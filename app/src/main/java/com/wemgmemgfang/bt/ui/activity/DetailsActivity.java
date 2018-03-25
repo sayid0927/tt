@@ -2,14 +2,15 @@ package com.wemgmemgfang.bt.ui.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.ToastUtils;
@@ -18,10 +19,15 @@ import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.VideoDetailsBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
+import com.wemgmemgfang.bt.database.CollectionInfoDao;
+import com.wemgmemgfang.bt.database.UserInfoDao;
+import com.wemgmemgfang.bt.entity.CollectionInfo;
+import com.wemgmemgfang.bt.entity.UserInfo;
 import com.wemgmemgfang.bt.presenter.contract.DetailsActivityContract;
 import com.wemgmemgfang.bt.presenter.impl.DetailsActivityPresenter;
 import com.wemgmemgfang.bt.service.DownTorrentVideoService;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
+import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
 import com.wemgmemgfang.bt.utils.PreferUtil;
 
@@ -30,11 +36,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import player.XLVideoPlayActivity;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class DetailsActivity extends BaseActivity implements DetailsActivityContract.View,EasyPermissions.PermissionCallbacks {
+public class DetailsActivity extends BaseActivity implements DetailsActivityContract.View, EasyPermissions.PermissionCallbacks {
 
     @Inject
     DetailsActivityPresenter mPresenter;
@@ -42,6 +49,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     LinearLayout llExit;
     @BindView(R.id.img)
     ImageView img;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.size)
@@ -52,15 +61,24 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     TextView content;
     @BindView(R.id.title_list)
     RecyclerView titleList;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.tv_collection)
+    TextView tvCollection;
+    @BindView(R.id.llRight)
+    LinearLayout llRight;
+    @BindView(R.id.connection_title)
+    RelativeLayout connectionTitle;
     private String HrefUrl, imgUrl, Title;
-
     private int clickType;
-
-
     private String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE};
     private ProgressDialog loadPd, commonPd;
     private String thunderUrl;
+    private String url;
+    private CollectionInfoDao collectionInfoDao;
+    private  boolean isCollertion;
+    
 
 
     @Override
@@ -87,12 +105,25 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     public void initView() {
 
         imgUrl = getIntent().getStringExtra("imgUrl");
+        url = getIntent().getStringExtra("HrefUrl");
         HrefUrl = "https://www.80s.tt" + getIntent().getStringExtra("HrefUrl");
         Title = getIntent().getStringExtra("Title");
         mPresenter.Fetch_VideoDetailsInfo(HrefUrl);
 
         ImgLoadUtils.GifloadImage(this, imgUrl, img);
+        tvTitle.setText(Title);
         title.setText(Title);
+        collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
+        List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).list();
+        if(cList!=null&& cList.size()!=0) {
+            isCollertion = true;
+            tvCollection.setText("已收藏");
+            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+        }else {
+            isCollertion = false;
+            tvCollection.setText("收藏");
+            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+        }
     }
 
     @Override
@@ -100,11 +131,34 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     }
 
-    @OnClick({R.id.llExit})
+    @OnClick({R.id.llExit, R.id.llRight})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.llExit:
                 this.finish();
+                break;
+            case R.id.llRight:
+
+
+
+                if(isCollertion){
+                    
+                    isCollertion =false;
+                    CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).unique();
+                    collectionInfoDao.delete(collectionInfo);
+                    tvCollection.setText("收藏");
+                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+                    
+                }else {
+                    isCollertion =true;
+                    CollectionInfo collectionInfo = new CollectionInfo();
+                    collectionInfo.setHrefUrl(url);
+                    collectionInfo.setTitle(Title);
+                    collectionInfo.setImgUrl(imgUrl);
+                    collectionInfoDao.insert(collectionInfo);
+                    tvCollection.setText("已收藏");
+                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+                }
                 break;
         }
     }
@@ -135,8 +189,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                     EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
                 } else {
                     thunderUrl = item.getThunder();
-                    if(thunderUrl!=null && thunderUrl.startsWith("thunder"))
-                    XLVideoPlayActivity.intentTo(DetailsActivity.this, thunderUrl, item.getTitle());
+                    if (thunderUrl != null && thunderUrl.startsWith("thunder"))
+                        XLVideoPlayActivity.intentTo(DetailsActivity.this, thunderUrl, item.getTitle());
                 }
             }
         });
@@ -150,17 +204,11 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                 } else {
 
                     thunderUrl = item.getThunder();
-                    if(thunderUrl!=null && thunderUrl.startsWith("thunder"))
+                    if (thunderUrl != null && thunderUrl.startsWith("thunder"))
 
-                    PreferUtil.getInstance().setPlayPath(thunderUrl);
+                        PreferUtil.getInstance().setPlayPath(thunderUrl);
                     PreferUtil.getInstance().setPlayTitle(item.getTitle());
                     PreferUtil.getInstance().setPlayimgUrl(imgUrl);
-
-
-//                    Intent intent = new Intent();
-//                    ComponentName componentName = new ComponentName("com.wengmengfan.btwang","com.wengmengfan.btwang.service.DownTorrentVideoService");
-//                    intent.setComponent(componentName);
-//                    startService(intent);
 
                     startService(new Intent(DetailsActivity.this, DownTorrentVideoService.class));
 
@@ -185,4 +233,5 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         ToastUtils.showLongToast("没有权限无法下载电影");
     }
+
 }

@@ -148,6 +148,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
                 Intent intent = new Intent(getActivity(), MoreActivity.class);
                 intent.putExtra("HrefUrl",item.getHrefUrl());
+                intent.putExtra("Title",item.getTitle());
                 getActivity().startActivity(intent);
 
             }

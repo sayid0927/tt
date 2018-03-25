@@ -15,6 +15,7 @@ import com.wemgmemgfang.bt.component.DaggerAppComponent;
 import com.wemgmemgfang.bt.module.ApiModule;
 import com.wemgmemgfang.bt.module.AppModule;
 import com.wemgmemgfang.bt.utils.AppUtils;
+import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.PreferUtil;
 import com.wemgmemgfang.bt.utils.UmengUtil;
 
@@ -41,6 +42,7 @@ public class BaseApplication extends Application {
         Utils.init(this);
         AppUtils.init(this);
         PreferUtil.getInstance().init(this);
+        GreenDaoUtil.initDataBase(getApplicationContext());
 //        UmengUtil.UmengUtilInit(this);
 //        UmengUtil.onEvent("phoneInfo");
     }

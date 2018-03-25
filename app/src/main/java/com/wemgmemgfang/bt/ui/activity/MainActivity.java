@@ -10,19 +10,26 @@ import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.base.BaseFragmentPageAdapter;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
+import com.wemgmemgfang.bt.database.UserInfoDao;
+import com.wemgmemgfang.bt.entity.UserInfo;
 import com.wemgmemgfang.bt.presenter.contract.MainContract;
 import com.wemgmemgfang.bt.presenter.impl.MainActivityPresenter;
 import com.wemgmemgfang.bt.ui.fragment.DownRankingFragment;
 import com.wemgmemgfang.bt.ui.fragment.FilmFragment;
 import com.wemgmemgfang.bt.ui.fragment.HomeFragment;
 import com.wemgmemgfang.bt.ui.fragment.MeFragment;
+import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.UmengUtil;
+
+import org.greenrobot.greendao.rx.RxDao;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
@@ -69,6 +76,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void initView() {
+
+//        UserInfoDao userInfoDao = GreenDaoUtil.getDaoSession().getUserInfoDao();
+//
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setId(null);
+//        userInfo.setUserName("wmf");
+//        userInfo.setUserSiz("男");
+//        userInfo.setUserStart("true");
+//        userInfo.setUserWeChat("VV");
+//        userInfo.setUserUuid("1100");
+//
+//        userInfoDao.insert(userInfo);
+
 
         UmengUtil.onEvent("MainActivity");
 

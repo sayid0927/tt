@@ -1,7 +1,11 @@
 package com.wemgmemgfang.bt.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.utils.ToastUtils;
@@ -12,10 +16,12 @@ import com.wemgmemgfang.bt.base.Constant;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.ui.activity.AboutActivity;
+import com.wemgmemgfang.bt.ui.activity.CollectionActivity;
 import com.wemgmemgfang.bt.ui.activity.DownListActivity;
 import com.wemgmemgfang.bt.ui.activity.MainActivity;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -37,7 +43,10 @@ public class MeFragment extends BaseFragment {
     RelativeLayout exit;
     @BindView(R.id.down)
     RelativeLayout down;
-    Unbinder unbinder;
+    @BindView(R.id.rl_collection)
+    RelativeLayout rlCollection;
+    @BindView(R.id.ll_denglu)
+    LinearLayout llDenglu;
 
 
     @Override
@@ -64,12 +73,17 @@ public class MeFragment extends BaseFragment {
         DaggerMainComponent.builder().appComponent(appComponent).build().inject(this);
     }
 
-    @OnClick({R.id.updae, R.id.baout, R.id.feedback, R.id.exit,R.id.down})
+    @OnClick({R.id.updae, R.id.baout, R.id.feedback, R.id.exit, R.id.down,R.id.ll_denglu,R.id.rl_collection})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.down:
                 getActivity().startActivity(new Intent(getActivity(), DownListActivity.class));
                 break;
+            case R.id.rl_collection:
+                getActivity().startActivity(new Intent(getActivity(), CollectionActivity.class));
+
+                break;
+
             case R.id.updae:
                 ToastUtils.showLongToast("已是最新版本");
                 break;
@@ -82,6 +96,13 @@ public class MeFragment extends BaseFragment {
             case R.id.exit:
                 MainActivity.mainActivity.killAll();
                 break;
+
+
+            case R.id.ll_denglu:
+
+
+                break;
+
         }
     }
 }

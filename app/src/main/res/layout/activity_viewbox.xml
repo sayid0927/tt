@@ -6,7 +6,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
     <include layout="@layout/common_toolbar" />
 
     <LinearLayout

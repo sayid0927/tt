@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wemgmemgfang.bt">
 
-
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -17,7 +15,6 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
-
         android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.activity.MainActivity"
+        <activity
+            android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -34,7 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="player.XLVideoPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -67,8 +64,6 @@
                 <data android:scheme="thunder" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".ui.activity.ViewBoxActivity"
             android:screenOrientation="portrait" />
@@ -88,11 +83,11 @@
         <activity
             android:name=".ui.activity.DetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.DownListActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".ui.activity.CollectionActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name=".contentprovider.PlayProvider"

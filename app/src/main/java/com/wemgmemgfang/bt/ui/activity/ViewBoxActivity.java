@@ -122,7 +122,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     public void Fetch_ViewBoxInfo_Success(ViewBoxBean data) {
         imgUrl = data.getImgUrl();
         ImgLoadUtils.loadImage(ViewBoxActivity.this, data.getImgUrl(), img);
-        title.setText(data.getAlt());
+        tvTitle.setText(data.getAlt());
         size.setText(data.getSize());
         sizeNum.setText(data.getSizeNum());
         content.setText(data.getContext());

@@ -59,6 +59,7 @@ public class DownTorrentVideoService extends Service {
                         ToastUtils.showLongToast("服务器太忙,请稍会再试");
                         XLTaskHelper.instance().stopTask(taskId);
                         nHandler.cancelNotification((int) taskId);
+//                        handler.sendMessageDelayed(handler.obtainMessage(0, taskId), 1000);
 
                         break;
                     case 1:

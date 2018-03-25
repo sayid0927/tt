@@ -2,35 +2,47 @@ package com.wemgmemgfang.bt.ui.activity;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.orhanobut.logger.Logger;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
-import com.wemgmemgfang.bt.base.Constant;
 import com.wemgmemgfang.bt.bean.MoreInfoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
+import com.wemgmemgfang.bt.database.UserInfoDao;
+import com.wemgmemgfang.bt.entity.UserInfo;
 import com.wemgmemgfang.bt.presenter.contract.MoreActivityContract;
 import com.wemgmemgfang.bt.presenter.impl.MoreActivityPresenter;
 import com.wemgmemgfang.bt.ui.adapter.More_Adapter;
-import com.wemgmemgfang.bt.ui.fragment.DownRankingFragment;
+import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.view.MyLoadMoreView;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MoreActivity extends BaseActivity implements MoreActivityContract.View, BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     MoreActivityPresenter mPresenter;
-    private String imgUrl,HrefUrl;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    private String imgUrl, HrefUrl,Title;
 
     @BindView(R.id.llExit)
     LinearLayout llExit;
@@ -69,12 +81,21 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
     @Override
     public void initView() {
 
+//
+//        UserInfoDao userInfoDao = GreenDaoUtil.getDaoSession().getUserInfoDao();
+//        List<UserInfo> user = userInfoDao.queryBuilder().where(UserInfoDao.Properties.UserName.eq("wmf")).list();
+
         HrefUrl = "https://www.80s.tt" + getIntent().getStringExtra("HrefUrl");
+
+        Title = getIntent().getStringExtra("Title");
+
+        tvTitle.setText(Title);
+
         mPresenter.Fetch_MoreTypeInfo(HrefUrl);
 
-         more_adapter = new More_Adapter(null,MoreActivity.this);
+        more_adapter = new More_Adapter(null, MoreActivity.this);
         rvInfo.setAdapter(more_adapter);
-        rvInfo.setLayoutManager(new GridLayoutManager(MoreActivity.this,2));
+        rvInfo.setLayoutManager(new GridLayoutManager(MoreActivity.this, 2));
 
         more_adapter.setOnLoadMoreListener(MoreActivity.this, rvInfo);
         more_adapter.setLoadMoreView(new MyLoadMoreView());
@@ -84,9 +105,9 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
             @Override
             public void OnPlayItemClickListener(MoreInfoBean.MoreVideoInfoBean item) {
                 Intent intent = new Intent(MoreActivity.this, DetailsActivity.class);
-                intent.putExtra("HrefUrl",item.getHerf());
-                intent.putExtra("imgUrl",item.getImgUrl());
-                intent.putExtra("Title",item.getTitle());
+                intent.putExtra("HrefUrl", item.getHerf());
+                intent.putExtra("imgUrl", item.getImgUrl());
+                intent.putExtra("Title", item.getTitle());
                 startActivity(intent);
             }
         });
@@ -124,7 +145,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
     public void onLoadMoreRequested() {
         if (index < 46) {
             index++;
-            mPresenter.Fetch_MoreTypeInfo(HrefUrl + "?page=" +index);
+            mPresenter.Fetch_MoreTypeInfo(HrefUrl + "?page=" + index);
             srlAndroid.setEnabled(false);
         }
     }
@@ -134,5 +155,12 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
         isRefresh = true;
         more_adapter.setEnableLoadMore(false);
         mPresenter.Fetch_MoreTypeInfo(HrefUrl);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

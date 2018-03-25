@@ -18,6 +18,7 @@ package com.wemgmemgfang.bt.component;
 
 
 import com.wemgmemgfang.bt.ui.activity.AboutActivity;
+import com.wemgmemgfang.bt.ui.activity.CollectionActivity;
 import com.wemgmemgfang.bt.ui.activity.DetailsActivity;
 import com.wemgmemgfang.bt.ui.activity.FeedbackActivity;
 import com.wemgmemgfang.bt.ui.activity.MainActivity;
@@ -62,6 +63,8 @@ public interface MainComponent {
    DetailsActivity inject(DetailsActivity detailsActivity);
 
    MoreActivity inject(MoreActivity moreActivity);
+
+   CollectionActivity  inject (CollectionActivity collectionActivity);
 
 
 }
