@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/connection_title"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/colorPrimary">
+
+
+    <LinearLayout
+        android:id="@+id/llExit"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@drawable/connection_title_back_butn"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/ab_back" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/llRight"
+        android:layout_toRightOf="@+id/llExit"
+        android:ellipsize="end"
+        android:maxLength="1"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+
+    <LinearLayout
+        android:id="@+id/llRight"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/connection_title_back_butn"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
+</RelativeLayout>

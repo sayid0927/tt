@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#333333"
+            android:orientation="vertical">
+
+            <com.flyco.tablayout.SegmentTabLayout
+                android:id="@+id/tl_4"
+                tl_textUnselectColor="#333333"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                tl:tl_indicator_anim_enable="true"
+                tl:tl_indicator_bounce_enable="false"
+                tl:tl_indicator_color="#AAAAAA"
+                tl:tl_indicator_margin_bottom="2dp"
+                tl:tl_indicator_margin_left="2dp"
+                tl:tl_indicator_margin_right="2dp"
+                tl:tl_indicator_margin_top="2dp"
+                tl:tl_tab_space_equal="true" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_film"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_film"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="12231233222"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="18sp" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:text="更多"-->
+        <!--android:textColor="@color/light_blue"-->
+        <!--android:textSize="18sp" />-->
+        <!---->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_film"-->
+        <!--android:layout_marginTop="10dp" />-->
+
+
+        <!--</RelativeLayout>-->
+
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_teleplay"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_teleplay"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="12231233222"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="18sp" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:text="更多"-->
+        <!--android:textColor="@color/light_blue"-->
+        <!--android:textSize="18sp" />-->
+
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_teleplay"-->
+        <!--android:layout_marginTop="10dp" />-->
+
+        <!--</RelativeLayout>-->
+
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_manga"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_manga"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="12231233222"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="18sp" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:text="更多"-->
+        <!--android:textColor="@color/light_blue"-->
+        <!--android:textSize="18sp" />-->
+
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_manga"-->
+        <!--android:layout_marginTop="10dp" />-->
+
+
+        <!--</RelativeLayout>-->
+
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_variefty"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_variefty"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="12231233222"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="18sp" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:text="更多"-->
+        <!--android:textColor="@color/light_blue"-->
+        <!--android:textSize="18sp" />-->
+
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_variefty"-->
+        <!--android:layout_marginTop="10dp" />-->
+        <!---->
+        <!--</RelativeLayout>-->
+        <!---->
+
+
+    </LinearLayout>
+</ScrollView>

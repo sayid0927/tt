@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最新电影"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/common_h1"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="更多"
+            android:textColor="@color/light_blue"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
