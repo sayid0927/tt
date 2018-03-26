@@ -142,6 +142,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
 
                 if(isCollertion){
+
                     
                     isCollertion =false;
                     CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).unique();
