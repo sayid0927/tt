@@ -14,6 +14,8 @@ import com.wemgmemgfang.bt.base.Constant;
 import com.wemgmemgfang.bt.contentprovider.PlayController;
 import com.wemgmemgfang.bt.contentprovider.PlayProvider;
 
+import org.apache.http.util.EncodingUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -209,17 +211,14 @@ public class DeviceUtils {
             Log.d("TestFile", "The File doesn't not exist.");
         } else {
             try {
-                InputStream instream = new FileInputStream(file);
-                if (instream != null) {
-                    InputStreamReader inputreader = new InputStreamReader(instream);
-                    BufferedReader buffreader = new BufferedReader(inputreader);
-                    String line;
-                    //分行读取
-                    while ((line = buffreader.readLine()) != null) {
-                        newList.add(line + "\n");
-                    }
-                    instream.close();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"GB2312"));
+                String line;
+                //分行读取
+                while ((line = reader.readLine()) != null) {
+                    String temp3 = EncodingUtils.getString(line.getBytes(),"UTF-8");
+                    newList.add(temp3);
                 }
+                reader.close();
             } catch (java.io.FileNotFoundException e) {
                 Log.d("TestFile", "The File doesn't not exist.");
             } catch (IOException e) {

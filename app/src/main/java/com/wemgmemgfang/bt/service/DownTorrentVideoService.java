@@ -54,12 +54,12 @@ public class DownTorrentVideoService extends Service {
                 }
                 switch (taskInfo.mTaskStatus) {
                     case 0:
+
                         isDown = false;
                         Logger.e("连接中");
                         ToastUtils.showLongToast("服务器太忙,请稍会再试");
                         XLTaskHelper.instance().stopTask(taskId);
                         nHandler.cancelNotification((int) taskId);
-//                        handler.sendMessageDelayed(handler.obtainMessage(0, taskId), 1000);
 
                         break;
                     case 1:
@@ -78,31 +78,35 @@ public class DownTorrentVideoService extends Service {
                         }
                         break;
                     case 2:
+
                         isDown = false;
                         nHandler.cancelNotification((int) taskId);
-                        ToastUtils.showLongToast(playTitle + "下载完成");
-                        for (DownVideoBean d : BaseApplication.downVideoBeanList) {
-                            if (d.getTaskId() == taskId) {
-                                BaseApplication.downVideoBeanList.remove(d);
-                            }
-                        }
-                        if (BaseApplication.downVideoBeanList.size() != 0) {
-                            String path = BaseApplication.downVideoBeanList.get(0).getPlayPath();
-                            String title = BaseApplication.downVideoBeanList.get(0).getPlayTitle();
-                            String savePath = DeviceUtils.getSDVideoPath(title);
-                            try {
-                                if (path.startsWith("thunder://")) {
-                                    taskId = XLTaskHelper.instance().addThunderTask(path, savePath, title);
-                                } else {
-                                    taskId = XLTaskHelper.instance().addTorrentTask(path, savePath, null);
+                        Logger.e("下载完成");
+                        if( BaseApplication.downVideoBeanList.size()!=0) {
+                            for (int d =0;d<BaseApplication.downVideoBeanList.size();d++) {
+                                if (BaseApplication.downVideoBeanList.get(d).getTaskId() == taskId) {
+                                    BaseApplication.downVideoBeanList.remove(BaseApplication.downVideoBeanList.get(d));
                                 }
-                                BaseApplication.downVideoBeanList.get(0).setTaskId(taskId);
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
-                            nBuilder = nHandler.createProgressNotification(DownTorrentVideoService.this, playTitle, (int) taskId);
-                            handler.sendMessage(handler.obtainMessage(0));
+                            if (BaseApplication.downVideoBeanList.size() != 0) {
+                                String path = BaseApplication.downVideoBeanList.get(0).getPlayPath();
+                                String title = BaseApplication.downVideoBeanList.get(0).getPlayTitle();
+                                String savePath = DeviceUtils.getSDVideoPath(title);
+                                try {
+                                    if (path.startsWith("thunder://")) {
+                                        taskId = XLTaskHelper.instance().addThunderTask(path, savePath, title);
+                                    } else {
+                                        taskId = XLTaskHelper.instance().addTorrentTask(path, savePath, null);
+                                    }
+                                    BaseApplication.downVideoBeanList.get(0).setTaskId(taskId);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                nBuilder = nHandler.createProgressNotification(DownTorrentVideoService.this, playTitle, (int) taskId);
+                                handler.sendMessage(handler.obtainMessage(0));
+                            }
                         }
+
                         break;
 
                     case 3:
@@ -112,12 +116,10 @@ public class DownTorrentVideoService extends Service {
                         ToastUtils.showLongToast(playTitle + "下载失败,请稍会再试");
                         Logger.e("失败");
                         break;
-
                 }
             }
         }
     };
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -164,6 +166,7 @@ public class DownTorrentVideoService extends Service {
         XLTaskHelper.init(getApplicationContext());
         nHandler = NotificationHandler.getInstance(this);
         commonDialog = new CommonDialog(DownTorrentVideoService.this, "存储空间不足");
+
     }
 
     @Nullable

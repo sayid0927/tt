@@ -77,21 +77,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void initView() {
 
-//        UserInfoDao userInfoDao = GreenDaoUtil.getDaoSession().getUserInfoDao();
-//
-//        UserInfo userInfo = new UserInfo();
-//        userInfo.setId(null);
-//        userInfo.setUserName("wmf");
-//        userInfo.setUserSiz("男");
-//        userInfo.setUserStart("true");
-//        userInfo.setUserWeChat("VV");
-//        userInfo.setUserUuid("1100");
-//
-//        userInfoDao.insert(userInfo);
-
-
         UmengUtil.onEvent("MainActivity");
-
 
         mTitleList.add("推荐");
         mTitleList.add("首页");

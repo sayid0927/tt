@@ -26,6 +26,7 @@ public class CollectionActivity extends BaseActivity {
     RecyclerView rvColl;
     @BindView(R.id.llExit)
     LinearLayout llExit;
+    private CollectionAdapter collectionAdapter;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -48,12 +49,19 @@ public class CollectionActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        collectionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void initView() {
 
         CollectionInfoDao collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
         List<CollectionInfo> collectionInfoList = collectionInfoDao.loadAll();
 
-        CollectionAdapter collectionAdapter = new CollectionAdapter(collectionInfoList, this);
+         collectionAdapter = new CollectionAdapter(collectionInfoList, this);
         rvColl.setAdapter(collectionAdapter);
         rvColl.setLayoutManager(new LinearLayoutManager(this));
         collectionAdapter.onVideoItemListener(new CollectionAdapter.onVideoItemListener() {

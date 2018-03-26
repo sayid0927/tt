@@ -35,7 +35,7 @@ public class CollectionAdapter extends BaseQuickAdapter<CollectionInfo, BaseView
     protected void convert(BaseViewHolder helper, final CollectionInfo item) {
         helper.setText(R.id.file_title,item.getTitle());
         ImageView iv =   helper.getView(R.id.iv_down);
-        ImgLoadUtils.GifloadImage(mContext,item.getImgUrl(),iv);
+        ImgLoadUtils.loadImage(mContext,item.getImgUrl(),iv);
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

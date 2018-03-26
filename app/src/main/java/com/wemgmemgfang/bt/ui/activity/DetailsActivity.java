@@ -109,6 +109,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         HrefUrl = "https://www.80s.tt" + getIntent().getStringExtra("HrefUrl");
         Title = getIntent().getStringExtra("Title");
         mPresenter.Fetch_VideoDetailsInfo(HrefUrl);
+        showLoadPd();
 
         ImgLoadUtils.GifloadImage(this, imgUrl, img);
         tvTitle.setText(Title);
@@ -139,16 +140,11 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                 break;
             case R.id.llRight:
 
-
-
                 if(isCollertion){
-
-                    
                     isCollertion =false;
                     CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).unique();
                     collectionInfoDao.delete(collectionInfo);
                     tvCollection.setText("收藏");
-
                     ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
                     
                 }else {
@@ -168,7 +164,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Override
     public void Fetch_VideoDetailsInfo_Success(VideoDetailsBean data) {
-
+            dismissLoadPd();
         for (int i = 0; i < data.getVideoInfoBeans().size(); i++) {
             String type = data.getVideoInfoBeans().get(i).getType();
             String putType = data.getVideoInfoBeans().get(i).getPutType();
