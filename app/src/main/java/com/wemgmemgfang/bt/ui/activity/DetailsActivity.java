@@ -147,6 +147,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                     CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).unique();
                     collectionInfoDao.delete(collectionInfo);
                     tvCollection.setText("收藏");
+
                     ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
                     
                 }else {
