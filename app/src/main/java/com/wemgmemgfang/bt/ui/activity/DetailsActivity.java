@@ -158,6 +158,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                     collectionInfoDao.insert(collectionInfo);
                     tvCollection.setText("已收藏");
                     ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+
                 }
                 break;
         }
