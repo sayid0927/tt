@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import com.orhanobut.logger.Logger;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.DownHrefBean;
+import com.wemgmemgfang.bt.bean.VideoDetailsBean;
 import com.wemgmemgfang.bt.bean.ViewBoxBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
@@ -29,6 +32,7 @@ import com.wemgmemgfang.bt.entity.CollectionInfo;
 import com.wemgmemgfang.bt.presenter.contract.ViewBoxContract;
 import com.wemgmemgfang.bt.presenter.impl.ViewBoxPresenter;
 import com.wemgmemgfang.bt.service.DownTorrentVideoService;
+import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
@@ -38,6 +42,7 @@ import org.apache.http.util.EncodingUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -75,10 +80,6 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     TextView sizeNum;
     @BindView(R.id.content)
     TextView content;
-    @BindView(R.id.down_Video)
-    Button downVideo;
-    @BindView(R.id.play_Video)
-    TextView playVideo;
 
     @BindView(R.id.iv_right)
     ImageView ivRight;
@@ -86,18 +87,18 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     TextView tvCollection;
     @BindView(R.id.llRight)
     LinearLayout llRight;
+    @BindView(R.id.title_list)
+    RecyclerView titleList;
 
     private String hrefUrl;
     private DownHrefBean downHrefBean;
-    private String torrFile = null;
-    private String videoPath, strTitle;
-    private int clickType;
+    private String strTitle;
     private String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE};
 
     private CollectionInfoDao collectionInfoDao;
     private boolean isCollertion;
-    private String Url,ImgUrl;
+    private String Url, ImgUrl;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -125,7 +126,6 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         ImgUrl = getIntent().getStringExtra("ImgUrl");
         mPresenter.Fetch_ViewBoxInfo("http://www.zei8.me" + Url);
         showLoadPd();
-
     }
 
     @Override
@@ -138,7 +138,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void Fetch_ViewBoxInfo_Success(ViewBoxBean data) {
-        dismissLoadPd();
+
         strTitle = data.getAlt();
         ImgLoadUtils.loadImage(ViewBoxActivity.this, ImgUrl, img);
         tvTitle.setText(strTitle);
@@ -159,6 +159,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
             tvCollection.setText("收藏");
             ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
         }
+        mPresenter.Fetch_HrefUrl(hrefUrl);
     }
 
     @Override
@@ -169,34 +170,67 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void download_Zip_Success(String filePath) {
-
+        dismissLoadPd();
         String destFileDir = DeviceUtils.getSDPath(downHrefBean.getTitle());
-        videoPath = DeviceUtils.getSDVideoPath(downHrefBean.getTitle());
-
+        List<VideoDetailsBean.VideoLinks> videoLinksList = new ArrayList<>();
         try {
             boolean jieya = ZipUtils.unzipFile(filePath, destFileDir);
             if (jieya) {
                 FileUtils.deleteFile(filePath);
                 List<File> files = FileUtils.listFilesInDir(destFileDir);
+
                 for (File f : files) {
                     if (f.getAbsolutePath().endsWith(".torrent")) {
-                        torrFile = f.getAbsolutePath();
-                        onClickType();
-                        break;
+                        VideoDetailsBean.VideoLinks videoLinks = new VideoDetailsBean.VideoLinks();
+                        videoLinks.setThunder(f.getAbsolutePath());
+                        videoLinks.setTitle(downHrefBean.getTitle());
+                        videoLinksList.add(videoLinks);
                     } else if (f.getAbsolutePath().endsWith(".txt")) {
                         for (String txt : ReadTxtFile(f.getAbsolutePath())) {
                             if (txt.contains("thunder")) {
-                                String tmp= txt.substring(0,txt.indexOf("t")-1);
-                                Log.e("temp4>>    ",txt);
-                                Log.e("temp4>>    ",tmp);
-                                torrFile = txt.substring(txt.indexOf("t"), txt.length()).replace("\n", "").trim();
-                                onClickType();
-                                break;
+                                VideoDetailsBean.VideoLinks videoLinks = new VideoDetailsBean.VideoLinks();
+                                String tmp = txt.substring(0, txt.indexOf("t"));
+                                videoLinks.setThunder(txt.substring(txt.indexOf("t"), txt.length()).trim());
+                                if (tmp.equals(""))
+                                    videoLinks.setTitle(downHrefBean.getTitle());
+                                else
+                                    videoLinks.setTitle(tmp);
+                                videoLinksList.add(videoLinks);
                             }
                         }
                     }
                 }
-                if (torrFile == null) {
+                Home_Title_Play_Adapter mAdapter = new Home_Title_Play_Adapter(videoLinksList, ViewBoxActivity.this);
+                titleList.setLayoutManager(new LinearLayoutManager(this));
+                titleList.setAdapter(mAdapter);
+                mAdapter.setOnDownItemClickListener(new Home_Title_Play_Adapter.OnDownItemClickListener() {
+                    @Override
+                    public void OnDownItemClickListener(VideoDetailsBean.VideoLinks item) {
+                        if (!EasyPermissions.hasPermissions(ViewBoxActivity.this, perms)) {
+                            EasyPermissions.requestPermissions(this, "需要读写权限", 2000, perms);
+                        } else {
+                            String thunderUrl = item.getThunder();
+                            PreferUtil.getInstance().setPlayPath(thunderUrl);
+                            PreferUtil.getInstance().setPlayTitle(item.getTitle());
+                            PreferUtil.getInstance().setPlayimgUrl(ImgUrl);
+                            startService(new Intent(ViewBoxActivity.this, DownTorrentVideoService.class));
+
+                        }
+                    }
+                });
+                mAdapter.setOnPlayItemClickListener(new Home_Title_Play_Adapter.OnPlayItemClickListener() {
+                    @Override
+                    public void OnPlayItemClickListener(VideoDetailsBean.VideoLinks item) {
+                        if (!EasyPermissions.hasPermissions(ViewBoxActivity.this, perms)) {
+                            EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
+                        } else {
+                            String thunderUrl = item.getThunder();
+                            if (thunderUrl != null && thunderUrl.startsWith("thunder"))
+                                XLVideoPlayActivity.intentTo(ViewBoxActivity.this, thunderUrl, item.getTitle());
+                        }
+                    }
+                });
+                if (videoLinksList.size() == 0) {
                     showDialog("暂无电影资源");
                 }
             }
@@ -205,50 +239,16 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         }
     }
 
-    private void onClickType() {
-        switch (clickType) {
-            case 0:
-                PreferUtil.getInstance().setPlayPath(torrFile);
-                PreferUtil.getInstance().setPlayTitle(downHrefBean.getTitle());
-                PreferUtil.getInstance().setPlayimgUrl(ImgUrl);
-                startService(new Intent(this, DownTorrentVideoService.class));
-                break;
-            case 1:
-                XLVideoPlayActivity.intentTo(this, torrFile, downHrefBean.getTitle());
-                break;
-
-        }
-    }
-
     @Override
     public void Down_Torrent_File_Success() {
 
     }
 
-    @OnClick({R.id.llExit, R.id.tvTitle, R.id.down_Video, R.id.play_Video, R.id.llRight})
+    @OnClick({R.id.llExit, R.id.tvTitle,R.id.llRight})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.llExit:
                 this.finish();
-                break;
-
-            case R.id.down_Video:
-                clickType = 0;
-                if (!EasyPermissions.hasPermissions(this, perms)) {
-                    EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
-                } else {
-                    mPresenter.Fetch_HrefUrl(hrefUrl);
-                }
-                break;
-
-            case R.id.play_Video:
-                loadPd.show();
-                clickType = 1;
-                if (!EasyPermissions.hasPermissions(this, perms)) {
-                    EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
-                } else {
-                    mPresenter.Fetch_HrefUrl(hrefUrl);
-                }
                 break;
 
             case R.id.llRight:

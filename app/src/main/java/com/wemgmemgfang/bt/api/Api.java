@@ -63,4 +63,8 @@ public class Api {
         return service.Fetch_Apk_Update_Path();
     }
 
+    public Observable<Response<ResponseBody>> Fetch_Search_Info(String keyword) {
+        return service.Fetch_Search_Info(keyword);
+    }
+
 }

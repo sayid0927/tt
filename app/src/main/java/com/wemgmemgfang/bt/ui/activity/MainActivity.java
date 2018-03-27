@@ -81,17 +81,15 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         mTitleList.add("推荐");
         mTitleList.add("首页");
-        mTitleList.add("图片");
-        mTitleList.add("我");
+        mTitleList.add("搜索");
+        mTitleList.add("设置");
 
         HomeFragment homeFragment = new HomeFragment();
         DownRankingFragment downRankingFragment = new DownRankingFragment();
         FilmFragment filmFragment = new FilmFragment();
         MeFragment meFragment = new MeFragment();
-
-        mFragments.add(homeFragment);
         mFragments.add(downRankingFragment);
-
+        mFragments.add(homeFragment);
         mFragments.add(filmFragment);
         mFragments.add(meFragment);
 

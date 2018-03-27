@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 允许程序录制音频 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".base.BaseApplication"
@@ -87,14 +87,19 @@
         <activity
             android:name=".ui.activity.DownListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.CollectionActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.CollectionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name=".contentprovider.PlayProvider"
             android:authorities="com.wengmengfan.btwang.provider"
             android:exported="true"
             android:process=":provider" />
+
 
     </application>
 

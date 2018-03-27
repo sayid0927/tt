@@ -33,8 +33,6 @@ public class DownTorrentVideoService extends Service {
 
 
     private String playPath, playTitle, videoPath, PlayimgUrl;
-
-
     private NotificationCompat.Builder nBuilder;
     private CommonDialog commonDialog;
     private NotificationHandler nHandler;
@@ -131,7 +129,6 @@ public class DownTorrentVideoService extends Service {
         DownVideoBean downVideoBean = new DownVideoBean();
 
         if (!isDown) {
-
             try {
                 if (playPath.startsWith("thunder://")) {
                     taskId = XLTaskHelper.instance().addThunderTask(playPath, videoPath, playTitle);
@@ -156,13 +153,13 @@ public class DownTorrentVideoService extends Service {
         BaseApplication.downVideoBeanList.add(downVideoBean);
 
         return super.onStartCommand(intent, flags, startId);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate() {
         super.onCreate();
-
         XLTaskHelper.init(getApplicationContext());
         nHandler = NotificationHandler.getInstance(this);
         commonDialog = new CommonDialog(DownTorrentVideoService.this, "存储空间不足");

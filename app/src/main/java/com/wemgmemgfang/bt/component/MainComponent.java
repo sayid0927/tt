@@ -23,8 +23,10 @@ import com.wemgmemgfang.bt.ui.activity.DetailsActivity;
 import com.wemgmemgfang.bt.ui.activity.FeedbackActivity;
 import com.wemgmemgfang.bt.ui.activity.MainActivity;
 import com.wemgmemgfang.bt.ui.activity.MoreActivity;
+import com.wemgmemgfang.bt.ui.activity.SearchActivity;
 import com.wemgmemgfang.bt.ui.activity.ViewBoxActivity;
 import com.wemgmemgfang.bt.ui.fragment.DownRankingFragment;
+import com.wemgmemgfang.bt.ui.fragment.FilmFragment;
 import com.wemgmemgfang.bt.ui.fragment.HomeFragment;
 import com.wemgmemgfang.bt.ui.fragment.MeFragment;
 import com.wemgmemgfang.bt.ui.fragment.homeChildFragment.HotsFilmFragment;
@@ -65,6 +67,10 @@ public interface MainComponent {
    MoreActivity inject(MoreActivity moreActivity);
 
    CollectionActivity  inject (CollectionActivity collectionActivity);
+
+   FilmFragment inject (FilmFragment filmFragment);
+
+   SearchActivity inject (SearchActivity searchActivity);
 
 
 }

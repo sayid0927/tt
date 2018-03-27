@@ -105,5 +105,10 @@
 
     <color name="comment_text">#5b5d5c</color>
 
+    <color name="colorDefault">#ffffff</color>
+    <color name="colorBackground">#f1f0f6</color>
+    <color name="colorText">#9b9b9b</color>
+
+
 
 </resources>

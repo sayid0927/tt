@@ -70,10 +70,10 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     // 多dex 打包的类库
     implementation 'com.android.support:multidex:1.0.3'
-
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'
-
     implementation 'org.apache.httpcomponents:httpcore:4.4.4'
     implementation project(':thunder')
+    implementation project(':umeng_sdk')
+
 }

@@ -238,6 +238,7 @@ public class ViewBoxPresenter extends RxPresenter<ViewBoxContract.View> implemen
 
                         try {
                             String destFileName = downHrefBean.getTitle() + ".zip";
+                            destFileName = destFileName.replace("/","-");
                             File file = saveFile(data, destFileName);
                             mView.download_Zip_Success(file.getPath());
                         } catch (Exception e) {
