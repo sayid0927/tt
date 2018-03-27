@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,22 +17,29 @@ import android.widget.TextView;
 import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.ToastUtils;
 import com.blankj.utilcode.utils.ZipUtils;
+import com.orhanobut.logger.Logger;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.DownHrefBean;
 import com.wemgmemgfang.bt.bean.ViewBoxBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
+import com.wemgmemgfang.bt.database.CollectionInfoDao;
+import com.wemgmemgfang.bt.entity.CollectionInfo;
 import com.wemgmemgfang.bt.presenter.contract.ViewBoxContract;
 import com.wemgmemgfang.bt.presenter.impl.ViewBoxPresenter;
 import com.wemgmemgfang.bt.service.DownTorrentVideoService;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
+import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
 import com.wemgmemgfang.bt.utils.PreferUtil;
+
+import org.apache.http.util.EncodingUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 
@@ -72,15 +80,24 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     @BindView(R.id.play_Video)
     TextView playVideo;
 
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.tv_collection)
+    TextView tvCollection;
+    @BindView(R.id.llRight)
+    LinearLayout llRight;
+
     private String hrefUrl;
-    private String imgUrl;
     private DownHrefBean downHrefBean;
     private String torrFile = null;
-    private String videoPath;
+    private String videoPath, strTitle;
     private int clickType;
     private String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE};
-    private ProgressDialog loadPd, commonPd;
+
+    private CollectionInfoDao collectionInfoDao;
+    private boolean isCollertion;
+    private String Url,ImgUrl;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -104,15 +121,16 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void initView() {
-        loadPd = new ProgressDialog(this);
-        loadPd.setMessage("正在加载中......");
-        String Url = "http://www.zei8.me" + getIntent().getStringExtra("Url");
-        mPresenter.Fetch_ViewBoxInfo(Url);
+        Url = getIntent().getStringExtra("HrefUrl");
+        ImgUrl = getIntent().getStringExtra("ImgUrl");
+        mPresenter.Fetch_ViewBoxInfo("http://www.zei8.me" + Url);
+        showLoadPd();
+
     }
 
     @Override
     public void showError(String message) {
-        if(loadPd.isShowing()){
+        if (loadPd.isShowing()) {
             loadPd.dismiss();
         }
         showDialog(message);
@@ -120,14 +138,27 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void Fetch_ViewBoxInfo_Success(ViewBoxBean data) {
-        imgUrl = data.getImgUrl();
-        ImgLoadUtils.loadImage(ViewBoxActivity.this, data.getImgUrl(), img);
-        tvTitle.setText(data.getAlt());
+        dismissLoadPd();
+        strTitle = data.getAlt();
+        ImgLoadUtils.loadImage(ViewBoxActivity.this, ImgUrl, img);
+        tvTitle.setText(strTitle);
+        title.setText(strTitle);
         size.setText(data.getSize());
         sizeNum.setText(data.getSizeNum());
         content.setText(data.getContext());
         hrefUrl = "http://www.zei8.me" + data.getHref();
 
+        collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
+        List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).list();
+        if (cList != null && cList.size() != 0) {
+            isCollertion = true;
+            tvCollection.setText("已收藏");
+            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+        } else {
+            isCollertion = false;
+            tvCollection.setText("收藏");
+            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+        }
     }
 
     @Override
@@ -138,7 +169,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void download_Zip_Success(String filePath) {
-        loadPd.dismiss();
+
         String destFileDir = DeviceUtils.getSDPath(downHrefBean.getTitle());
         videoPath = DeviceUtils.getSDVideoPath(downHrefBean.getTitle());
 
@@ -155,17 +186,19 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                     } else if (f.getAbsolutePath().endsWith(".txt")) {
                         for (String txt : ReadTxtFile(f.getAbsolutePath())) {
                             if (txt.contains("thunder")) {
-                                 torrFile = txt.substring(txt.indexOf("t"), txt.length()).replace("\n", "").trim();
-                                 onClickType();
+                                String tmp= txt.substring(0,txt.indexOf("t")-1);
+                                Log.e("temp4>>    ",txt);
+                                Log.e("temp4>>    ",tmp);
+                                torrFile = txt.substring(txt.indexOf("t"), txt.length()).replace("\n", "").trim();
+                                onClickType();
                                 break;
                             }
                         }
                     }
                 }
-                if(torrFile==null){
-                     showDialog("暂无电影资源");
+                if (torrFile == null) {
+                    showDialog("暂无电影资源");
                 }
-//                FileUtils.deleteDir(destFileDir);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -177,12 +210,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
             case 0:
                 PreferUtil.getInstance().setPlayPath(torrFile);
                 PreferUtil.getInstance().setPlayTitle(downHrefBean.getTitle());
-                PreferUtil.getInstance().setPlayimgUrl(imgUrl);
-//                Intent intent = new Intent();
-//                ComponentName componentName = new ComponentName("com.wengmengfan.btwang",
-//                        "com.wengmengfan.btwang.service.DownTorrentVideoService");
-//                intent.setComponent(componentName);
-//                startService(intent);
+                PreferUtil.getInstance().setPlayimgUrl(ImgUrl);
                 startService(new Intent(this, DownTorrentVideoService.class));
                 break;
             case 1:
@@ -197,7 +225,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     }
 
-    @OnClick({R.id.llExit, R.id.tvTitle, R.id.down_Video, R.id.play_Video})
+    @OnClick({R.id.llExit, R.id.tvTitle, R.id.down_Video, R.id.play_Video, R.id.llRight})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.llExit:
@@ -220,6 +248,27 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                     EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
                 } else {
                     mPresenter.Fetch_HrefUrl(hrefUrl);
+                }
+                break;
+
+            case R.id.llRight:
+
+                if (isCollertion) {
+                    isCollertion = false;
+                    CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).unique();
+                    collectionInfoDao.delete(collectionInfo);
+                    tvCollection.setText("收藏");
+                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+
+                } else {
+                    isCollertion = true;
+                    CollectionInfo collectionInfo = new CollectionInfo();
+                    collectionInfo.setHrefUrl(Url);
+                    collectionInfo.setTitle(strTitle);
+                    collectionInfo.setImgUrl(ImgUrl);
+                    collectionInfoDao.insert(collectionInfo);
+                    tvCollection.setText("已收藏");
+                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
                 }
                 break;
 

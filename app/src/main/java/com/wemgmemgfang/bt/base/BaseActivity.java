@@ -1,5 +1,6 @@
 package com.wemgmemgfang.bt.base;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public final static List<AppCompatActivity> mActivities = new LinkedList<>();
     private CommonDialog commonDialog;
     private AlertDialog dialog;
+    public ProgressDialog loadPd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,25 @@ public abstract class BaseActivity extends AppCompatActivity {
         setupActivityComponent(BaseApplication.getBaseApplication().getAppComponent());
         attachView();
         initView();
+
         synchronized (mActivities) {
             mActivities.add(this);
         }
+    }
+
+    public void showLoadPd() {
+        if (loadPd == null) {
+            loadPd = new ProgressDialog(this);
+            loadPd.setMessage("正在加载中......");
+            loadPd.show();
+        } else {
+            loadPd.show();
+        }
+    }
+
+    public void dismissLoadPd() {
+        if (loadPd != null && loadPd.isShowing())
+            loadPd.dismiss();
     }
 
     @Override
@@ -73,14 +91,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-    public  void dismissDialog(){
-        if(dialog!=null)
+    public void dismissDialog() {
+        if (dialog != null)
             dialog.dismiss();
     }
 
 
     public void showDialog(String str) {
-         dialog = new AlertDialog.Builder(this)
+        dialog = new AlertDialog.Builder(this)
 //                .setIcon(R.mipmap.icon)//设置标题的图片
 //                .setTitle("我是对话框")//设置对话框的标题
                 .setMessage(str)//设置对话框的内容

@@ -32,6 +32,7 @@
         android:layout_toRightOf="@+id/llExit"
         android:gravity="center"
         android:text=""
+        android:maxLines="1"
         android:textColor="@color/white"
         android:textSize="18dp" />
 

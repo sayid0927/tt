@@ -72,7 +72,8 @@ public class DownRankingFragment extends BaseFragment implements DownRankingCont
             @Override
             public void onItemClickListener(DownRaningBean item) {
                 Intent intent = new Intent(getActivity(), ViewBoxActivity.class);
-                intent.putExtra("Url",item.getHref());
+                intent.putExtra("HrefUrl",item.getHref());
+                intent.putExtra("ImgUrl",item.getImgUrl());
                 getActivity().startActivity(intent);
 
             }

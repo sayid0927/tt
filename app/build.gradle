@@ -74,5 +74,6 @@ dependencies {
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'
 
+    implementation 'org.apache.httpcomponents:httpcore:4.4.4'
     implementation project(':thunder')
 }
