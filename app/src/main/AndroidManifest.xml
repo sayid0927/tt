@@ -75,9 +75,11 @@
         <activity
             android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activity.FeedbackActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activity.MoreActivity"
             android:screenOrientation="portrait" />

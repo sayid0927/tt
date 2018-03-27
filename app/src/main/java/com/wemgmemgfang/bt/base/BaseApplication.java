@@ -9,7 +9,7 @@ import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.utils.ThreadPoolUtils;
 import com.blankj.utilcode.utils.Utils;
-import com.sh.zsh.code.umeng_sdk.UMShareHelper;
+
 import com.wemgmemgfang.bt.bean.DownVideoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerAppComponent;
@@ -44,7 +44,7 @@ public class BaseApplication extends Application {
         AppUtils.init(this);
         PreferUtil.getInstance().init(this);
         GreenDaoUtil.initDataBase(getApplicationContext());
-        UMShareHelper.init(this);
+//        UMShareHelper.init(this);
 //        UmengUtil.UmengUtilInit(this);
 //        UmengUtil.onEvent("phoneInfo");
     }

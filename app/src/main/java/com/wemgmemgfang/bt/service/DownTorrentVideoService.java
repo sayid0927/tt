@@ -76,7 +76,6 @@ public class DownTorrentVideoService extends Service {
                         }
                         break;
                     case 2:
-
                         isDown = false;
                         nHandler.cancelNotification((int) taskId);
                         Logger.e("下载完成");
@@ -104,7 +103,6 @@ public class DownTorrentVideoService extends Service {
                                 handler.sendMessage(handler.obtainMessage(0));
                             }
                         }
-
                         break;
 
                     case 3:

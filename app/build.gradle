@@ -74,6 +74,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.apache.httpcomponents:httpcore:4.4.4'
     implementation project(':thunder')
-    implementation project(':umeng_sdk')
-
+    //    implementation project(':umeng_sdk')
+    implementation project(':library')
 }

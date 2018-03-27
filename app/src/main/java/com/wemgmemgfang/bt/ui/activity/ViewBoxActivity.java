@@ -178,7 +178,6 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
             if (jieya) {
                 FileUtils.deleteFile(filePath);
                 List<File> files = FileUtils.listFilesInDir(destFileDir);
-
                 for (File f : files) {
                     if (f.getAbsolutePath().endsWith(".torrent")) {
                         VideoDetailsBean.VideoLinks videoLinks = new VideoDetailsBean.VideoLinks();
@@ -214,7 +213,6 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             PreferUtil.getInstance().setPlayTitle(item.getTitle());
                             PreferUtil.getInstance().setPlayimgUrl(ImgUrl);
                             startService(new Intent(ViewBoxActivity.this, DownTorrentVideoService.class));
-
                         }
                     }
                 });
@@ -225,7 +223,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
                         } else {
                             String thunderUrl = item.getThunder();
-                            if (thunderUrl != null && thunderUrl.startsWith("thunder"))
+                            if (thunderUrl != null)
                                 XLVideoPlayActivity.intentTo(ViewBoxActivity.this, thunderUrl, item.getTitle());
                         }
                     }
