@@ -38,8 +38,19 @@ public class More_Adapter extends BaseQuickAdapter<MoreInfoBean.MoreVideoInfoBea
 
     @Override
     protected void convert(BaseViewHolder helper, final MoreInfoBean.MoreVideoInfoBean item) {
-              helper.setText(R.id.tv_score,item.getScore());
-              helper.setText(R.id.tv_language,item.getLanguage());
+
+        if(item.getLanguage()==null ||  item.getLanguage().equals("")){
+            helper.getView(R.id.bot_fl).setVisibility(View.GONE);
+        }else {
+            helper.getView(R.id.bot_fl).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_language,item.getLanguage());
+        }
+        if(item.getScore()==null || item.getScore().equals("")){
+            helper.getView(R.id.top_fl).setVisibility(View.GONE);
+        }else {
+            helper.getView(R.id.top_fl).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_score,item.getScore());
+        }
               helper.setText(R.id.tv_title,item.getTitle());
               helper.setText(R.id.tv_em,item.getEm());
               ImageView iv = helper.getView(R.id.iv_home_item);

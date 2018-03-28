@@ -25,7 +25,7 @@
         android:orientation="horizontal">
 
         <Button
-
+            android:id="@+id/but_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -36,6 +36,7 @@
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/but_dalu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -56,6 +57,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/but_gantai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -66,6 +68,7 @@
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/but_rihan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -87,6 +90,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/but_aomei"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -97,6 +101,7 @@
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/but_yyi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -118,6 +123,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/but_dongman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"

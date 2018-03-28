@@ -3,24 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-    <include layout="@layout/common_toolbar"/>
+    <include layout="@layout/common_toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_android"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
-
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+
 </LinearLayout>

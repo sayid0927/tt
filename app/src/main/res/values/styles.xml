@@ -19,6 +19,7 @@
 
 
 
+
     <style name="PlayerTheme" parent="android:Theme.NoTitleBar.Fullscreen">  </style>
 
     <style name="AppTheme.NoActionBar">
