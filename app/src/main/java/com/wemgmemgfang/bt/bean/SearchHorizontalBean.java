@@ -9,6 +9,15 @@ public class SearchHorizontalBean {
 
     private  String name;
     private  String type;
+    private boolean start;
+
+    public boolean isStart() {
+        return start;
+    }
+
+    public void setStart(boolean start) {
+        this.start = start;
+    }
 
     public String getName() {
         return name;

@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
-    android:background="@color/white"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
     android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <TextView
-            android:text="ddddddddddddddd"
+            android:layout_gravity="center"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_marginLeft="5dp"
-            android:text="vvvvvvvvvvvvvvvvvvv"
-            android:id="@+id/tv_ble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" />
+            android:text="ffffffff"
+            android:textColor="@color/common_h2"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

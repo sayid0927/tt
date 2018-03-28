@@ -1,4 +1,4 @@
-package com.wemgmemgfang.bt.utils;
+package com.wemgmemgfang.bt.view;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -65,7 +65,25 @@ public class SearchDialog extends Dialog {
         MoreDialogAdapter moreDialogAdapter = new MoreDialogAdapter(searchDialogBeanList,context);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(moreDialogAdapter);
+        moreDialogAdapter.OnMoreItemClick(new MoreDialogAdapter.OnMoreItemClick() {
+            @Override
+            public void OnMoreItemClick(SearchDialogBean item) {
+                onMoreDialogItemClick.OnMoreDialogItemClick(item);
+            }
+        });
     }
+    OnMoreDialogItemClick onMoreDialogItemClick;
+
+    public  void  OnMoreDialogItemClick(OnMoreDialogItemClick onMoreDialogItemClick){
+        this.onMoreDialogItemClick  = onMoreDialogItemClick;
+    }
+
+    public  interface  OnMoreDialogItemClick{
+        void  OnMoreDialogItemClick(SearchDialogBean item);
+    }
+
+
+
 
     public void setDialogAttributes(Activity context, final Dialog dialog,
                                     float widthP, float heightP, int gravity) {

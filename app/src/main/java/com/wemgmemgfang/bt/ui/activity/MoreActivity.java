@@ -2,25 +2,20 @@ package com.wemgmemgfang.bt.ui.activity;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.MoreInfoBean;
+import com.wemgmemgfang.bt.bean.SearchDialogBean;
 import com.wemgmemgfang.bt.bean.SearchHorizontalBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
@@ -28,7 +23,7 @@ import com.wemgmemgfang.bt.presenter.contract.MoreActivityContract;
 import com.wemgmemgfang.bt.presenter.impl.MoreActivityPresenter;
 import com.wemgmemgfang.bt.ui.adapter.More_Adapter;
 import com.wemgmemgfang.bt.ui.adapter.More_Search_Adapter;
-import com.wemgmemgfang.bt.utils.SearchDialog;
+import com.wemgmemgfang.bt.view.SearchDialog;
 import com.wemgmemgfang.bt.view.MyLoadMoreView;
 
 import java.util.ArrayList;
@@ -37,7 +32,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MoreActivity extends BaseActivity implements MoreActivityContract.View, BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
@@ -65,6 +59,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
     private boolean isRefresh = false;
     private More_Adapter more_adapter;
     private int index = 1;
+    private List<SearchDialogBean> searchDialogBeanList = new ArrayList<>();
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -100,8 +95,6 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
         more_adapter.setLoadMoreView(new MyLoadMoreView());
         srlAndroid.setOnRefreshListener(MoreActivity.this);
 
-        tvCollection.setVisibility(View.GONE);
-        ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.scarr));
 
         more_adapter.setOnPlayItemClickListener(new More_Adapter.OnPlayItemClickListener() {
             @Override
@@ -113,6 +106,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -122,30 +116,58 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
 
     @Override
     public void Fetch_MoreTypeInfo_Success(final MoreInfoBean data) {
-        List<SearchHorizontalBean> searchHorizontalBeanList = new ArrayList<>();
+
+        final List<SearchHorizontalBean> searchHorizontalBeanList = new ArrayList<>();
         String tmp = "aa";
         for (int i = 0; i < data.getMoreTypeBeans().size(); i++) {
             SearchHorizontalBean searchHorizontalBean = new SearchHorizontalBean();
             String dd = data.getMoreTypeBeans().get(i).getType();
             if (dd != null && !tmp.equals(dd)) {
+                searchHorizontalBean.setStart(true);
                 searchHorizontalBean.setType(data.getMoreTypeBeans().get(i).getType());
                 searchHorizontalBean.setName(data.getMoreTypeBeans().get(i).getTypeName());
                 searchHorizontalBeanList.add(searchHorizontalBean);
                 tmp = data.getMoreTypeBeans().get(i).getType();
             }
         }
-
-        More_Search_Adapter moreSearchAdapter = new More_Search_Adapter(searchHorizontalBeanList, MoreActivity.this);
+        if (searchDialogBeanList.size() != 0) {
+            for (int n = 0; n < searchHorizontalBeanList.size(); n++) {
+                for (int k = 0; k < searchDialogBeanList.size(); k++) {
+                    if (searchHorizontalBeanList.get(n).getType().equals(searchDialogBeanList.get(k).getType())) {
+                        searchHorizontalBeanList.get(n).setName(searchDialogBeanList.get(k).getTypeName());
+                        break;
+                    }
+                }
+            }
+        }
+        final More_Search_Adapter moreSearchAdapter = new More_Search_Adapter(searchHorizontalBeanList, MoreActivity.this);
         rlSearch.setAdapter(moreSearchAdapter);
         LinearLayoutManager ms = new LinearLayoutManager(this);
         ms.setOrientation(LinearLayoutManager.HORIZONTAL);
         rlSearch.setLayoutManager(ms);
-
         moreSearchAdapter.setOnPlayItemClickListener(new More_Search_Adapter.OnPlayItemClickListener() {
             @Override
             public void OnPlayItemClickListener(SearchHorizontalBean item) {
 
-                SearchDialog dialog = new SearchDialog(MoreActivity.this,  item, data.getMoreTypeBeans());
+                final SearchDialog dialog = new SearchDialog(MoreActivity.this, item, data.getMoreTypeBeans());
+                dialog.OnMoreDialogItemClick(new SearchDialog.OnMoreDialogItemClick() {
+                    @Override
+                    public void OnMoreDialogItemClick(SearchDialogBean item) {
+                        isRefresh = true;
+                        HrefUrl = "https://www.80s.tt" + item.getHref();
+                        if (searchDialogBeanList.size() != 0) {
+                            for (int i = 0; i < searchDialogBeanList.size(); i++) {
+                                if (item.getType().equals(searchDialogBeanList.get(i).getType())) {
+                                    searchDialogBeanList.get(i).setTypeName(item.getTypeName());
+                                }else
+                                    searchDialogBeanList.add(item);
+                            }
+                        } else
+                            searchDialogBeanList.add(item);
+                        mPresenter.Fetch_MoreTypeInfo(HrefUrl);
+                        dialog.dismiss();
+                    }
+                });
                 dialog.show();
             }
         });
@@ -167,10 +189,6 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
         switch (view.getId()) {
             case R.id.llExit:
                 this.finish();
-                break;
-
-            case R.id.llRight:
-
                 break;
         }
     }

@@ -34,6 +34,21 @@ public class MoreDialogAdapter extends BaseQuickAdapter<SearchDialogBean, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, final SearchDialogBean item) {
 
-        helper.setText(R.id.tv_title,item.getType()+item.getTypeName());
+        helper.setText(R.id.tv_title,item.getTypeName());
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMoreItemClick.OnMoreItemClick(item);
+            }
+        });
     }
+
+    OnMoreItemClick onMoreItemClick;
+    public  void  OnMoreItemClick(OnMoreItemClick onMoreItemClick){
+        this.onMoreItemClick = onMoreItemClick;
+    }
+    public  interface  OnMoreItemClick{
+        void OnMoreItemClick(SearchDialogBean item);
+    }
+
 }
