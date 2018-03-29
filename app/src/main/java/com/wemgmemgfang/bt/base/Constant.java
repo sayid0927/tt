@@ -44,7 +44,7 @@ public class Constant {
     public  static  final String MEINVHA_TITLE_LIST="meinvha_title_list";
     public  static  final String MEINVHA_IMG_LIST="meinvha_img_list";
 
-
+    public static final String SERVICE_INTENT_EXTRA = "service_intent_extra";
 
 
 }

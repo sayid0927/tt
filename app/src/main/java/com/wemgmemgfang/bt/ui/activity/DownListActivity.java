@@ -13,9 +13,12 @@ import com.wemgmemgfang.bt.base.BaseApplication;
 import com.wemgmemgfang.bt.bean.DownFileBean;
 import com.wemgmemgfang.bt.bean.DownVideoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
+import com.wemgmemgfang.bt.database.DownVideoInfoDao;
+import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.ui.adapter.DownFileListApadter;
 import com.wemgmemgfang.bt.ui.adapter.DownListApadter;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
+import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.NotificationHandler;
 import com.xunlei.downloadlib.XLTaskHelper;
 
@@ -32,19 +35,14 @@ import butterknife.OnClick;
 
 public class DownListActivity extends BaseActivity {
 
-    @BindView(R.id.tv_down)
-    TextView tvDown;
     @BindView(R.id.rv_down)
     RecyclerView rvDown;
-    @BindView(R.id.tv_down_ok)
-    TextView tvDownOk;
-    @BindView(R.id.rv_down_ok)
-    RecyclerView rvDownOk;
     @BindView(R.id.llExit)
     LinearLayout llExit;
 
     private NotificationHandler nHandler;
     private DownListApadter mAdapter;
+    private DownVideoInfoDao downVideoInfoDao;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -83,44 +81,21 @@ public class DownListActivity extends BaseActivity {
     public void initView() {
 
         EventBus.getDefault().register(this);
+        downVideoInfoDao = GreenDaoUtil.getDaoSession().getDownVideoInfoDao();
+        List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
 
-        nHandler = NotificationHandler.getInstance(this);
-        mAdapter = new DownListApadter(BaseApplication.downVideoBeanList, DownListActivity.this);
+        mAdapter = new DownListApadter(downVideoInfoList, DownListActivity.this);
         rvDown.setLayoutManager(new LinearLayoutManager(DownListActivity.this));
         rvDown.setAdapter(mAdapter);
 
         mAdapter.OnDeleteItemListenter(new DownListApadter.OnDeleteItemListenter() {
             @Override
-            public void OnDeleteItemListenter(DownVideoBean item) {
-                String videoPath = DeviceUtils.getSDVideoPath(item.getPlayTitle());
-                XLTaskHelper.instance().deleteTask(item.getTaskId(), videoPath);
-                BaseApplication.downVideoBeanList.remove(item);
-                nHandler.cancelNotification((int) item.getTaskId());
-                mAdapter.notifyDataSetChanged();
+            public void OnDeleteItemListenter(DownVideoInfo item) {
+                XLTaskHelper.instance().deleteTask(item.getTaskId(),  item.getSaveVideoPath());
+                downVideoInfoDao.delete(item);
+                mAdapter.addData(downVideoInfoDao.loadAll());
             }
         });
-
-        String sdDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Video";
-        List<File> files = FileUtils.listFilesInDir(sdDir);
-        List<DownFileBean> downFileBeanList = new ArrayList<>();
-
-        if (files != null && files.size() != 0) {
-            for (File e : files) {
-                if (FileUtils.isFile(e) && !e.getName().endsWith(".js")) {
-                    DownFileBean downFileBean = new DownFileBean();
-                    downFileBean.setFileName(e.getName());
-                    downFileBean.setFilePath(e.getAbsolutePath());
-                    downFileBean.setFileSize(e.getFreeSpace());
-                    downFileBeanList.add(downFileBean);
-
-                }
-            }
-        }
-
-        DownFileListApadter fAdapter = new DownFileListApadter(downFileBeanList, DownListActivity.this);
-        rvDownOk.setLayoutManager(new LinearLayoutManager(DownListActivity.this));
-        rvDownOk.setAdapter(fAdapter);
-
     }
 
     @OnClick(R.id.llExit)

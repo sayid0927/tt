@@ -1,15 +1,9 @@
 package com.wemgmemgfang.bt.base;
 
-import android.annotation.TargetApi;
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.utils.ThreadPoolUtils;
 import com.blankj.utilcode.utils.Utils;
-
 import com.wemgmemgfang.bt.bean.DownVideoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerAppComponent;
@@ -18,7 +12,6 @@ import com.wemgmemgfang.bt.module.AppModule;
 import com.wemgmemgfang.bt.utils.AppUtils;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.PreferUtil;
-import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.ArrayList;
 import java.util.List;

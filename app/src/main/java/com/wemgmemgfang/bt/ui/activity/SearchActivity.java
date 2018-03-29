@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
@@ -32,6 +33,8 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     RecyclerView searchRv;
     @BindView(R.id.llExit)
     LinearLayout llExit;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
     private String keyword;
 
 
@@ -69,10 +72,12 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void Fetch_Search_Info_Success(List<SearchBean> searchBeanList) {
-        if(searchBeanList.size()!=0) {
+        if (searchBeanList.size() != 0) {
+            tvTitle.setText("搜索结果");
             Search_Adapter adapter = new Search_Adapter(searchBeanList, SearchActivity.this);
             searchRv.setAdapter(adapter);
             searchRv.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+
             adapter.setOnPlayItemClickListener(new Search_Adapter.OnPlayItemClickListener() {
                 @Override
                 public void OnPlayItemClickListener(SearchBean item) {
@@ -83,7 +88,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
                     startActivity(intent);
                 }
             });
-        }else {
+        } else {
             ToastUtils.showLongToast("没有找到任何资源");
         }
     }
@@ -91,5 +96,12 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     @OnClick(R.id.llExit)
     public void onViewClicked() {
         this.finish();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

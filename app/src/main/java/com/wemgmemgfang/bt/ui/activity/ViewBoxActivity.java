@@ -29,11 +29,13 @@ import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.database.CollectionInfoDao;
 import com.wemgmemgfang.bt.entity.CollectionInfo;
+import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.presenter.contract.ViewBoxContract;
 import com.wemgmemgfang.bt.presenter.impl.ViewBoxPresenter;
 import com.wemgmemgfang.bt.service.DownTorrentVideoService;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
+import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
 import com.wemgmemgfang.bt.utils.PreferUtil;
@@ -171,7 +173,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     @Override
     public void download_Zip_Success(String filePath) {
         dismissLoadPd();
-        String destFileDir = DeviceUtils.getSDPath(downHrefBean.getTitle());
+        final String destFileDir = DeviceUtils.getSDPath(downHrefBean.getTitle());
         List<VideoDetailsBean.VideoLinks> videoLinksList = new ArrayList<>();
         try {
             boolean jieya = ZipUtils.unzipFile(filePath, destFileDir);
@@ -208,11 +210,15 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                         if (!EasyPermissions.hasPermissions(ViewBoxActivity.this, perms)) {
                             EasyPermissions.requestPermissions(this, "需要读写权限", 2000, perms);
                         } else {
-                            String thunderUrl = item.getThunder();
-                            PreferUtil.getInstance().setPlayPath(thunderUrl);
-                            PreferUtil.getInstance().setPlayTitle(item.getTitle());
-                            PreferUtil.getInstance().setPlayimgUrl(ImgUrl);
-                            startService(new Intent(ViewBoxActivity.this, DownTorrentVideoService.class));
+                            DownVideoInfo downVideoInfo = new DownVideoInfo();
+                            downVideoInfo.setPlayPath(item.getThunder());
+                            downVideoInfo.setPlayTitle(item.getTitle());
+                            downVideoInfo.setPlayimgUrl(ImgUrl);
+                            downVideoInfo.setHrefUrl(Url);
+                            downVideoInfo.setHrefTitle(strTitle);
+                            downVideoInfo.setType("zei8");
+                            downVideoInfo.setSaveVideoPath(DeviceUtils.getSDVideoPath(item.getTitle()));
+                            DownLoadHelper.getInstance().submit(ViewBoxActivity.this, downVideoInfo);
                         }
                     }
                 });
@@ -242,7 +248,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     }
 
-    @OnClick({R.id.llExit, R.id.tvTitle,R.id.llRight})
+    @OnClick({R.id.llExit, R.id.tvTitle, R.id.llRight})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.llExit:

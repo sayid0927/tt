@@ -22,11 +22,14 @@ import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.database.CollectionInfoDao;
 import com.wemgmemgfang.bt.database.UserInfoDao;
 import com.wemgmemgfang.bt.entity.CollectionInfo;
+import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.entity.UserInfo;
 import com.wemgmemgfang.bt.presenter.contract.DetailsActivityContract;
 import com.wemgmemgfang.bt.presenter.impl.DetailsActivityPresenter;
 import com.wemgmemgfang.bt.service.DownTorrentVideoService;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
+import com.wemgmemgfang.bt.utils.DeviceUtils;
+import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
 import com.wemgmemgfang.bt.utils.PreferUtil;
@@ -77,8 +80,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     private String thunderUrl;
     private String url;
     private CollectionInfoDao collectionInfoDao;
-    private  boolean isCollertion;
-    
+    private boolean isCollertion;
 
 
     @Override
@@ -116,11 +118,11 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         title.setText(Title);
         collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
         List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).list();
-        if(cList!=null&& cList.size()!=0) {
+        if (cList != null && cList.size() != 0) {
             isCollertion = true;
             tvCollection.setText("已收藏");
             ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
-        }else {
+        } else {
             isCollertion = false;
             tvCollection.setText("收藏");
             ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
@@ -140,15 +142,15 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                 break;
             case R.id.llRight:
 
-                if(isCollertion){
-                    isCollertion =false;
+                if (isCollertion) {
+                    isCollertion = false;
                     CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).unique();
                     collectionInfoDao.delete(collectionInfo);
                     tvCollection.setText("收藏");
                     ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
-                    
-                }else {
-                    isCollertion =true;
+
+                } else {
+                    isCollertion = true;
                     CollectionInfo collectionInfo = new CollectionInfo();
                     collectionInfo.setHrefUrl(url);
                     collectionInfo.setTitle(Title);
@@ -163,8 +165,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     }
 
     @Override
-    public void Fetch_VideoDetailsInfo_Success(VideoDetailsBean data) {
-            dismissLoadPd();
+    public void Fetch_VideoDetailsInfo_Success(final VideoDetailsBean data) {
+        dismissLoadPd();
         for (int i = 0; i < data.getVideoInfoBeans().size(); i++) {
             String type = data.getVideoInfoBeans().get(i).getType();
             String putType = data.getVideoInfoBeans().get(i).getPutType();
@@ -201,16 +203,17 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                 if (!EasyPermissions.hasPermissions(DetailsActivity.this, perms)) {
                     EasyPermissions.requestPermissions(this, "需要读写权限", 2000, perms);
                 } else {
-
                     thunderUrl = item.getThunder();
-                    if (thunderUrl != null && thunderUrl.startsWith("thunder"))
-
-                        PreferUtil.getInstance().setPlayPath(thunderUrl);
-                    PreferUtil.getInstance().setPlayTitle(item.getTitle());
-                    PreferUtil.getInstance().setPlayimgUrl(imgUrl);
-
-                    startService(new Intent(DetailsActivity.this, DownTorrentVideoService.class));
-
+                    if (thunderUrl != null && thunderUrl.startsWith("thunder")) {
+                        DownVideoInfo downVideoInfo = new DownVideoInfo();
+                        downVideoInfo.setPlayPath(thunderUrl);
+                        downVideoInfo.setPlayTitle(item.getTitle());
+                        downVideoInfo.setPlayimgUrl(imgUrl);
+                        downVideoInfo.setHrefUrl(url);
+                        downVideoInfo.setType("sst");
+                        downVideoInfo.setSaveVideoPath(DeviceUtils.getSDVideoPath(item.getTitle()));
+                        DownLoadHelper.getInstance().submit(DetailsActivity.this, downVideoInfo);
+                    }
                 }
             }
         });

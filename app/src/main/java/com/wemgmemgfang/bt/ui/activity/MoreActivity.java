@@ -55,7 +55,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
     @BindView(R.id.rl_search)
     RecyclerView rlSearch;
 
-    private String imgUrl, HrefUrl, Title;
+    private String HrefUrl;
     private boolean isRefresh = false;
     private More_Adapter more_adapter;
     private int index = 1;
@@ -85,9 +85,9 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
     public void initView() {
 
         HrefUrl = "https://www.80s.tt" + getIntent().getStringExtra("HrefUrl");
-        Title = getIntent().getStringExtra("Title");
-        tvTitle.setText(Title);
+        tvTitle.setText(getIntent().getStringExtra("Title"));
         mPresenter.Fetch_MoreTypeInfo(HrefUrl);
+        showLoadPd();
         more_adapter = new More_Adapter(null, MoreActivity.this);
         rvInfo.setAdapter(more_adapter);
         rvInfo.setLayoutManager(new GridLayoutManager(MoreActivity.this, 2));
@@ -116,7 +116,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
 
     @Override
     public void Fetch_MoreTypeInfo_Success(final MoreInfoBean data) {
-
+        dismissLoadPd();
         final List<SearchHorizontalBean> searchHorizontalBeanList = new ArrayList<>();
         String tmp = "aa";
         for (int i = 0; i < data.getMoreTypeBeans().size(); i++) {
@@ -159,13 +159,14 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
                             for (int i = 0; i < searchDialogBeanList.size(); i++) {
                                 if (item.getType().equals(searchDialogBeanList.get(i).getType())) {
                                     searchDialogBeanList.get(i).setTypeName(item.getTypeName());
-                                }else
+                                } else
                                     searchDialogBeanList.add(item);
                             }
                         } else
                             searchDialogBeanList.add(item);
                         mPresenter.Fetch_MoreTypeInfo(HrefUrl);
                         dialog.dismiss();
+                        showLoadPd();
                     }
                 });
                 dialog.show();

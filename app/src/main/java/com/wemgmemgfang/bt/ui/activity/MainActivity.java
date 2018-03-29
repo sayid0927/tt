@@ -11,6 +11,7 @@ import com.wemgmemgfang.bt.base.BaseFragmentPageAdapter;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.database.UserInfoDao;
+import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.entity.UserInfo;
 import com.wemgmemgfang.bt.presenter.contract.MainContract;
 import com.wemgmemgfang.bt.presenter.impl.MainActivityPresenter;
@@ -18,6 +19,7 @@ import com.wemgmemgfang.bt.ui.fragment.DownRankingFragment;
 import com.wemgmemgfang.bt.ui.fragment.FilmFragment;
 import com.wemgmemgfang.bt.ui.fragment.HomeFragment;
 import com.wemgmemgfang.bt.ui.fragment.MeFragment;
+import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.UmengUtil;
 

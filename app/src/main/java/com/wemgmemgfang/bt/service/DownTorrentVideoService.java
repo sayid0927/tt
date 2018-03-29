@@ -37,7 +37,7 @@ public class DownTorrentVideoService extends Service {
     private CommonDialog commonDialog;
     private NotificationHandler nHandler;
     private long taskId = -1;
-    private boolean isDown = false;
+    public static boolean isDown = false;
 
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
