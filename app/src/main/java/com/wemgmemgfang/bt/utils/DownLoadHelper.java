@@ -42,21 +42,33 @@ public class DownLoadHelper {
         return SINGLETANCE;
     }
 
-    public synchronized void submit(Context context, DownVideoInfo downVideoInfo) {
-        DownVideoInfo d= downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(downVideoInfo.getPlayPath())).unique();
-        if(d==null){
-            if(!DownVoideService.isDown){
+    public void submit(Context context, DownVideoInfo downVideoInfo) {
+        DownVideoInfo d = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(downVideoInfo.getPlayPath())).unique();
+
+        if (d == null) {
+            addTask(downVideoInfo);
+            if(!DownVoideService.isDown) {
                 Bundle bundle = new Bundle();
                 bundle.putString("PlayPath", downVideoInfo.getPlayPath());
+                bundle.putString("state", downVideoInfo.getState());
                 Intent intent = new Intent(context, DownVoideService.class);
                 intent.putExtras(bundle);
                 context.startService(intent);
-                addTask(downVideoInfo);
             }
-        }else {
-            ToastUtils.showLongToast("已在下载队列中");
+        } else {
+            if (d.getPlayPath().equals(downVideoInfo.getPlayPath()) && !downVideoInfo.getState().equals(d.getState())) {
+                downVideoInfo.setId(d.getId());
+                downVideoInfoDao.update(downVideoInfo);
+                Bundle bundle = new Bundle();
+                bundle.putString("PlayPath", downVideoInfo.getPlayPath());
+                bundle.putString("state", downVideoInfo.getState());
+                Intent intent = new Intent(context, DownVoideService.class);
+                intent.putExtras(bundle);
+                context.startService(intent);
+            }
         }
     }
+
     public void addTask(DownVideoInfo downVideoInfo) {
         downVideoInfoDao.insert(downVideoInfo);
         ToastUtils.showLongToast("添加到下载队列中");

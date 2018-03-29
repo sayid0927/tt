@@ -19,6 +19,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="book_read_bottom_text">12dp</dimen>
     <dimen name="top_text">30sp</dimen>
-
+    <dimen name="dp_80">80dp</dimen>
 
 </resources>

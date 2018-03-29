@@ -38,35 +38,47 @@ public class DownListApadter extends BaseQuickAdapter<DownVideoInfo, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, final DownVideoInfo item) {
         ImageView iv = helper.getView(R.id.iv_down);
-        Button but = helper.getView(R.id.bu_delete);
+//        Button but = helper.getView(R.id.bu_delete);
+        helper.setText(R.id.down_title, item.getPlayTitle());
         ProgressBar progressBar= helper.getView(R.id.progressBar);
         ImgLoadUtils.loadImage(mContext, item.getPlayimgUrl(), iv);
-        helper.setText(R.id.down_title, item.getPlayTitle());
-        helper.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               if(item.getType().equals("zei8")){
-                   Intent intent = new Intent(mContext, ViewBoxActivity.class);
-                   intent.putExtra("HrefUrl",item.getHrefUrl());
-                   intent.putExtra("ImgUrl",item.getPlayimgUrl());
-                   mContext.startActivity(intent);
-               }else {
-                   Intent intent = new Intent(mContext, DetailsActivity.class);
-                   intent.putExtra("HrefUrl",item.getHrefUrl());
-                   intent.putExtra("imgUrl",item.getPlayimgUrl());
-                   intent.putExtra("Title",item.getHrefTitle());
-                   mContext.startActivity(intent);
-               }
-            }
-        });
+        if(item.getMFileSize()!=0&& item.getMDownloadSize()!=0) {
+            progressBar.setVisibility(View.VISIBLE);
+            helper.getView(R.id.tv_pro).setVisibility(View.VISIBLE);
+             int size =  (int) (item.getMDownloadSize() * 100 / item.getMFileSize());
+            progressBar.setProgress( size);
+            helper.setText(R.id.tv_pro,  String.valueOf(size)+"%    " +item.getMFileSize()+ " / "+item.getMDownloadSize());
+        }else {
+            helper.getView(R.id.tv_pro).setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+        }
 
 
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDeleteItemListenter.OnDeleteItemListenter(item);
-            }
-        });
+
+//        helper.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//               if(item.getType().equals("zei8")){
+//                   Intent intent = new Intent(mContext, ViewBoxActivity.class);
+//                   intent.putExtra("HrefUrl",item.getHrefUrl());
+//                   intent.putExtra("ImgUrl",item.getPlayimgUrl());
+//                   mContext.startActivity(intent);
+//               }else {
+//                   Intent intent = new Intent(mContext, DetailsActivity.class);
+//                   intent.putExtra("HrefUrl",item.getHrefUrl());
+//                   intent.putExtra("imgUrl",item.getPlayimgUrl());
+//                   intent.putExtra("Title",item.getHrefTitle());
+//                   mContext.startActivity(intent);
+//               }
+//            }
+//        });
+
+//        but.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onDeleteItemListenter.OnDeleteItemListenter(item);
+//            }
+//        });
 
     }
 

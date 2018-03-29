@@ -51,11 +51,9 @@ public class DownVoideService extends Service {
                             commonDialog.show();
                         } else {
                             DownVideoInfo downVideoInfo = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(PlayPath)).unique();
-
                             switch (taskInfo.mTaskStatus) {
                                 case 0:
                                     isDown = false;
-                                    Logger.e("连接中");
                                     downVideoInfo.setMTaskStatus(taskInfo.mTaskStatus);
                                     downVideoInfoDao.update(downVideoInfo);
                                     ToastUtils.showLongToast("服务器太忙,请稍会再试");
@@ -63,7 +61,6 @@ public class DownVoideService extends Service {
                                     break;
                                 case 1:
                                     isDown = true;
-
                                     downVideoInfo.setMTaskStatus(taskInfo.mTaskStatus);
                                     downVideoInfo.setMDownloadSize(taskInfo.mDownloadSize);
                                     downVideoInfo.setMFileSize(taskInfo.mFileSize);
@@ -74,7 +71,7 @@ public class DownVoideService extends Service {
                                     break;
                                 case 2:
                                     isDown = false;
-
+                                    Logger.e("taskInfo.mDownloadSize>>>  " + taskInfo.mDownloadSize + "\n" + "taskInfo.mFileSize>>  " + taskInfo.mFileSize);
                                     downVideoInfo.setMTaskStatus(taskInfo.mTaskStatus);
                                     downVideoInfo.setMDownloadSize(taskInfo.mDownloadSize);
                                     downVideoInfo.setMFileSize(taskInfo.mFileSize);
@@ -110,7 +107,7 @@ public class DownVoideService extends Service {
                                             taskId = XLTaskHelper.instance().addTorrentTask(d.getPlayPath(), d.getSaveVideoPath(), null);
                                         }
                                         handler.sendMessage(handler.obtainMessage(0));
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     break;
@@ -125,7 +122,6 @@ public class DownVoideService extends Service {
     };
 
 
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (null != intent) {
@@ -135,18 +131,35 @@ public class DownVoideService extends Service {
                 Bundle bundle = intent.getExtras();
                 PlayPath = bundle.getString("PlayPath");
                 DownVideoInfo downVideoInfo = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(PlayPath)).unique();
+                String state = downVideoInfo.getState();
+                if (state != null) {
+                    switch (state) {
+                        case "开始":
 
-                if (PlayPath.startsWith("thunder://")) {
-                    taskId = XLTaskHelper.instance().addThunderTask(PlayPath, downVideoInfo.getSaveVideoPath(), downVideoInfo.getPlayTitle());
-                } else {
-                    taskId = XLTaskHelper.instance().addTorrentTask(PlayPath, downVideoInfo.getSaveVideoPath(), null);
+                            if (PlayPath.startsWith("thunder://")) {
+                                taskId = XLTaskHelper.instance().addThunderTask(PlayPath, downVideoInfo.getSaveVideoPath(), downVideoInfo.getPlayTitle());
+                            } else {
+                                taskId = XLTaskHelper.instance().addTorrentTask(PlayPath, downVideoInfo.getSaveVideoPath(), null);
+                            }
+                            downVideoInfo.setTaskId(taskId);
+                            downVideoInfoDao.update(downVideoInfo);
+                            PlayPath = downVideoInfo.getPlayPath();
+                            handler.sendMessage(handler.obtainMessage(0));
+
+                            break;
+                        case "停止":
+                            XLTaskHelper.instance().stopTask(downVideoInfo.getTaskId());
+                            EventBus.getDefault().post(downVideoInfo);
+
+                            break;
+                        case "删除":
+                            downVideoInfoDao.delete(downVideoInfo);
+                            XLTaskHelper.instance().deleteTask(downVideoInfo.getTaskId(), downVideoInfo.getSaveVideoPath());
+                            EventBus.getDefault().post(downVideoInfo);
+                            break;
+                    }
                 }
-                downVideoInfo.setTaskId(taskId);
-                downVideoInfoDao.update(downVideoInfo);
-                handler.sendMessage(handler.obtainMessage(0));
-
             } catch (Exception e) {
-                LogUtils.i("TAG", "onStartCommand()-> 接受数据,启动线程中发生异常");
                 e.printStackTrace();
             }
         }

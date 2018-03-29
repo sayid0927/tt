@@ -217,6 +217,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             downVideoInfo.setHrefUrl(Url);
                             downVideoInfo.setHrefTitle(strTitle);
                             downVideoInfo.setType("zei8");
+                            downVideoInfo.setState("开始");
                             downVideoInfo.setSaveVideoPath(DeviceUtils.getSDVideoPath(item.getTitle()));
                             DownLoadHelper.getInstance().submit(ViewBoxActivity.this, downVideoInfo);
                         }

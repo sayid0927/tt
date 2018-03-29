@@ -211,6 +211,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                         downVideoInfo.setPlayimgUrl(imgUrl);
                         downVideoInfo.setHrefUrl(url);
                         downVideoInfo.setType("sst");
+                        downVideoInfo.setState("开始");
                         downVideoInfo.setSaveVideoPath(DeviceUtils.getSDVideoPath(item.getTitle()));
                         DownLoadHelper.getInstance().submit(DetailsActivity.this, downVideoInfo);
                     }

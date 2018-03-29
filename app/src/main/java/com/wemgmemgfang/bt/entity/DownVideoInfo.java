@@ -20,16 +20,17 @@ public class DownVideoInfo {
     private String hrefUrl;
     private  String hrefTitle;
     private  String type;
+    private  String state;
     private int  mTaskStatus;
     private  long taskId;
     private long mFileSize;
     private String saveVideoPath;
     private long mDownloadSize;
-    @Generated(hash = 21775891)
+    @Generated(hash = 1136827977)
     public DownVideoInfo(Long id, String playPath, String playTitle,
             String PlayimgUrl, String hrefUrl, String hrefTitle, String type,
-            int mTaskStatus, long taskId, long mFileSize, String saveVideoPath,
-            long mDownloadSize) {
+            String state, int mTaskStatus, long taskId, long mFileSize,
+            String saveVideoPath, long mDownloadSize) {
         this.id = id;
         this.playPath = playPath;
         this.playTitle = playTitle;
@@ -37,6 +38,7 @@ public class DownVideoInfo {
         this.hrefUrl = hrefUrl;
         this.hrefTitle = hrefTitle;
         this.type = type;
+        this.state = state;
         this.mTaskStatus = mTaskStatus;
         this.taskId = taskId;
         this.mFileSize = mFileSize;
@@ -117,6 +119,12 @@ public class DownVideoInfo {
     }
     public void setType(String type) {
         this.type = type;
+    }
+    public String getState() {
+        return this.state;
+    }
+    public void setState(String state) {
+        this.state = state;
     }
 
 

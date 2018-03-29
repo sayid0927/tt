@@ -110,5 +110,10 @@
     <color name="colorText">#9b9b9b</color>
 
 
+    <color name="green_normal">#37C000</color>
+    <color name="green_pressed">#30A070</color>
+
+    <color name="red_normal">#FF0000</color>
+    <color name="red_pressed">#FF6666</color>
 
 </resources>
