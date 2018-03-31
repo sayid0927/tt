@@ -21,6 +21,8 @@ import com.wemgmemgfang.bt.bean.HomeInfoBean;
 import com.wemgmemgfang.bt.presenter.contract.HomeContract;
 import com.wemgmemgfang.bt.utils.RandomUtils;
 
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -58,6 +60,7 @@ public class HomeFragmentPresenter extends RxPresenter<HomeContract.View> implem
             @Override
             public void call(Subscriber<? super HomeInfoBean> subscriber) {
                 //在call方法中执行异步任务
+                SSLSocketFactory.getSocketFactory().setHostnameVerifier(new AllowAllHostnameVerifier());
                 HomeInfoBean homeInfoBean = new HomeInfoBean();
                 List<HomeInfoBean.HotsInfoBean> hotsInfoBeanList = new ArrayList<>();
                 List<HomeInfoBean.ColTitleBean> colTitleBeanList = new ArrayList<>();

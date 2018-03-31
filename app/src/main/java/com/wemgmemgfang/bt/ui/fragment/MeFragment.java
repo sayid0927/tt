@@ -16,6 +16,7 @@ import com.wemgmemgfang.bt.ui.activity.CollectionActivity;
 import com.wemgmemgfang.bt.ui.activity.DownListActivity;
 import com.wemgmemgfang.bt.ui.activity.FeedbackActivity;
 import com.wemgmemgfang.bt.ui.activity.MainActivity;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,7 +60,7 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        UmengUtil.onEvent("MeFragment");
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.wemgmemgfang.bt.presenter.contract.FilmFragmentContract;
 import com.wemgmemgfang.bt.presenter.impl.FilmFragmentPresenter;
 import com.wemgmemgfang.bt.ui.activity.MoreActivity;
 import com.wemgmemgfang.bt.ui.activity.SearchActivity;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import javax.inject.Inject;
 
@@ -61,6 +62,7 @@ public class FilmFragment extends BaseFragment implements FilmFragmentContract.V
 
     @Override
     protected void initView(Bundle bundle) {
+        UmengUtil.onEvent("FilmFragment");
         searchBar.setOnSearchActionListener(FilmFragment.this);
     }
 

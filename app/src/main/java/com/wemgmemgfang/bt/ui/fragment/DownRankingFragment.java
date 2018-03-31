@@ -17,6 +17,7 @@ import com.wemgmemgfang.bt.presenter.contract.DownRankingContract;
 import com.wemgmemgfang.bt.presenter.impl.DownRankingPresenter;
 import com.wemgmemgfang.bt.ui.activity.ViewBoxActivity;
 import com.wemgmemgfang.bt.ui.adapter.DownRanking_Adapter;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 import com.wemgmemgfang.bt.view.MyLoadMoreView;
 
 import java.util.List;
@@ -60,6 +61,8 @@ public class DownRankingFragment extends BaseFragment implements DownRankingCont
 
     @Override
     protected void initView(Bundle bundle) {
+
+        UmengUtil.onEvent("DownRankingFragment");
 
         mAdapter = new DownRanking_Adapter(dataBean, getSupportActivity());
         mAdapter.setOnLoadMoreListener(DownRankingFragment.this, rvList);

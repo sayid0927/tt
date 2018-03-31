@@ -2,12 +2,11 @@ package com.wemgmemgfang.bt.base;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 
-
+import com.umeng.analytics.MobclickAgent;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.view.CommonDialog;
 
@@ -57,16 +56,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
+
         return super.dispatchTouchEvent(event);
+
     }
 
     @Override
@@ -77,6 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         detachView();
     }
+
 
     public void killAll() {
         // 复制了一份mActivities 集合Å

@@ -10,8 +10,10 @@ import com.wemgmemgfang.bt.component.DaggerAppComponent;
 import com.wemgmemgfang.bt.module.ApiModule;
 import com.wemgmemgfang.bt.module.AppModule;
 import com.wemgmemgfang.bt.utils.AppUtils;
+import com.wemgmemgfang.bt.utils.CrashHandler;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.PreferUtil;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,19 @@ public class BaseApplication extends Application {
         Utils.init(this);
         AppUtils.init(this);
         PreferUtil.getInstance().init(this);
+        UmengUtil.UmengUtilInit(this);
         GreenDaoUtil.initDataBase(getApplicationContext());
+
+        UmengUtil.onEvent("BaseApplication");
+
+//        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "5abf0596b27b0a5f4600021a");
+//        UMGameAgent.init( this );
+//        MobclickAgent.setScenarioType(this ,  MobclickAgent.EScenarioType.E_UM_NORMAL);
+//        UMConfigure.setLogEnabled(true);
+
+//        CrashHandler.getInstance().init();
+
+
 //        UMShareHelper.init(this);
 //        UmengUtil.UmengUtilInit(this);
 //        UmengUtil.onEvent("phoneInfo");

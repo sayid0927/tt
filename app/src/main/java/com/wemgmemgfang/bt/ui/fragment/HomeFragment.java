@@ -29,6 +29,7 @@ import com.wemgmemgfang.bt.ui.fragment.homeChildFragment.HotsFilmFragment;
 import com.wemgmemgfang.bt.ui.fragment.homeChildFragment.HotsMangaFragment;
 import com.wemgmemgfang.bt.ui.fragment.homeChildFragment.HotsTeleplayFragment;
 import com.wemgmemgfang.bt.ui.fragment.homeChildFragment.HotsVarietyFragment;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @Override
     protected void initView(Bundle bundle) {
-
+        UmengUtil.onEvent("HomeFragment");
     }
 
     @Override

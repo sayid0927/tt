@@ -228,6 +228,34 @@ public class DeviceUtils {
         return newList;
     }
 
+
+    public static String ReadTxtFiles(String strFilePath) {
+        String path = strFilePath;
+        StringBuffer newList = new StringBuffer();
+        //打开文件
+        File file = new File(path);
+        //如果path是传递过来的参数，可以做一个非目录的判断
+        if (file.isDirectory()) {
+            Log.d("TestFile", "The File doesn't not exist.");
+        } else {
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"GB2312"));
+                String line;
+                //分行读取
+                while ((line = reader.readLine()) != null) {
+                    String temp3 = EncodingUtils.getString(line.getBytes(),"UTF-8");
+                    newList.append(temp3+"\n");
+                }
+                reader.close();
+            } catch (java.io.FileNotFoundException e) {
+                Log.d("TestFile", "The File doesn't not exist.");
+            } catch (IOException e) {
+                Log.d("TestFile", e.getMessage());
+            }
+        }
+        return newList.toString();
+    }
+
 }
 
 

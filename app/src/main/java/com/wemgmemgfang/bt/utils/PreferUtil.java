@@ -21,6 +21,8 @@ public final class PreferUtil {
     private static final String PLAY_PATH = "play_path";
     private static final String PLAY_TITLE = "play_title";
     private static final String PLAY_IMGURL= "play_imgurl";
+    private  static final  String CRASHTXTPATH ="crashTxtPath";
+
 
     public void setPlayTitle(String flag){
         putString(PLAY_TITLE, flag);
@@ -37,6 +39,15 @@ public final class PreferUtil {
 
     public  String getPlayPath(){
         return  getString(PLAY_PATH,"");
+    }
+
+
+    public void setcrashTxtPath(String flag){
+        putString(CRASHTXTPATH, flag);
+    }
+
+    public  String getcrashTxtPath(){
+        return  getString(CRASHTXTPATH,"");
     }
 
 

@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.blankj.utilcode.utils.LogUtils;
 import com.blankj.utilcode.utils.ToastUtils;
@@ -46,6 +47,7 @@ public class DownVoideService extends Service {
                 switch (msg.what) {
                     case 0:
                         XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(taskId);
+                        Log.e("TAG",taskInfo.mFileName+"\n"+taskInfo.mDownloadSize);
                         if (taskInfo.mFileSize > DeviceUtils.getSDFreeSize()) {
                             XLTaskHelper.instance().stopTask(taskId);
                             commonDialog.show();
