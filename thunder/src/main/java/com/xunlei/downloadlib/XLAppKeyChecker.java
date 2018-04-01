@@ -97,7 +97,7 @@ public class XLAppKeyChecker {
     public boolean verify() {
         try {
             AppKeyEntity keyEntity = getKeyEntity();
-            this.mPackageName = "com.xunlei.downloadprovider";
+            this.mPackageName = "com.xunlei.downloadlib";
             if (!verifyAppKeyMD5(keyEntity, this.mPackageName)) {
                 XLLog.i(TAG, "appkey MD5 invalid.");
                 return false;
@@ -132,7 +132,7 @@ public class XLAppKeyChecker {
     }
 
     public String getSoAppKey() {
-        return XLUtil.generateAppKey("com.xunlei.downloadprovider", this.mAppId, (byte) 1);
+        return XLUtil.generateAppKey("com.xunlei.downloadlib", this.mAppId, (byte) 1);
     }
 
     private AppKeyEntity getKeyEntity() throws KeyFormateException {

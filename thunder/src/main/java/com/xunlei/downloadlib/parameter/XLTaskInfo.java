@@ -2,7 +2,6 @@ package com.xunlei.downloadlib.parameter;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
 
 public class XLTaskInfo implements Parcelable {
     public static final Creator<XLTaskInfo> CREATOR = new Creator<XLTaskInfo>() {

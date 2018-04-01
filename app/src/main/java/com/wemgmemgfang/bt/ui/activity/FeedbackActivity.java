@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.component.AppComponent;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,7 +43,7 @@ public class FeedbackActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        UmengUtil.onEvent("FeedbackActivity");
     }
 
 

@@ -79,6 +79,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             mActivities.remove(this);
         }
         detachView();
+        if (dialog != null)
+            dialog.dismiss();
     }
 
 

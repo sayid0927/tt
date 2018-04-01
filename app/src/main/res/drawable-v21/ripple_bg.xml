@@ -6,6 +6,4 @@
         <color android:color="@color/white" />
     </item>
 
-    <corners android:radius="10dp" />
-
 </ripple>

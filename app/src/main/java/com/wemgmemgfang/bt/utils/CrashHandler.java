@@ -110,11 +110,11 @@ public class CrashHandler
                     pw.write(getCrashHead());
                     throwable.printStackTrace(pw);
                     pw.write(throwable.getMessage());
-//                    Throwable cause = throwable.getCause();
-//                    while (cause != null) {
-//                        cause.printStackTrace(pw);
-//                        cause = cause.getCause();
-//                    }
+                    Throwable cause = throwable.getCause();
+                    while (cause != null) {
+                        cause.printStackTrace(pw);
+                        cause = cause.getCause();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -142,6 +142,7 @@ public class CrashHandler
                 "\nAndroid SDK        : " + Build.VERSION.SDK_INT +// SDK版本
                 "\nApp VersionName    : " + versionName +
                 "\nApp VersionCode    : " + versionCode +
+
                 "\n************* Crash Log Head ****************\n\n";
     }
 }

@@ -1,7 +1,6 @@
 package com.xunlei.downloadlib;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -39,7 +38,7 @@ public class XLTaskHelper {
         //initParam.mAppKey = "bpIzNjAxNTsxNTA0MDk0ODg4LjQyODAwMA&&OxNw==^a2cec7^10e7f1756b15519e20ffb6cf0fbf671f==2D^E21EACA6^E5EB66DA2726E51707BA";
         //initParam.mAppKey = "xzNjAwOQ^^yb==aa214316d5e0a63a5b58db24557fa2^e";
         //initParam.mAppKey = "OxNw==^a2cec7^10e7f1756b15519e20ffb6cf0fbf671f==2D^E21EACA6^E5EB66DA2726E51707BA";
-        initParam.mAppKey = XLUtil.generateAppKey("com.xunlei.downloadprovider", (byte)0, (byte) 1);
+        initParam.mAppKey = XLUtil.generateAppKey("com.xunlei.downloadlib", (byte)0, (byte) 1);
         Log.i(TAG, "initAppKey = " + initParam.mAppKey);
         /**
         try {

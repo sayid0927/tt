@@ -1,6 +1,7 @@
 package com.wemgmemgfang.bt.utils;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.blankj.utilcode.utils.PhoneUtils;
@@ -32,6 +33,7 @@ public class UmengUtil {
         maps.put("当前网络类型", String.valueOf(NetworkUtils.getNetworkType()));
         maps.put("设备型号", com.blankj.utilcode.utils.DeviceUtils.getModel());
         maps.put("设备系统版本号", String.valueOf(com.blankj.utilcode.utils.DeviceUtils.getSDKVersion()));
+
     }
 
     public static synchronized void UmengUtilInit(Context context) {
@@ -43,6 +45,8 @@ public class UmengUtil {
     public static void onEvent(String EventsName) {
         MobclickAgent.onEvent(context, EventsName, maps);
     }
+
+
 
     public static void onCarshEvent(String carsh) {
 

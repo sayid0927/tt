@@ -1,7 +1,5 @@
 package com.xunlei.downloadlib;
 
-import android.content.Context;
-import com.xunlei.downloadlib.android.XLLog;
 import com.xunlei.downloadlib.parameter.BtIndexSet;
 import com.xunlei.downloadlib.parameter.BtSubTaskDetail;
 import com.xunlei.downloadlib.parameter.BtTaskStatus;

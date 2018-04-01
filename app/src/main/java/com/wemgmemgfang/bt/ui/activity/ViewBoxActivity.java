@@ -39,6 +39,7 @@ import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
 import com.wemgmemgfang.bt.utils.PreferUtil;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import org.apache.http.util.EncodingUtils;
 
@@ -101,6 +102,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     private CollectionInfoDao collectionInfoDao;
     private boolean isCollertion;
     private String Url, ImgUrl;
+    private ArrayList<VideoDetailsBean.VideoLinks> videoLinksList;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -124,6 +126,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void initView() {
+        UmengUtil.onEvent("ViewBoxActivity");
         Url = getIntent().getStringExtra("HrefUrl");
         ImgUrl = getIntent().getStringExtra("ImgUrl");
         mPresenter.Fetch_ViewBoxInfo("http://www.zei8.me" + Url);
@@ -136,6 +139,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
             loadPd.dismiss();
         }
         showDialog(message);
+        UmengUtil.onEvent("showError_ViewBoxActivity");
     }
 
     @Override
@@ -174,7 +178,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     public void download_Zip_Success(String filePath) {
         dismissLoadPd();
         final String destFileDir = DeviceUtils.getSDPath(downHrefBean.getTitle());
-        List<VideoDetailsBean.VideoLinks> videoLinksList = new ArrayList<>();
+         videoLinksList = new ArrayList<>();
         try {
             boolean jieya = ZipUtils.unzipFile(filePath, destFileDir);
             if (jieya) {
@@ -187,6 +191,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                         videoLinks.setTitle(downHrefBean.getTitle());
                         videoLinksList.add(videoLinks);
                     } else if (f.getAbsolutePath().endsWith(".txt")) {
+
                         for (String txt : ReadTxtFile(f.getAbsolutePath())) {
                             if (txt.contains("thunder")) {
                                 VideoDetailsBean.VideoLinks videoLinks = new VideoDetailsBean.VideoLinks();
@@ -199,6 +204,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                                 videoLinksList.add(videoLinks);
                             }
                         }
+//                        mPresenter.ReadTxtFiles(f.getAbsolutePath());
                     }
                 }
                 Home_Title_Play_Adapter mAdapter = new Home_Title_Play_Adapter(videoLinksList, ViewBoxActivity.this);
@@ -230,12 +236,15 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
                         } else {
                             String thunderUrl = item.getThunder();
+                            Log.e("TAG",thunderUrl);
                             if (thunderUrl != null)
+
                                 XLVideoPlayActivity.intentTo(ViewBoxActivity.this, thunderUrl, item.getTitle());
                         }
                     }
                 });
                 if (videoLinksList.size() == 0) {
+//                    ToastUtils.showLongToast("暂无电影资源");
                     showDialog("暂无电影资源");
                 }
             }
@@ -248,6 +257,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     public void Down_Torrent_File_Success() {
 
     }
+
 
     @OnClick({R.id.llExit, R.id.tvTitle, R.id.llRight})
     public void onViewClicked(View view) {

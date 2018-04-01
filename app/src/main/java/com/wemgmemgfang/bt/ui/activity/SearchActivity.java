@@ -16,6 +16,7 @@ import com.wemgmemgfang.bt.presenter.contract.SearchContract;
 import com.wemgmemgfang.bt.presenter.impl.SearchPresenter;
 import com.wemgmemgfang.bt.ui.adapter.Search_Adapter;
 import com.wemgmemgfang.bt.utils.ToastUtils;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.List;
 
@@ -60,14 +61,14 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void initView() {
-
+          UmengUtil.onEvent("SearchActivity");
         keyword = getIntent().getStringExtra("Keyword");
         mPresenter.Fetch_Search_Info(keyword);
     }
 
     @Override
     public void showError(String message) {
-
+     UmengUtil.onEvent("showError_SearchActivity");
     }
 
     @Override

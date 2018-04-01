@@ -95,6 +95,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public void showError(String message) {
 //        showDialog(message);
+        UmengUtil.onEvent("showError_HomeFragment");
         mPresenter.Fetch_80sHomeInfo(sttBaseUrl);
     }
 
