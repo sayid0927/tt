@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     public void initView() {
 
         UmengUtil.onEvent("MainActivity");
-
+        setSwipeBackEnable(false);
         mTitleList.add("推荐");
         mTitleList.add("首页");
         mTitleList.add("搜索");
@@ -136,6 +136,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         super.killAll();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PgyUpdateManager.unregister();
+    }
 
     public static String getDeviceInfo(Context context) {
         try {

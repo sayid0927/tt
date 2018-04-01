@@ -1,12 +1,16 @@
 package com.wemgmemgfang.bt.ui.activity;
 
+import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.component.AppComponent;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -19,6 +23,8 @@ public class FeedbackActivity extends BaseActivity {
 
     @BindView(R.id.llExit)
     LinearLayout llExit;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -42,7 +48,9 @@ public class FeedbackActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        UmengUtil.onEvent("FeedbackActivity");
+        setSwipeBackEnable(true);
+        tvTitle.setText("意见反馈");
     }
 
 
@@ -50,4 +58,5 @@ public class FeedbackActivity extends BaseActivity {
     public void onViewClicked() {
         this.finish();
     }
+
 }

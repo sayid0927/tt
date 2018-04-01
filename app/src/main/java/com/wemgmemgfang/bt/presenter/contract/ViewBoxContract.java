@@ -20,6 +20,8 @@ import com.wemgmemgfang.bt.base.BaseContract;
 import com.wemgmemgfang.bt.bean.DownHrefBean;
 import com.wemgmemgfang.bt.bean.ViewBoxBean;
 
+import java.util.List;
+
 public interface ViewBoxContract {
 
     interface View extends BaseContract.BaseView {
@@ -30,7 +32,6 @@ public interface ViewBoxContract {
         void download_Zip_Success(String filePath);
 
         void  Down_Torrent_File_Success();
-
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {

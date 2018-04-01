@@ -13,6 +13,7 @@ import com.wemgmemgfang.bt.database.CollectionInfoDao;
 import com.wemgmemgfang.bt.entity.CollectionInfo;
 import com.wemgmemgfang.bt.ui.adapter.CollectionAdapter;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.List;
 
@@ -51,12 +52,14 @@ public class CollectionActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         collectionAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void initView() {
+
+        UmengUtil.onEvent("CollectionActivity");
+        setSwipeBackEnable(true);
 
         CollectionInfoDao collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
         List<CollectionInfo> collectionInfoList = collectionInfoDao.loadAll();

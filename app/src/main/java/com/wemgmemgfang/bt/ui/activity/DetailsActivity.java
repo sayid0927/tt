@@ -33,6 +33,7 @@ import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
 import com.wemgmemgfang.bt.utils.PreferUtil;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.List;
 
@@ -105,6 +106,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Override
     public void initView() {
+        UmengUtil.onEvent("DetailsActivity");
+        setSwipeBackEnable(true);
 
         imgUrl = getIntent().getStringExtra("imgUrl");
         url = getIntent().getStringExtra("HrefUrl");
@@ -131,7 +134,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Override
     public void showError(String message) {
-
+        UmengUtil.onEvent("showError_DetailsActivity");
     }
 
     @OnClick({R.id.llExit, R.id.llRight})

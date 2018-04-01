@@ -1,6 +1,8 @@
 package com.wemgmemgfang.bt.base;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.utils.ThreadPoolUtils;
 import com.blankj.utilcode.utils.Utils;
@@ -41,8 +43,6 @@ public class BaseApplication extends Application {
         UmengUtil.UmengUtilInit(this);
         GreenDaoUtil.initDataBase(getApplicationContext());
 
-        UmengUtil.onEvent("BaseApplication");
-
 //        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "5abf0596b27b0a5f4600021a");
 //        UMGameAgent.init( this );
 //        MobclickAgent.setScenarioType(this ,  MobclickAgent.EScenarioType.E_UM_NORMAL);
@@ -55,9 +55,6 @@ public class BaseApplication extends Application {
 //        UmengUtil.UmengUtilInit(this);
 //        UmengUtil.onEvent("phoneInfo");
     }
-
-
-
 
     private void initCompoent() {
         appComponent = DaggerAppComponent.builder()
@@ -77,6 +74,12 @@ public class BaseApplication extends Application {
 
     public static AppComponent getAppComponent(){
         return appComponent;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
 }

@@ -2,7 +2,6 @@ package xllib;
 
 import android.content.Context;
 
-import com.xunlei.downloadlib.XLDownloadManager;
 import com.xunlei.downloadlib.XLTaskHelper;
 
 /**

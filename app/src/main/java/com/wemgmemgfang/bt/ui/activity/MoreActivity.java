@@ -23,6 +23,7 @@ import com.wemgmemgfang.bt.presenter.contract.MoreActivityContract;
 import com.wemgmemgfang.bt.presenter.impl.MoreActivityPresenter;
 import com.wemgmemgfang.bt.ui.adapter.More_Adapter;
 import com.wemgmemgfang.bt.ui.adapter.More_Search_Adapter;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 import com.wemgmemgfang.bt.view.SearchDialog;
 import com.wemgmemgfang.bt.view.MyLoadMoreView;
 
@@ -83,7 +84,8 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
 
     @Override
     public void initView() {
-
+        UmengUtil.onEvent("MoreActivity");
+        setSwipeBackEnable(true);
         HrefUrl = "https://www.80s.tt" + getIntent().getStringExtra("HrefUrl");
         tvTitle.setText(getIntent().getStringExtra("Title"));
         mPresenter.Fetch_MoreTypeInfo(HrefUrl);
@@ -111,7 +113,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
 
     @Override
     public void showError(String message) {
-
+         UmengUtil.onEvent("showError_MoreActivity");
     }
 
     @Override

@@ -143,7 +143,7 @@ public class XLDownloadManager {
                     if (mAllowExecution) {
                         i2 = XLUtil.getNetworkTypeComplete(context);
                     }
-                      i = this.mLoader.init(initParam.mAppKey, "com.xunlei.downloadprovider", initParam.mAppVersion, "", peerid, guid, initParam.mStatSavePath, initParam.mStatCfgSavePath, i2, initParam.mPermissionLevel);
+                      i = this.mLoader.init(initParam.mAppKey, "com.xunlei.downloadlib", initParam.mAppVersion, "", peerid, guid, initParam.mStatSavePath, initParam.mStatCfgSavePath, i2, initParam.mPermissionLevel);
                     if (i != 9000) {
                         mDownloadManagerState = XLManagerStatus.MANAGER_INIT_FAIL;
                     } else {

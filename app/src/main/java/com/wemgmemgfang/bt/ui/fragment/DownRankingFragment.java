@@ -106,7 +106,7 @@ public class DownRankingFragment extends BaseFragment implements DownRankingCont
 
     @Override
     public void showError(String message) {
-
+      UmengUtil.onEvent("showError_DownRankingFragment");
     }
 
     @Override

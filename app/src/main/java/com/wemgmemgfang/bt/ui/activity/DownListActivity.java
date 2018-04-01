@@ -1,31 +1,20 @@
 package com.wemgmemgfang.bt.ui.activity;
 
-import android.app.ListActivity;
 import android.graphics.Color;
-import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.blankj.utilcode.utils.FileUtils;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
-import com.wemgmemgfang.bt.base.BaseApplication;
-import com.wemgmemgfang.bt.bean.DownFileBean;
-import com.wemgmemgfang.bt.bean.DownVideoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.database.DownVideoInfoDao;
 import com.wemgmemgfang.bt.entity.DownVideoInfo;
-import com.wemgmemgfang.bt.ui.adapter.DownFileListApadter;
 import com.wemgmemgfang.bt.ui.adapter.DownListApadter;
-import com.wemgmemgfang.bt.utils.DeviceUtils;
 import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.NotificationHandler;
-import com.xunlei.downloadlib.XLTaskHelper;
+import com.wemgmemgfang.bt.utils.UmengUtil;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
@@ -37,8 +26,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -92,8 +79,9 @@ public class DownListActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        UmengUtil.onEvent("DownListActivity");
         EventBus.getDefault().register(this);
+        setSwipeBackEnable(true);
         downVideoInfoDao = GreenDaoUtil.getDaoSession().getDownVideoInfoDao();
         downVideoInfoList = downVideoInfoDao.loadAll();
 

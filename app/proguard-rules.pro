@@ -348,7 +348,7 @@ public void xxxxxx(**);
 }
 
 # for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 # #  ######## greenDao混淆  ##########
 # # -------------------------------------------
@@ -468,13 +468,13 @@ public void xxxxxx(**);
 }
 
 #litepal
--dontwarn org.litepal.
--keep class org.litepal.* { ; }
--keep enum org.litepal.*
--keep interface org.litepal. { ; }
--keep public class  extends org.litepal.
--keepattributes Annotation
--keepclassmembers class * extends org.litepal.crud.DataSupport{*;}
+#-dontwarn org.litepal.
+#-keep class org.litepal.* { ; }
+#-keep enum org.litepal.*
+#-keep interface org.litepal. { ; }
+#-keep public class  extends org.litepal.
+#-keepattributes Annotation
+#-keepclassmembers class * extends org.litepal.crud.DataSupport{*;}
 
 #fastJson
 -dontwarn com.alibaba.fastjson.**
@@ -500,10 +500,33 @@ public void xxxxxx(**);
     @com.facebook.common.internal.DoNotStrip *;
 }
 
-
-
 #科大讯飞
-#由*	jp1017*贡献混淆代码
-#作者Github地址：hhttps://github.com/jp1017
 -keep class com.iflytek.**{*;}
 
+-keep class freemarker.** {*;}
+-dontwarn freemarker.**
+
+-keep class org.greenrobot.** {*;}
+-dontwarn org.greenrobot.**
+
+-keep class com.xunlei.downloadlib.android.** {*;}
+-dontwarn com.xunlei.downloadlib.android.**
+
+-keep class com.xunlei.downloadlib.parameter.** {*;}
+-dontwarn com.xunlei.downloadlib.parameter.**
+
+-keep class tv.danmaku.ijk.media.exo.** {*;}
+-dontwarn tv.danmaku.ijk.media.exo.**
+
+-keep class tv.danmaku.ijk.media.player.** {*;}
+-dontwarn tv.danmaku.ijk.media.player.**
+
+-keep class org.apache.** {*;}
+-dontwarn org.apache.**
+
+#greendao3.2.0,此是针对3.2.0，如果是之前的，可能需要更换下包名
+-keep class org.greenrobot.greendao.**{*;}
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties

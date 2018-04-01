@@ -20,19 +20,48 @@ android {
             abiFilters 'x86_64'
         }
 
-        splits {
-            abi {
-                enable true
-                reset()
-                include 'x86', 'armeabi-v7a','x86_64'
-                universalApk true
-            }
+//        splits {
+//            abi {
+//                enable true
+//                reset()
+//                include 'x86', 'armeabi-v7a','x86_64'
+//                universalApk true
+//            }
+//        }
+    }
+
+
+    signingConfigs {
+        release {
+            storeFile file("tt.jks")
+            storePassword "000000"
+            keyAlias "tt"
+            keyPassword "000000"
+        }
+        debug {
+            storeFile file("tt.jks")
+            storePassword "000000"
+            keyAlias "tt"
+            keyPassword "000000"
         }
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable true
+            zipAlignEnabled true //zip对齐
+            minifyEnabled true  //设置混淆
+            shrinkResources true //删除多余的资源文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release //设置签名
+        }
+        debug {
+            debuggable true
+            zipAlignEnabled true //zip对齐
+            minifyEnabled true  //设置混淆
+            shrinkResources true //删除多余的资源文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release //设置签名
         }
     }
 
@@ -44,9 +73,11 @@ android {
         //targetGenDirTest：设置生成单元测试目录
         //generateTests：设置自动生成单元测试用例
     }
-
-
+    dexOptions {
+        jumboMode true
+    }
     buildToolsVersion '26.0.2'
+
 }
 
 dependencies {
@@ -86,12 +117,7 @@ dependencies {
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.apache.httpcomponents:httpcore:4.4.4'
-
+    implementation 'com.umeng.analytics:analytics:latest.integration'
     implementation project(':thunder')
     implementation project(':library')
-//    implementation files('libs/umeng-common-1.4.4.jar')
-//    implementation files('libs/umeng-analytics-7.4.4.jar')
-
-    implementation 'com.umeng.analytics:analytics:latest.integration'
-
 }

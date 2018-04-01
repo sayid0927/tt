@@ -15,6 +15,8 @@
  */
 package com.wemgmemgfang.bt.presenter.impl;
 
+import android.util.Log;
+
 import com.blankj.utilcode.utils.RegexUtils;
 import com.wemgmemgfang.bt.api.Api;
 import com.wemgmemgfang.bt.base.RxPresenter;
@@ -24,15 +26,20 @@ import com.wemgmemgfang.bt.presenter.contract.ViewBoxContract;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
 import com.wemgmemgfang.bt.utils.RandomUtils;
 
+import org.apache.http.util.EncodingUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

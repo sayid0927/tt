@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:text="关于漫画"
+                android:text="关于香蜜"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
