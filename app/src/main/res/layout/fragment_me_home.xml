@@ -53,7 +53,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:text="我的收藏"
-                android:textColor="@color/black"
+                android:textColor="@color/common_h2"
                 android:textSize="18sp" />
 
             <ImageView
@@ -87,7 +87,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:text="下载列表"
-                android:textColor="@color/black"
+                android:textColor="@color/common_h2"
                 android:textSize="18sp" />
 
             <ImageView
@@ -122,7 +122,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:text="检查最新"
-                android:textColor="@color/black"
+                android:textColor="@color/common_h2"
                 android:textSize="18sp" />
 
             <ImageView
@@ -157,7 +157,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:text="关于香蜜"
-                android:textColor="@color/black"
+                android:textColor="@color/common_h2"
                 android:textSize="18sp" />
 
             <ImageView
@@ -192,7 +192,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:text="意见反馈"
-                android:textColor="@color/black"
+                android:textColor="@color/common_h2"
                 android:textSize="18sp" />
 
             <ImageView
@@ -226,7 +226,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
                 android:text="退出"
-                android:textColor="@color/black"
+                android:textColor="@color/common_h2"
                 android:textSize="18sp" />
 
             <ImageView

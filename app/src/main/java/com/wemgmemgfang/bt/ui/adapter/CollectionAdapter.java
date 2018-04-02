@@ -39,7 +39,7 @@ public class CollectionAdapter extends BaseQuickAdapter<CollectionInfo, BaseView
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onVideoItemListener.onVideoItemListener(item);
+//                onVideoItemListener.onVideoItemListener(item);
             }
         });
     }

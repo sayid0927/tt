@@ -67,16 +67,16 @@ public class CollectionActivity extends BaseActivity {
          collectionAdapter = new CollectionAdapter(collectionInfoList, this);
         rvColl.setAdapter(collectionAdapter);
         rvColl.setLayoutManager(new LinearLayoutManager(this));
-        collectionAdapter.onVideoItemListener(new CollectionAdapter.onVideoItemListener() {
-            @Override
-            public void onVideoItemListener(CollectionInfo item) {
-                Intent intent = new Intent(CollectionActivity.this, DetailsActivity.class);
-                intent.putExtra("HrefUrl",item.getHrefUrl());
-                intent.putExtra("imgUrl",item.getImgUrl());
-                intent.putExtra("Title",item.getTitle());
-                startActivity(intent);
-            }
-        });
+//        collectionAdapter.onVideoItemListener(new CollectionAdapter.onVideoItemListener() {
+//            @Override
+//            public void onVideoItemListener(CollectionInfo item) {
+//                Intent intent = new Intent(CollectionActivity.this, DetailsActivity.class);
+//                intent.putExtra("HrefUrl",item.getHrefUrl());
+//                intent.putExtra("imgUrl",item.getImgUrl());
+//                intent.putExtra("Title",item.getTitle());
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @OnClick(R.id.llExit)
