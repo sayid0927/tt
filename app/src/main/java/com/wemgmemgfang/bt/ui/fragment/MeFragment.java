@@ -44,12 +44,8 @@ public class MeFragment extends BaseFragment {
     @BindView(R.id.ll_denglu)
     LinearLayout llDenglu;
 
-//    UMShareAPI mShareAPI;
-
-
     @Override
     public void loadData() {
-//        mShareAPI = UMShareAPI.get(getActivity());
         setState(Constant.STATE_SUCCESS);
     }
 
@@ -81,9 +77,7 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.rl_collection:
                 getActivity().startActivity(new Intent(getActivity(), CollectionActivity.class));
-
                 break;
-
             case R.id.updae:
                 ToastUtils.showLongToast("已是最新版本");
                 break;
@@ -96,29 +90,9 @@ public class MeFragment extends BaseFragment {
             case R.id.exit:
                 MainActivity.mainActivity.killAll();
                 break;
-
             case R.id.ll_denglu:
-//                mShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, umAuthListener);
-//                mShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.SINA, umAuthListener);
+                ToastUtils.showLongToast("暂不支持");
                 break;
-
         }
     }
-    //登录 回调 文档 http://dev.umeng.com/social/android/login-page#2
-//    UMAuthListener umAuthListener = new UMAuthListener() {
-//        @Override
-//        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-//            Log.i("登录结果",map.toString());
-//        }
-//
-//        @Override
-//        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-//            Log.i("登录结果",throwable.toString());
-//        }
-//
-//        @Override
-//        public void onCancel(SHARE_MEDIA share_media, int i) {
-//
-//        }
-//    };
 }

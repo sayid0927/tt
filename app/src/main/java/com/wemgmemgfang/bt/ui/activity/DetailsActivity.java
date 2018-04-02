@@ -123,11 +123,11 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).list();
         if (cList != null && cList.size() != 0) {
             isCollertion = true;
-            tvCollection.setText("已收藏");
+            tvCollection.setText(R.string.Collection_Yes);
             ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
         } else {
             isCollertion = false;
-            tvCollection.setText("收藏");
+            tvCollection.setText(R.string.Collection_No);
             ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
         }
     }
@@ -149,7 +149,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                     isCollertion = false;
                     CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).unique();
                     collectionInfoDao.delete(collectionInfo);
-                    tvCollection.setText("收藏");
+                    tvCollection.setText(R.string.Collection_Yes);
                     ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
 
                 } else {
@@ -159,7 +159,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                     collectionInfo.setTitle(Title);
                     collectionInfo.setImgUrl(imgUrl);
                     collectionInfoDao.insert(collectionInfo);
-                    tvCollection.setText("已收藏");
+                    tvCollection.setText(R.string.Collection_No);
                     ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
 
                 }
@@ -214,7 +214,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                         downVideoInfo.setPlayimgUrl(imgUrl);
                         downVideoInfo.setHrefUrl(url);
                         downVideoInfo.setType("sst");
-                        downVideoInfo.setState("开始");
+                        downVideoInfo.setState(getString(R.string.Start));
                         downVideoInfo.setSaveVideoPath(DeviceUtils.getSDVideoPath(item.getTitle()));
                         DownLoadHelper.getInstance().submit(DetailsActivity.this, downVideoInfo);
                     }

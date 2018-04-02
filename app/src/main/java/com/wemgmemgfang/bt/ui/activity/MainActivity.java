@@ -97,10 +97,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         UmengUtil.onEvent("MainActivity");
         setSwipeBackEnable(false);
-        mTitleList.add("推荐");
-        mTitleList.add("首页");
-        mTitleList.add("搜索");
-        mTitleList.add("设置");
+        mTitleList.add(getString(R.string.DownRank));
+        mTitleList.add(getString(R.string.Home));
+        mTitleList.add(getString(R.string.Film));
+        mTitleList.add(getString(R.string.Me));
 
         HomeFragment homeFragment = new HomeFragment();
         DownRankingFragment downRankingFragment = new DownRankingFragment();

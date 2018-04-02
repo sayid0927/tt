@@ -50,7 +50,7 @@ public class AboutActivity extends BaseActivity {
     public void initView() {
         UmengUtil.onEvent("AboutActivity");
         setSwipeBackEnable(true);
-        tvTitle.setText("关于香蜜");
+        tvTitle.setText(R.string.AboutApp);
 
 
     }

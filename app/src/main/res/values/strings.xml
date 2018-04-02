@@ -8,5 +8,18 @@
     <string name="about_author">作者:</string>
     <string name="github_issues">您好，您有什么好的意见可以及时向我反馈，可以通过以下方式联系我，我将根据情况尽量处理哦 ~</string>
     <string name="about_project">项目简介:\n一个纯粹的影音App\n该项目会持续迭代与优化,加入更丰富的内容与功能,并不断尝试最新的技术。</string>
+    <string name="AboutApp">关于香蜜</string>
+    <string name="Collection_Yes">已收藏</string>
+    <string name="Collection_No">收藏</string>
+    <string name="Start">开始</string>
+    <string name="Feedback">意见反馈</string>
+    <string name="DownRank">推荐</string>
+    <string name="Home">首页</string>
+    <string name="Film">搜索</string>
+    <string name="Me">设置</string>
+    <string name="sBaseUrl">https://www.80s.tt</string>
+    <string name="SearchRe">搜索结果</string>
+    <string name="Search_No">没有找到任何资源</string>
+    <string name="Video_No">暂无电影资源</string>
 
 </resources>

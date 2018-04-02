@@ -75,7 +75,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     @Override
     public void Fetch_Search_Info_Success(List<SearchBean> searchBeanList) {
         if (searchBeanList.size() != 0) {
-            tvTitle.setText("搜索结果");
+            tvTitle.setText(R.string.SearchRe);
             Search_Adapter adapter = new Search_Adapter(searchBeanList, SearchActivity.this);
             searchRv.setAdapter(adapter);
             searchRv.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
@@ -91,7 +91,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
                 }
             });
         } else {
-            ToastUtils.showLongToast("没有找到任何资源");
+            ToastUtils.showLongToast(getString(R.string.Search_No));
         }
     }
 
@@ -100,10 +100,5 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
         this.finish();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

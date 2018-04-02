@@ -53,33 +53,6 @@ public class DownListApadter extends BaseQuickAdapter<DownVideoInfo, BaseViewHol
             progressBar.setVisibility(View.GONE);
         }
 
-
-
-//        helper.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               if(item.getType().equals("zei8")){
-//                   Intent intent = new Intent(mContext, ViewBoxActivity.class);
-//                   intent.putExtra("HrefUrl",item.getHrefUrl());
-//                   intent.putExtra("ImgUrl",item.getPlayimgUrl());
-//                   mContext.startActivity(intent);
-//               }else {
-//                   Intent intent = new Intent(mContext, DetailsActivity.class);
-//                   intent.putExtra("HrefUrl",item.getHrefUrl());
-//                   intent.putExtra("imgUrl",item.getPlayimgUrl());
-//                   intent.putExtra("Title",item.getHrefTitle());
-//                   mContext.startActivity(intent);
-//               }
-//            }
-//        });
-
-//        but.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onDeleteItemListenter.OnDeleteItemListenter(item);
-//            }
-//        });
-
     }
 
     private OnDeleteItemListenter onDeleteItemListenter;

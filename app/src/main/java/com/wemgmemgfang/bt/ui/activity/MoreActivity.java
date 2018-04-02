@@ -86,7 +86,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
     public void initView() {
         UmengUtil.onEvent("MoreActivity");
         setSwipeBackEnable(true);
-        HrefUrl = "https://www.80s.tt" + getIntent().getStringExtra("HrefUrl");
+        HrefUrl = getString(R.string.sBaseUrl) + getIntent().getStringExtra("HrefUrl");
         tvTitle.setText(getIntent().getStringExtra("Title"));
         mPresenter.Fetch_MoreTypeInfo(HrefUrl);
         showLoadPd();
@@ -156,7 +156,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
                     @Override
                     public void OnMoreDialogItemClick(SearchDialogBean item) {
                         isRefresh = true;
-                        HrefUrl = "https://www.80s.tt" + item.getHref();
+                        HrefUrl = getString(R.string.sBaseUrl) +  item.getHref();
                         if (searchDialogBeanList.size() != 0) {
                             for (int i = 0; i < searchDialogBeanList.size(); i++) {
                                 if (item.getType().equals(searchDialogBeanList.get(i).getType())) {

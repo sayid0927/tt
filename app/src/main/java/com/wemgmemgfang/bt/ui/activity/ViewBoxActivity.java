@@ -159,11 +159,11 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).list();
         if (cList != null && cList.size() != 0) {
             isCollertion = true;
-            tvCollection.setText("已收藏");
+            tvCollection.setText(R.string.Collection_Yes);
             ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
         } else {
             isCollertion = false;
-            tvCollection.setText("收藏");
+            tvCollection.setText(R.string.Collection_No);
             ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
         }
         mPresenter.Fetch_HrefUrl(hrefUrl);
@@ -224,7 +224,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             downVideoInfo.setHrefUrl(Url);
                             downVideoInfo.setHrefTitle(strTitle);
                             downVideoInfo.setType("zei8");
-                            downVideoInfo.setState("开始");
+                            downVideoInfo.setState(getString(R.string.Start));
                             downVideoInfo.setSaveVideoPath(DeviceUtils.getSDVideoPath(item.getTitle()));
                             DownLoadHelper.getInstance().submit(ViewBoxActivity.this, downVideoInfo);
                         }
@@ -246,7 +246,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                 });
                 if (videoLinksList.size() == 0) {
 //                    ToastUtils.showLongToast("暂无电影资源");
-                    showDialog("暂无电影资源");
+                    showDialog(getString(R.string.Video_No));
                 }
             }
         } catch (IOException e) {

@@ -50,7 +50,7 @@ public class FeedbackActivity extends BaseActivity {
     public void initView() {
         UmengUtil.onEvent("FeedbackActivity");
         setSwipeBackEnable(true);
-        tvTitle.setText("意见反馈");
+        tvTitle.setText(R.string.Feedback);
     }
 
 
