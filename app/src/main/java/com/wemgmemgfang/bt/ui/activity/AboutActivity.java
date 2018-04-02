@@ -52,6 +52,7 @@ public class AboutActivity extends BaseActivity {
         setSwipeBackEnable(true);
         tvTitle.setText("关于香蜜");
 
+
     }
 
     @OnClick({R.id.llExit})
