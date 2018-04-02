@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.blankj.utilcode.utils.ToastUtils;
-import com.orhanobut.logger.Logger;
 import com.wemgmemgfang.bt.database.DownVideoInfoDao;
 import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
@@ -72,7 +71,7 @@ public class DownVoideService extends Service {
                                     break;
                                 case 2:
                                     isDown = false;
-                                    Logger.e("taskInfo.mDownloadSize>>>  " + taskInfo.mDownloadSize + "\n" + "taskInfo.mFileSize>>  " + taskInfo.mFileSize);
+
                                     downVideoInfo.setMTaskStatus(taskInfo.mTaskStatus);
                                     downVideoInfo.setMDownloadSize(taskInfo.mDownloadSize);
                                     downVideoInfo.setMFileSize(taskInfo.mFileSize);

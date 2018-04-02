@@ -16,12 +16,9 @@
 package com.wemgmemgfang.bt.presenter.impl;
 
 
-import com.blankj.utilcode.utils.LogUtils;
-import com.orhanobut.logger.Logger;
 import com.wemgmemgfang.bt.api.Api;
 import com.wemgmemgfang.bt.base.RxPresenter;
 import com.wemgmemgfang.bt.bean.SearchBean;
-import com.wemgmemgfang.bt.presenter.contract.FilmFragmentContract;
 import com.wemgmemgfang.bt.presenter.contract.SearchContract;
 
 import org.jsoup.Jsoup;

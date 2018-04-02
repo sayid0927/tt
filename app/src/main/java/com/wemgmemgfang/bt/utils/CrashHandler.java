@@ -4,13 +4,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
-import android.util.Log;
 
 import com.blankj.utilcode.utils.CloseUtils;
-import com.blankj.utilcode.utils.CrashUtils;
 import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.Utils;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,11 +16,7 @@ import java.io.PrintWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-
-import static com.wemgmemgfang.bt.utils.DeviceUtils.ReadTxtFile;
-import static com.wemgmemgfang.bt.utils.DeviceUtils.ReadTxtFiles;
 
 /**
  * <pre>

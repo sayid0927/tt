@@ -1,9 +1,6 @@
 package com.wemgmemgfang.bt.ui.activity;
 
 import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -11,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +15,6 @@ import android.widget.TextView;
 import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.ToastUtils;
 import com.blankj.utilcode.utils.ZipUtils;
-import com.orhanobut.logger.Logger;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.DownHrefBean;
@@ -32,22 +27,17 @@ import com.wemgmemgfang.bt.entity.CollectionInfo;
 import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.presenter.contract.ViewBoxContract;
 import com.wemgmemgfang.bt.presenter.impl.ViewBoxPresenter;
-import com.wemgmemgfang.bt.service.DownTorrentVideoService;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
 import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
-import com.wemgmemgfang.bt.utils.PreferUtil;
 import com.wemgmemgfang.bt.utils.UmengUtil;
-
-import org.apache.http.util.EncodingUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 

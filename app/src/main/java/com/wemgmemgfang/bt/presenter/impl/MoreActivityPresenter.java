@@ -16,11 +16,9 @@
 package com.wemgmemgfang.bt.presenter.impl;
 
 
-import com.orhanobut.logger.Logger;
 import com.wemgmemgfang.bt.api.Api;
 import com.wemgmemgfang.bt.base.RxPresenter;
 import com.wemgmemgfang.bt.bean.MoreInfoBean;
-import com.wemgmemgfang.bt.bean.VideoDetailsBean;
 import com.wemgmemgfang.bt.presenter.contract.MoreActivityContract;
 import com.wemgmemgfang.bt.utils.RandomUtils;
 

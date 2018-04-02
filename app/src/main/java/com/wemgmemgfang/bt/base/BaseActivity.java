@@ -127,7 +127,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
         }
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+        finishActivity();
+    }
 
     public void killAll() {
         // 复制了一份mActivities 集合Å

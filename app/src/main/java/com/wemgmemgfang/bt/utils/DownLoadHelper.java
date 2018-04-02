@@ -3,18 +3,10 @@ package com.wemgmemgfang.bt.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
-import com.blankj.utilcode.utils.LogUtils;
-import com.wemgmemgfang.bt.base.Constant;
-import com.wemgmemgfang.bt.database.CollectionInfoDao;
 import com.wemgmemgfang.bt.database.DownVideoInfoDao;
 import com.wemgmemgfang.bt.entity.DownVideoInfo;
-import com.wemgmemgfang.bt.service.DownTorrentVideoService;
 import com.wemgmemgfang.bt.service.DownVoideService;
-
-import java.io.File;
-import java.io.Serializable;
 
 /**
  * sayid ....

@@ -2,8 +2,6 @@ package com.wemgmemgfang.bt.ui.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,19 +18,15 @@ import com.wemgmemgfang.bt.bean.VideoDetailsBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.database.CollectionInfoDao;
-import com.wemgmemgfang.bt.database.UserInfoDao;
 import com.wemgmemgfang.bt.entity.CollectionInfo;
 import com.wemgmemgfang.bt.entity.DownVideoInfo;
-import com.wemgmemgfang.bt.entity.UserInfo;
 import com.wemgmemgfang.bt.presenter.contract.DetailsActivityContract;
 import com.wemgmemgfang.bt.presenter.impl.DetailsActivityPresenter;
-import com.wemgmemgfang.bt.service.DownTorrentVideoService;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
 import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
-import com.wemgmemgfang.bt.utils.PreferUtil;
 import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.List;
@@ -40,7 +34,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import player.XLVideoPlayActivity;
 import pub.devrel.easypermissions.EasyPermissions;
