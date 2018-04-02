@@ -51,6 +51,7 @@ public class AboutActivity extends BaseActivity {
         UmengUtil.onEvent("AboutActivity");
         setSwipeBackEnable(true);
         tvTitle.setText("关于香蜜");
+
     }
 
     @OnClick({R.id.llExit})
