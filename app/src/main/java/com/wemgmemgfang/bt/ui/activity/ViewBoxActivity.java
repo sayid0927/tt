@@ -229,13 +229,11 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             String thunderUrl = item.getThunder();
                             Log.e("TAG",thunderUrl);
                             if (thunderUrl != null)
-
                                 XLVideoPlayActivity.intentTo(ViewBoxActivity.this, thunderUrl, item.getTitle());
                         }
                     }
                 });
                 if (videoLinksList.size() == 0) {
-//                    ToastUtils.showLongToast("暂无电影资源");
                     showDialog(getString(R.string.Video_No));
                 }
             }

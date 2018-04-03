@@ -24,8 +24,8 @@ import com.wemgmemgfang.bt.presenter.impl.MoreActivityPresenter;
 import com.wemgmemgfang.bt.ui.adapter.More_Adapter;
 import com.wemgmemgfang.bt.ui.adapter.More_Search_Adapter;
 import com.wemgmemgfang.bt.utils.UmengUtil;
-import com.wemgmemgfang.bt.view.SearchDialog;
 import com.wemgmemgfang.bt.view.MyLoadMoreView;
+import com.wemgmemgfang.bt.view.SearchDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +105,7 @@ public class MoreActivity extends BaseActivity implements MoreActivityContract.V
                 intent.putExtra("HrefUrl", item.getHerf());
                 intent.putExtra("imgUrl", item.getImgUrl());
                 intent.putExtra("Title", item.getTitle());
-                startActivity(intent);
+                startActivityIn(intent,MoreActivity.this);
             }
         });
 

@@ -70,9 +70,7 @@
             android:name=".ui.activity.ViewBoxActivity"
             android:screenOrientation="portrait" />
 
-
         <service android:name=".service.DownLoadService" />
-        <service android:name=".service.DownTorrentVideoService" />
         <service android:name=".service.DownVoideService"/>
 
         <activity
@@ -98,12 +96,6 @@
 
         <activity android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait" />
-
-        <provider
-            android:name=".contentprovider.PlayProvider"
-            android:authorities="com.wengmengfan.btwang.provider"
-            android:exported="true"
-            android:process=":provider" />
 
         <meta-data
             android:name="PGYER_APPID"

@@ -73,19 +73,20 @@ public class MeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.down:
-                getActivity().startActivity(new Intent(getActivity(), DownListActivity.class));
+                MainActivity.mainActivity.startActivityIn(new Intent(getActivity(), DownListActivity.class),getActivity());
                 break;
             case R.id.rl_collection:
-                getActivity().startActivity(new Intent(getActivity(), CollectionActivity.class));
+                MainActivity.mainActivity.startActivityIn(new Intent(getActivity(), CollectionActivity.class),getActivity());
                 break;
             case R.id.updae:
                 ToastUtils.showLongToast("已是最新版本");
                 break;
             case R.id.baout:
-                getActivity().startActivity(new Intent(getActivity(), AboutActivity.class));
+                MainActivity.mainActivity.startActivityIn(new Intent(getActivity(), AboutActivity.class),getActivity());
                 break;
             case R.id.feedback:
-                getActivity().startActivity(new Intent(getActivity(), FeedbackActivity.class));
+                MainActivity.mainActivity.startActivityIn(new Intent(getActivity(), FeedbackActivity.class),getActivity());
+
                 break;
             case R.id.exit:
                 MainActivity.mainActivity.killAll();

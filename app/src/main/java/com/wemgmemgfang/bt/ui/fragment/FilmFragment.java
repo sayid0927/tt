@@ -16,6 +16,7 @@ import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.presenter.contract.FilmFragmentContract;
 import com.wemgmemgfang.bt.presenter.impl.FilmFragmentPresenter;
+import com.wemgmemgfang.bt.ui.activity.MainActivity;
 import com.wemgmemgfang.bt.ui.activity.MoreActivity;
 import com.wemgmemgfang.bt.ui.activity.SearchActivity;
 import com.wemgmemgfang.bt.utils.UmengUtil;
@@ -95,7 +96,7 @@ public class FilmFragment extends BaseFragment implements FilmFragmentContract.V
     public void onSearchConfirmed(CharSequence text) {
         Intent intent = new Intent(getActivity(), SearchActivity.class);
         intent.putExtra("Keyword", text.toString());
-        getActivity().startActivity(intent);
+        MainActivity.mainActivity.startActivityIn(intent,getActivity());
     }
 
     @Override
@@ -118,43 +119,43 @@ public class FilmFragment extends BaseFragment implements FilmFragmentContract.V
                 Intent intent = new Intent(getActivity(), MoreActivity.class);
                 intent.putExtra("HrefUrl","/movie/1-0-0-0-0-0");
                 intent.putExtra("Title","电影");
-                getActivity().startActivity(intent);
+                MainActivity.mainActivity.startActivityIn(intent,getActivity());
                 break;
             case R.id.but_dalu:
                 Intent i = new Intent(getActivity(), MoreActivity.class);
                 i.putExtra("HrefUrl","/movie/9-0-0-0-0-0");
                 i.putExtra("Title","大陆剧");
-                getActivity().startActivity(i);
+                MainActivity.mainActivity.startActivityIn(i,getActivity());
                 break;
             case R.id.but_gantai:
                 Intent g = new Intent(getActivity(), MoreActivity.class);
                 g.putExtra("HrefUrl","/movie/10-0-0-0-0-0");
                 g.putExtra("Title","港台剧");
-                getActivity().startActivity(g);
+                MainActivity.mainActivity.startActivityIn(g,getActivity());
                 break;
             case R.id.but_rihan:
                 Intent r = new Intent(getActivity(), MoreActivity.class);
                 r.putExtra("HrefUrl","/movie/11-0-0-0-0-0");
                 r.putExtra("Title","日韩剧");
-                getActivity().startActivity(r);
+                MainActivity.mainActivity.startActivityIn(r,getActivity());
                 break;
             case R.id.but_aomei:
                 Intent o = new Intent(getActivity(), MoreActivity.class);
                 o.putExtra("HrefUrl","/movie/12-0-0-0-0-0");
                 o.putExtra("Title","欧美剧");
-                getActivity().startActivity(o);
+                MainActivity.mainActivity.startActivityIn(o,getActivity());
                 break;
             case R.id.but_yyi:
                 Intent y = new Intent(getActivity(), MoreActivity.class);
                 y.putExtra("HrefUrl","/movie/4-0-0-0-0-0");
                 y.putExtra("Title","综艺");
-                getActivity().startActivity(y);
+                MainActivity.mainActivity.startActivityIn(y,getActivity());
                 break;
             case R.id.but_dongman:
                 Intent d = new Intent(getActivity(), MoreActivity.class);
                 d.putExtra("HrefUrl","/movie/14-0-0-0-0-0");
                 d.putExtra("Title","动漫");
-                getActivity().startActivity(d);
+                MainActivity.mainActivity.startActivityIn(d,getActivity());
                 break;
         }
     }

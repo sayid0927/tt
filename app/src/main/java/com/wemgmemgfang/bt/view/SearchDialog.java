@@ -46,7 +46,7 @@ public class SearchDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);//将弹出框设置为全局
+//        getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);//将弹出框设置为全局
         setContentView(R.layout.searchdialog);
         setCanceledOnTouchOutside(false);
         setCancelable(true);//弹出框不可以换返回键取消

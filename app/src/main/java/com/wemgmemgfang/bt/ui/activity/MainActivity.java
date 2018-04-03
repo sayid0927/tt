@@ -2,7 +2,9 @@ package com.wemgmemgfang.bt.ui.activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -124,6 +126,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if(dd!=null&& !dd.equals("")){
             UmengUtil.onCarshEvent(ReadTxtFiles(dd));
         }
+    }
+
+    public  void  startActivityin(Intent i,Activity a){
+        startActivityIn(i,a);
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.presenter.contract.HomeContract;
 import com.wemgmemgfang.bt.presenter.impl.HomeFragmentPresenter;
 import com.wemgmemgfang.bt.ui.activity.DetailsActivity;
+import com.wemgmemgfang.bt.ui.activity.MainActivity;
 import com.wemgmemgfang.bt.ui.activity.MoreActivity;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Adapter;
 import com.wemgmemgfang.bt.ui.fragment.homeChildFragment.HotsFilmFragment;
@@ -151,7 +152,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 Intent intent = new Intent(getActivity(), MoreActivity.class);
                 intent.putExtra("HrefUrl",item.getHrefUrl());
                 intent.putExtra("Title",item.getTitle());
-                getActivity().startActivity(intent);
+                MainActivity.mainActivity.startActivityIn(intent,getActivity());
 
             }
         });
@@ -162,7 +163,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 intent.putExtra("HrefUrl",item.getHerf());
                 intent.putExtra("imgUrl",item.getImgUrl());
                 intent.putExtra("Title",item.getTitle());
-                getActivity().startActivity(intent);
+                MainActivity.mainActivity.startActivityIn(intent,getActivity());
             }
         });
     }

@@ -15,6 +15,8 @@ import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.presenter.contract.DownRankingContract;
 import com.wemgmemgfang.bt.presenter.impl.DownRankingPresenter;
+import com.wemgmemgfang.bt.ui.activity.DownListActivity;
+import com.wemgmemgfang.bt.ui.activity.MainActivity;
 import com.wemgmemgfang.bt.ui.activity.ViewBoxActivity;
 import com.wemgmemgfang.bt.ui.adapter.DownRanking_Adapter;
 import com.wemgmemgfang.bt.utils.UmengUtil;
@@ -77,8 +79,7 @@ public class DownRankingFragment extends BaseFragment implements DownRankingCont
                 Intent intent = new Intent(getActivity(), ViewBoxActivity.class);
                 intent.putExtra("HrefUrl",item.getHref());
                 intent.putExtra("ImgUrl",item.getImgUrl());
-                getActivity().startActivity(intent);
-
+                MainActivity.mainActivity.startActivityIn(intent,getActivity());
             }
         });
     }

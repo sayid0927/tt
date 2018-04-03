@@ -87,7 +87,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
                     intent.putExtra("HrefUrl", item.getHref());
                     intent.putExtra("imgUrl", item.getImgUrl());
                     intent.putExtra("Title", item.getH4());
-                    startActivity(intent);
+                    startActivityIn(intent,SearchActivity.this);
                 }
             });
         } else {

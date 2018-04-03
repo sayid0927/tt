@@ -93,7 +93,7 @@
 #---------------------------------------------------------------------------------------------------
 #---------------------------------实体类---------------------------------
 #修改成你对应的包名
--keep class [com.wemgmemgfang.bt].** { *; }
+#-keep class [com.wemgmemgfang.bt].** { *; }
 
 #---------------------------------第三方包-------------------------------
 
@@ -236,9 +236,9 @@
 -keep class im.yixin.sdk.api.YXMessage {*;}
 -keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
 #下面中括号的地方需要要填你的包名
--keep public class [com.wemgmemgfang.bt].R$*{
-    public static final int *;
-}
+#-keep public class [com.wemgmemgfang.bt].R$*{
+#    public static final int *;
+#}
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
 }
