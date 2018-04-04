@@ -12,7 +12,6 @@ import com.wemgmemgfang.bt.component.DaggerAppComponent;
 import com.wemgmemgfang.bt.module.ApiModule;
 import com.wemgmemgfang.bt.module.AppModule;
 import com.wemgmemgfang.bt.utils.AppUtils;
-import com.wemgmemgfang.bt.utils.CrashHandler;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.PreferUtil;
 import com.wemgmemgfang.bt.utils.UmengUtil;
@@ -50,7 +49,6 @@ public class BaseApplication extends Application {
 
 //        CrashHandler.getInstance().init();
 
-
 //        UMShareHelper.init(this);
 //        UmengUtil.UmengUtilInit(this);
 //        UmengUtil.onEvent("phoneInfo");
@@ -81,5 +79,4 @@ public class BaseApplication extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
-
 }
