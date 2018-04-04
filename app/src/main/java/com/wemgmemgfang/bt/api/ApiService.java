@@ -18,6 +18,7 @@ package com.wemgmemgfang.bt.api;
 
 
 import com.wemgmemgfang.bt.base.Constant;
+import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -50,6 +51,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("search")
     Observable<Response<ResponseBody>> Fetch_Search_Info(@Field("keyword") String keyword);
+
+
+    /**
+     * 获取APP更新信息
+     */
+    @POST(Constant.APK_UPDATE)
+    Observable<Apk_UpdateBean> Fetch_Apk_Update();
+
 
 
 }

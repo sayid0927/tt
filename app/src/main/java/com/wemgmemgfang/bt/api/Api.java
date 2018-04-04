@@ -18,6 +18,7 @@ package com.wemgmemgfang.bt.api;
 
 import com.google.gson.Gson;
 import com.wemgmemgfang.bt.base.Constant;
+import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 
 
 import okhttp3.OkHttpClient;
@@ -65,6 +66,11 @@ public class Api {
 
     public Observable<Response<ResponseBody>> Fetch_Search_Info(String keyword) {
         return service.Fetch_Search_Info(keyword);
+    }
+
+    public Observable<Apk_UpdateBean> Fetch_Apk_Update() {
+        return service.Fetch_Apk_Update();
+
     }
 
 }

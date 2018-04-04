@@ -69,6 +69,7 @@ android {
         qh360{}
         wandoujia{}
         qq{}
+        fir{}
     }
 
     productFlavors.all {

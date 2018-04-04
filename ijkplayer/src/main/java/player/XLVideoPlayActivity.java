@@ -115,7 +115,9 @@ public class XLVideoPlayActivity extends Activity implements IMediaPlayer.OnPrep
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 }
                 updateFullScreenButton();
-            } else **/ if (v.getId() == R.id.app_video_play) {
+            } else **/
+
+            if (v.getId() == R.id.app_video_play) {
                 doPauseResume();
                 show(defaultTimeout);
             } else if (v.getId() == R.id.app_video_replay_icon) {
@@ -346,6 +348,7 @@ public class XLVideoPlayActivity extends Activity implements IMediaPlayer.OnPrep
 
         isRunning = true;
         runningInstance = this;
+
     }
 
     @Override
@@ -475,7 +478,6 @@ public class XLVideoPlayActivity extends Activity implements IMediaPlayer.OnPrep
         } else if (newStatus == STATUS_PLAYING) {
             hideAll();
         }
-
     }
 
     private void hideAll() {
@@ -592,6 +594,7 @@ public class XLVideoPlayActivity extends Activity implements IMediaPlayer.OnPrep
     }
 
     private void showBottomControl(boolean show) {
+
         $.id(R.id.app_play_btn_play_list).visibility(show && xlDownloadManager.taskInstance().getPlayList().size() > 1 ? View.VISIBLE : View.GONE);
         $.id(R.id.app_video_play).visibility(show ? View.VISIBLE : View.GONE);
         $.id(R.id.app_video_speed).visibility(show ? View.VISIBLE : View.GONE);
@@ -599,6 +602,7 @@ public class XLVideoPlayActivity extends Activity implements IMediaPlayer.OnPrep
         $.id(R.id.app_video_endTime).visibility(show ? View.VISIBLE : View.GONE);
         $.id(R.id.app_video_seekBar).visibility(show ? View.VISIBLE : View.GONE);
         if(show && playListView.isShown())playListView.setVisibility(View.GONE);
+
     }
 
     /**

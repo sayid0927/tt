@@ -19,6 +19,7 @@ import com.pgyersdk.update.PgyUpdateManager;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.base.BaseFragmentPageAdapter;
+import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerMainComponent;
 import com.wemgmemgfang.bt.database.UserInfoDao;
@@ -126,6 +127,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if(dd!=null&& !dd.equals("")){
             UmengUtil.onCarshEvent(ReadTxtFiles(dd));
         }
+        mPresenter.Apk_Update();
     }
 
     public  void  startActivityin(Intent i,Activity a){
@@ -263,6 +265,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
 
+    @Override
+    public void Apk_Update_Success(Apk_UpdateBean.DataBean dataBean) {
 
-
+    }
 }

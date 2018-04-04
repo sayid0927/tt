@@ -1223,6 +1223,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         adBuilder.setTitle(R.string.media_information);
         adBuilder.setNegativeButton(R.string.close, null);
         adBuilder.show();
+
     }
 
     private String buildResolution(int width, int height, int sarNum, int sarDen) {
@@ -1302,4 +1303,5 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     public int getSelectedTrack(int trackType) {
         return MediaPlayerCompat.getSelectedTrack(mMediaPlayer, trackType);
     }
+
 }

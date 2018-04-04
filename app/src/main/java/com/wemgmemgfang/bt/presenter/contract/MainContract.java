@@ -17,16 +17,17 @@ package com.wemgmemgfang.bt.presenter.contract;
 
 
 import com.wemgmemgfang.bt.base.BaseContract;
+import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 
 public interface MainContract {
 
     interface View extends BaseContract.BaseView {
 
-
+        void Apk_Update_Success(Apk_UpdateBean.DataBean dataBean);
 
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
-
+        void Apk_Update();
     }
 }
