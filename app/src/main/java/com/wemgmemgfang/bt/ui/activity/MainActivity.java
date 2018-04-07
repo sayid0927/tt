@@ -15,6 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.blankj.utilcode.utils.AppUtils;
+import com.blankj.utilcode.utils.LocationUtils;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
@@ -105,6 +107,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mTitleList.add(getString(R.string.Film));
         mTitleList.add(getString(R.string.Me));
 
+
+
+
         HomeFragment homeFragment = new HomeFragment();
         DownRankingFragment downRankingFragment = new DownRankingFragment();
         FilmFragment filmFragment = new FilmFragment();
@@ -128,6 +133,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             UmengUtil.onCarshEvent(ReadTxtFiles(dd));
         }
         mPresenter.Apk_Update();
+        UmengUtil.onEvent("DeviceInfo",getDeviceInfo(this));
+
     }
 
     public  void  startActivityin(Intent i,Activity a){

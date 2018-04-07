@@ -70,6 +70,7 @@ android {
         wandoujia{}
         qq{}
         fir{}
+        pgyer{}
     }
 
     productFlavors.all {

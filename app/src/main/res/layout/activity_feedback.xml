@@ -40,9 +40,52 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="12dp"
-            android:text="QQ: 1873588839"
+            android:text="QQ: 2123928340"
             android:textColor="@color/comment_text"
             android:textSize="16sp" />
 
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_weibo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/ripple_item_white_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="12dp"
+            android:text="新浪微博 : 香蜜影音"
+            android:textColor="@color/comment_text"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_weixi"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/ripple_item_white_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="12dp"
+            android:text="微信号 : xmi0927"
+            android:textColor="@color/comment_text"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

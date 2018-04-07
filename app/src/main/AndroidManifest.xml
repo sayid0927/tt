@@ -15,6 +15,9 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -25,9 +28,10 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".ui.activity.MainActivity"
+            android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Home"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,36 +76,43 @@
 
 
         <service android:name=".service.DownLoadService" />
-        <service android:name=".service.DownVoideService"/>
+        <service android:name=".service.DownVoideService" />
 
         <activity
             android:name=".ui.activity.AboutActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.FeedbackActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.MoreActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.DetailsActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.DownListActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.CollectionActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.SearchActivity"
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
 
         <meta-data
             android:name="PGYER_APPID"
-            android:value="4b6e8877dfcc2462bedb37dcf66b6d87" >
-        </meta-data>
+            android:value="4b6e8877dfcc2462bedb37dcf66b6d87"/>
 
         <meta-data
             android:name="UMENG_APPKEY"

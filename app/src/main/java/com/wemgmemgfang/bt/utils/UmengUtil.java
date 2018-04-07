@@ -43,6 +43,12 @@ public class UmengUtil {
     }
 
     public static void onEvent(String EventsName) {
+
+        MobclickAgent.onEvent(context, EventsName, maps);
+    }
+
+    public static void onEvent(String EventsName,String str) {
+        maps.put(str,str);
         MobclickAgent.onEvent(context, EventsName, maps);
     }
 
