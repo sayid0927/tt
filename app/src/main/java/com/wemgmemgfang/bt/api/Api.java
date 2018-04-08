@@ -17,6 +17,7 @@ package com.wemgmemgfang.bt.api;
 
 
 import com.google.gson.Gson;
+import com.wemgmemgfang.bt.RequestBody.AppInfoRequest;
 import com.wemgmemgfang.bt.base.Constant;
 import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 
@@ -71,6 +72,10 @@ public class Api {
     public Observable<Apk_UpdateBean> Fetch_Apk_Update() {
         return service.Fetch_Apk_Update();
 
+    }
+
+    public Observable<Response<ResponseBody>> Post_App_Info(AppInfoRequest appInfoRequest) {
+        return service.Post_Apk_Info(appInfoRequest);
     }
 
 }

@@ -1,13 +1,20 @@
 package com.wemgmemgfang.bt.utils;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 
 import com.blankj.utilcode.utils.CloseUtils;
 import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.Utils;
+import com.wemgmemgfang.bt.R;
+import com.wemgmemgfang.bt.ui.activity.CrashDialog;
+import com.wemgmemgfang.bt.ui.activity.MainActivity;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,6 +24,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import cat.ereza.customactivityoncrash.activity.DefaultErrorActivity;
 
 /**
  * <pre>
@@ -37,9 +47,11 @@ public class CrashHandler
     private String crashDir;
     private String versionName;
     private int versionCode;
+    private Context context;
 
 
-    private CrashHandler() {
+    private CrashHandler(Context context) {
+        this.context =context;
     }
 
     /**
@@ -49,11 +61,11 @@ public class CrashHandler
      *
      * @return 单例
      */
-    public static CrashHandler getInstance() {
+    public static CrashHandler getInstance(Context context) {
         if (mInstance == null) {
             synchronized (CrashHandler.class) {
                 if (mInstance == null) {
-                    mInstance = new CrashHandler();
+                    mInstance = new CrashHandler(context);
                 }
             }
         }
@@ -94,6 +106,7 @@ public class CrashHandler
         String now = new SimpleDateFormat("yy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
         final String fullPath = crashDir + now + ".txt";
         if (!FileUtils.createOrExistsFile(fullPath)) return;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -116,10 +129,11 @@ public class CrashHandler
                 }
             }
         }).start();
-        if (mHandler != null) {
-            mHandler.uncaughtException(thread, throwable);
-        }
-
+        // 跳转到崩溃提示Activity
+        Intent intent = new Intent(context, CrashDialog.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        System.exit(0);// 关闭已奔溃的app进程
     }
 
     /**

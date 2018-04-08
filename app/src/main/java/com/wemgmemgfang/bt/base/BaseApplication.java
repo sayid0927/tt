@@ -6,12 +6,14 @@ import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.utils.ThreadPoolUtils;
 import com.blankj.utilcode.utils.Utils;
+import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.bean.DownVideoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.component.DaggerAppComponent;
 import com.wemgmemgfang.bt.module.ApiModule;
 import com.wemgmemgfang.bt.module.AppModule;
 import com.wemgmemgfang.bt.utils.AppUtils;
+import com.wemgmemgfang.bt.utils.CrashHandler;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.PreferUtil;
 import com.wemgmemgfang.bt.utils.UmengUtil;
@@ -42,12 +44,13 @@ public class BaseApplication extends Application {
         UmengUtil.UmengUtilInit(this);
         GreenDaoUtil.initDataBase(getApplicationContext());
 
+
 //        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "5abf0596b27b0a5f4600021a");
 //        UMGameAgent.init( this );
 //        MobclickAgent.setScenarioType(this ,  MobclickAgent.EScenarioType.E_UM_NORMAL);
 //        UMConfigure.setLogEnabled(true);
 
-//        CrashHandler.getInstance().init();
+        CrashHandler.getInstance(this).init();
 
 //        UMShareHelper.init(this);
 //        UmengUtil.UmengUtilInit(this);

@@ -17,11 +17,13 @@ package com.wemgmemgfang.bt.api;
 
 
 
+import com.wemgmemgfang.bt.RequestBody.AppInfoRequest;
 import com.wemgmemgfang.bt.base.Constant;
 import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -51,6 +53,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("search")
     Observable<Response<ResponseBody>> Fetch_Search_Info(@Field("keyword") String keyword);
+
+
+
+    /**
+     * 提交APP信息
+     */
+    @POST(Constant.POST_APK_INFO)
+    Observable<Response<ResponseBody>>  Post_Apk_Info(@Body AppInfoRequest appInfoRequest);
 
 
     /**

@@ -47,7 +47,7 @@ public class RandomUtils {
         agentString.add("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");
         agentString.add("Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.133 Safari/534.16");
         agentString.add("UCWEB7.0.2.37/28/999");
-        return  agentString.get(rand.nextInt(agentString.size()+1));
+        return  agentString.get(rand.nextInt(agentString.size()));
     }
 
 }

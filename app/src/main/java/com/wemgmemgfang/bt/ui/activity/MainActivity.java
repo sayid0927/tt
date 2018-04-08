@@ -17,8 +17,11 @@ import android.util.Log;
 
 import com.blankj.utilcode.utils.AppUtils;
 import com.blankj.utilcode.utils.LocationUtils;
+import com.blankj.utilcode.utils.LogUtils;
+import com.blankj.utilcode.utils.TimeUtils;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.wemgmemgfang.bt.R;
+import com.wemgmemgfang.bt.RequestBody.AppInfoRequest;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.base.BaseFragmentPageAdapter;
 import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
@@ -36,6 +39,7 @@ import com.wemgmemgfang.bt.ui.fragment.MeFragment;
 import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.PreferUtil;
+import com.wemgmemgfang.bt.utils.RandomUtils;
 import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import org.greenrobot.greendao.rx.RxDao;
@@ -100,15 +104,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void initView() {
 
+
+
         UmengUtil.onEvent("MainActivity");
         setSwipeBackEnable(false);
         mTitleList.add(getString(R.string.DownRank));
         mTitleList.add(getString(R.string.Home));
         mTitleList.add(getString(R.string.Film));
         mTitleList.add(getString(R.string.Me));
-
-
-
 
         HomeFragment homeFragment = new HomeFragment();
         DownRankingFragment downRankingFragment = new DownRankingFragment();
@@ -132,6 +135,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         if(dd!=null&& !dd.equals("")){
             UmengUtil.onCarshEvent(ReadTxtFiles(dd));
         }
+
         mPresenter.Apk_Update();
         UmengUtil.onEvent("DeviceInfo",getDeviceInfo(this));
 
@@ -274,6 +278,20 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void Apk_Update_Success(Apk_UpdateBean.DataBean dataBean) {
+
+        AppInfoRequest appInfoRequest = new AppInfoRequest();
+        appInfoRequest.setAppName(AppUtils.getAppName(this));
+        appInfoRequest.setAppPackageName(AppUtils.getAppPackageName(this));
+        appInfoRequest.setAppVersionCode(AppUtils.getAppVersionCode(this));
+        appInfoRequest.setAppVersionName(AppUtils.getAppVersionName(this));
+        appInfoRequest.setDate(TimeUtils.getNowTimeString());
+
+        mPresenter.Pust_App_Info(appInfoRequest);
+
+    }
+
+    @Override
+    public void Pust_App_Info_Success() {
 
     }
 }

@@ -16,6 +16,7 @@
 package com.wemgmemgfang.bt.presenter.contract;
 
 
+import com.wemgmemgfang.bt.RequestBody.AppInfoRequest;
 import com.wemgmemgfang.bt.base.BaseContract;
 import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 
@@ -25,9 +26,12 @@ public interface MainContract {
 
         void Apk_Update_Success(Apk_UpdateBean.DataBean dataBean);
 
+        void  Pust_App_Info_Success();
+
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
         void Apk_Update();
+        void  Pust_App_Info(AppInfoRequest appInfoRequest);
     }
 }

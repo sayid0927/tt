@@ -51,8 +51,7 @@ public class AboutActivity extends BaseActivity {
         UmengUtil.onEvent("AboutActivity");
         setSwipeBackEnable(true);
         tvTitle.setText(R.string.AboutApp);
-
-
+//        throw new RuntimeException("Boom!");
     }
 
     @OnClick({R.id.llExit})
