@@ -35,6 +35,7 @@ public class DownLoadHelper {
     }
 
     public void submit(Context context, DownVideoInfo downVideoInfo) {
+
         DownVideoInfo d = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(downVideoInfo.getPlayPath())).unique();
 
         if (d == null) {

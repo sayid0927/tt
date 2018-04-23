@@ -3,10 +3,14 @@ package com.wemgmemgfang.bt.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.blankj.utilcode.utils.LogUtils;
 import com.wemgmemgfang.bt.base.Constant;
 
 import org.apache.http.util.EncodingUtils;
@@ -220,6 +224,31 @@ public class DeviceUtils {
         return newList.toString();
     }
 
+
+    public static   void  getLocat(Context context){
+        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        //获取所有可用的位置提供器
+        List<String> providers = locationManager.getProviders(true);
+        String locationProvider;
+        if(providers.contains(LocationManager.GPS_PROVIDER)){
+            //如果是GPS
+            locationProvider = LocationManager.GPS_PROVIDER;
+        }else if(providers.contains(LocationManager.NETWORK_PROVIDER)){
+            //如果是Network
+            locationProvider = LocationManager.NETWORK_PROVIDER;
+        }else{
+            Toast.makeText(context, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
+            return ;
+        }
+        //获取Location
+        Location location = locationManager.getLastKnownLocation(locationProvider);
+        if(location!=null){
+            //不为空,显示地理位置经纬度
+            String locationStr = "维度：" + location.getLatitude() +"\n"
+                    + "经度：" + location.getLongitude();
+            LogUtils.e(locationStr);
+        }
+    }
 }
 
 

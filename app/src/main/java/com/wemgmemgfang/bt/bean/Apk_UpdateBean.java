@@ -9,9 +9,9 @@ public class Apk_UpdateBean {
 
     /**
      * res : 00000
-     * message : 鏌ヨ鎴愬姛
-     * currentTimes : 1.50954753638E9
-     * data : {"VersionCode":1,"fileSize":5087267,"Apk_Update_Path":"Apk_Update_Path"}
+     * message : 查询成功
+     * currentTimes : 1.52343498627902E9
+     * data : {"VersionCode":1,"Apk_Name":"app-release.apk","FileSize":4584698,"Update_Info":"更新内容\n  1. 异常处理\n 2. 异常处理\n","Apk_Update_Path":"Apk_Update_Path"}
      */
 
     private String res;
@@ -54,34 +54,20 @@ public class Apk_UpdateBean {
     public static class DataBean {
         /**
          * VersionCode : 1
-         * fileSize : 5087267
+         * Apk_Name : app-release.apk
+         * FileSize : 4584698
+         * Update_Info : 更新内容
+         1. 异常处理
+         2. 异常处理
+
          * Apk_Update_Path : Apk_Update_Path
-         * Update_Info
-         *
-         * Apk_Name
          */
 
         private int VersionCode;
-        private int FileSize;
-        private String Apk_Update_Path;
-        private String Update_Info;
         private String Apk_Name;
-
-        public String getApk_Name() {
-            return Apk_Name;
-        }
-
-        public void setApk_Name(String apk_Name) {
-            Apk_Name = apk_Name;
-        }
-
-        public String getUpdate_Info() {
-            return Update_Info;
-        }
-
-        public void setUpdate_Info(String update_Info) {
-            Update_Info = update_Info;
-        }
+        private int FileSize;
+        private String Update_Info;
+        private String Apk_Update_Path;
 
         public int getVersionCode() {
             return VersionCode;
@@ -91,12 +77,28 @@ public class Apk_UpdateBean {
             this.VersionCode = VersionCode;
         }
 
+        public String getApk_Name() {
+            return Apk_Name;
+        }
+
+        public void setApk_Name(String Apk_Name) {
+            this.Apk_Name = Apk_Name;
+        }
+
         public int getFileSize() {
             return FileSize;
         }
 
         public void setFileSize(int FileSize) {
             this.FileSize = FileSize;
+        }
+
+        public String getUpdate_Info() {
+            return Update_Info;
+        }
+
+        public void setUpdate_Info(String Update_Info) {
+            this.Update_Info = Update_Info;
         }
 
         public String getApk_Update_Path() {
@@ -111,17 +113,17 @@ public class Apk_UpdateBean {
         public String toString() {
             return "DataBean{" +
                     "VersionCode=" + VersionCode +
-                    ", FileSize=" + FileSize +
-                    ", Apk_Update_Path='" + Apk_Update_Path + '\'' +
-                    ", Update_Info='" + Update_Info + '\'' +
                     ", Apk_Name='" + Apk_Name + '\'' +
+                    ", FileSize=" + FileSize +
+                    ", Update_Info='" + Update_Info + '\'' +
+                    ", Apk_Update_Path='" + Apk_Update_Path + '\'' +
                     '}';
         }
     }
 
     @Override
     public String toString() {
-        return "Apk_Update{" +
+        return "Apk_UpdateBean{" +
                 "res='" + res + '\'' +
                 ", message='" + message + '\'' +
                 ", currentTimes=" + currentTimes +

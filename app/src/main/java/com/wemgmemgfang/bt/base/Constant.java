@@ -34,7 +34,8 @@ public class Constant {
     public  static  final String API_BASE_URL="http://120.78.136.232:9000/";
     public  static  final String STT_URL="https://www.80s.tt/";
     public  static  final String APK_UPDATE="apk_update";
-    public  static  final String  POST_APK_INFO="post_apk_info";
+    public  static  final String  POST_APK_INFO="app_info";
+    public  static  final String  POST_PHONE_INFO="phone_info";
     public  static  final String APK_UPDATE_PATH="apk_path";
 
     public  static  final String MEINVHA_DIR_LIST="meinvha_dir_list";

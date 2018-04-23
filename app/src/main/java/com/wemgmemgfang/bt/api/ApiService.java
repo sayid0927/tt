@@ -18,6 +18,7 @@ package com.wemgmemgfang.bt.api;
 
 
 import com.wemgmemgfang.bt.RequestBody.AppInfoRequest;
+import com.wemgmemgfang.bt.RequestBody.PhoneInfoRequest;
 import com.wemgmemgfang.bt.base.Constant;
 import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
 
@@ -62,13 +63,17 @@ public interface ApiService {
     @POST(Constant.POST_APK_INFO)
     Observable<Response<ResponseBody>>  Post_Apk_Info(@Body AppInfoRequest appInfoRequest);
 
+    /**
+     * 提交手机信息
+     */
+    @POST(Constant.POST_PHONE_INFO)
+    Observable<Response<ResponseBody>>  Post_Phone_Info(@Body PhoneInfoRequest phoneInfoRequest);
+
 
     /**
      * 获取APP更新信息
      */
-    @POST(Constant.APK_UPDATE)
+    @GET(Constant.APK_UPDATE)
     Observable<Apk_UpdateBean> Fetch_Apk_Update();
-
-
 
 }

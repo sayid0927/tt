@@ -17,7 +17,10 @@ package com.wemgmemgfang.bt.presenter.impl;
 
 
 import com.blankj.utilcode.utils.LogUtils;
+import com.blankj.utilcode.utils.NetworkUtils;
+import com.blankj.utilcode.utils.PhoneUtils;
 import com.wemgmemgfang.bt.RequestBody.AppInfoRequest;
+import com.wemgmemgfang.bt.RequestBody.PhoneInfoRequest;
 import com.wemgmemgfang.bt.api.Api;
 import com.wemgmemgfang.bt.base.RxPresenter;
 import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
@@ -27,6 +30,7 @@ import com.wemgmemgfang.bt.utils.DeviceUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -59,19 +63,18 @@ public class MainActivityPresenter extends RxPresenter<MainContract.View> implem
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.e(e.toString());
+                        LogUtils.e("APK onError>>   "+e.toString());
                     }
                     @Override
                     public void onNext(Apk_UpdateBean data) {
-
-                        if (data != null && mView != null && data.getRes().equals("00000")) {
+                        if (mView != null && data.getRes().equals("00000")) {
                             Apk_UpdateBean.DataBean dataBean = data.getData();
                             mView.Apk_Update_Success(dataBean);
                         }
-
                     }
                 });
         addSubscrebe(rxSubscription);
+
     }
 
     @Override
@@ -91,6 +94,48 @@ public class MainActivityPresenter extends RxPresenter<MainContract.View> implem
                     }
                     @Override
                     public void onNext(Response<ResponseBody> data) {
+
+                        LogUtils.e("Pust_App_Info >.  "+ data.body().toString());
+
+                    }
+                });
+        addSubscrebe(rxSubscription);
+    }
+
+    @Override
+    public void Pust_Phone_Info() {
+
+
+        PhoneInfoRequest phoneInfoRequest = new PhoneInfoRequest();
+        phoneInfoRequest.setIsPhone(PhoneUtils.isPhone() ? 0 : 1);
+        phoneInfoRequest.setIMEI(PhoneUtils.getIMEI());
+        phoneInfoRequest.setIMSI(PhoneUtils.getIMSI());
+        phoneInfoRequest.setPhoneType(PhoneUtils.getPhoneType());
+        phoneInfoRequest.setIPAddress(NetworkUtils.getIPAddress(true));
+        phoneInfoRequest.setNetworkOperatorName(NetworkUtils.getNetworkOperatorName());
+        phoneInfoRequest.setSDKVersion(com.blankj.utilcode.utils.DeviceUtils.getSDKVersion());
+        phoneInfoRequest.setAndroidID(com.blankj.utilcode.utils.DeviceUtils.getAndroidID());
+        phoneInfoRequest.setMacAddress(com.blankj.utilcode.utils.DeviceUtils.getMacAddress());
+        phoneInfoRequest.setManufacturer(com.blankj.utilcode.utils.DeviceUtils.getManufacturer());
+        phoneInfoRequest.setModel(com.blankj.utilcode.utils.DeviceUtils.getModel());
+
+
+        Subscription rxSubscription = bookApi.Post_Phone_Info(phoneInfoRequest).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<ResponseBody>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.e(e.toString());
+                    }
+                    @Override
+                    public void onNext(Response<ResponseBody> data) {
+
+                        LogUtils.e("Pust_App_Info >.  "+ data.body().toString());
 
                     }
                 });

@@ -4,12 +4,15 @@ apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion '26.0.3'
+
     defaultConfig {
         applicationId "com.wemgmemgfang.bt"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+
         //多渠道打包
         flavorDimensions "1"
         ndk {
@@ -21,14 +24,14 @@ android {
             abiFilters 'x86_64'
         }
 
-//        splits {
-//            abi {
-//                enable true
-//                reset()
-//                include 'x86', 'armeabi-v7a','x86_64'
-//                universalApk true
-//            }
-//        }
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'x86', 'armeabi-v7a','x86_64'
+                universalApk true
+            }
+        }
 
     }
     signingConfigs {
@@ -39,10 +42,10 @@ android {
             keyPassword "000000"
         }
         debug {
-            storeFile file("tt.jks")
-            storePassword "000000"
-            keyAlias "tt"
-            keyPassword "000000"
+//            storeFile file("tt.jks")
+//            storePassword "000000"
+//            keyAlias "tt"
+//            keyPassword "000000"
         }
     }
     buildTypes {
@@ -53,14 +56,15 @@ android {
             shrinkResources true //删除多余的资源文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release //设置签名
+
         }
         debug {
-            debuggable true
-            zipAlignEnabled true //zip对齐
-            minifyEnabled true  //设置混淆
-            shrinkResources true //删除多余的资源文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release //设置签名
+//            debuggable true
+//            zipAlignEnabled true //zip对齐
+//            minifyEnabled true  //设置混淆
+//            shrinkResources true //删除多余的资源文件
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release //设置签名
         }
     }
 
@@ -78,22 +82,22 @@ android {
     }
 
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE:name]
     }
 
     greendao {
         schemaVersion 1//数据库版本号
         daoPackage 'com.wemgmemgfang.bt.database'//设置DaoMaster、DaoSession、Dao包名
-        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+        targetGenDir 'src/main/java'                             //设置DaoMaster、DaoSession、Dao目录
         //targetGenDirTest：设置生成单元测试目录
         //generateTests：设置自动生成单元测试用例
     }
     dexOptions {
         jumboMode true
     }
-    buildToolsVersion '26.0.2'
 
 }
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -129,7 +133,10 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpcore:4.4.4'
     implementation 'com.umeng.analytics:analytics:latest.integration'
 
-    implementation 'cat.ereza:customactivityoncrash:1.3.0'
+//    可选，用于生成application类
+//    provided 'com.tencent.tinker:tinker-android-anno:1.7.11'
+//    //tinker的核心库
+//    compile 'com.tencent.tinker:tinker-android-lib:1.7.11'
 
     implementation project(':thunder')
     implementation project(':library')

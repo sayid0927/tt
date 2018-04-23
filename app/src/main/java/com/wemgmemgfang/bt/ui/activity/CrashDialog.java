@@ -50,7 +50,6 @@ public class CrashDialog extends AppCompatActivity {
                 exit();
             }
         });
-
     }
     private void exit() {
         System.exit(0);

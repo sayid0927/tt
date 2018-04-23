@@ -1,14 +1,18 @@
 package com.wemgmemgfang.bt.ui.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,12 +20,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.blankj.utilcode.utils.AppUtils;
+import com.blankj.utilcode.utils.DeviceUtils;
 import com.blankj.utilcode.utils.LocationUtils;
 import com.blankj.utilcode.utils.LogUtils;
+import com.blankj.utilcode.utils.NetworkUtils;
+import com.blankj.utilcode.utils.PhoneUtils;
 import com.blankj.utilcode.utils.TimeUtils;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.RequestBody.AppInfoRequest;
+import com.wemgmemgfang.bt.RequestBody.PhoneInfoRequest;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.base.BaseFragmentPageAdapter;
 import com.wemgmemgfang.bt.bean.Apk_UpdateBean;
@@ -57,6 +65,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 import static com.wemgmemgfang.bt.utils.DeviceUtils.ReadTxtFiles;
+import static com.wemgmemgfang.bt.utils.DeviceUtils.getLocat;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
@@ -69,8 +78,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @BindView(R.id.vp)
     ViewPager vp;
-
-    private BaseFragmentPageAdapter myAdapter;
 
     private ArrayList<String> mTitleList = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -104,8 +111,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void initView() {
 
-
-
         UmengUtil.onEvent("MainActivity");
         setSwipeBackEnable(false);
         mTitleList.add(getString(R.string.DownRank));
@@ -122,28 +127,59 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mFragments.add(filmFragment);
         mFragments.add(meFragment);
 
-        myAdapter = new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragments, mTitleList);
+        BaseFragmentPageAdapter myAdapter = new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragments, mTitleList);
         vp.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
         tabLayout.setupWithViewPager(vp);
 
+        mPresenter.Apk_Update();
+
+        AppInfoRequest appInfoRequest = new AppInfoRequest();
+        appInfoRequest.setAppName(AppUtils.getAppName(this));
+        appInfoRequest.setAppPackageName(AppUtils.getAppPackageName(this));
+        appInfoRequest.setAppVersionCode(AppUtils.getAppVersionCode(this));
+        appInfoRequest.setAppVersionName(AppUtils.getAppVersionName(this));
+        appInfoRequest.setDate(TimeUtils.getNowTimeString());
+
+        mPresenter.Pust_App_Info(appInfoRequest);
+        mPresenter.Pust_Phone_Info();
+
+        if(LocationUtils.isLocationEnabled()  ){
+            getLocat(this);
+        }
+
+        //上报异常信息
+        if ( !PreferUtil.getInstance().getcrashTxtPath().equals("")) {
+
+        }
+
+        UmengUtil.onEvent("DeviceInfo", getDeviceInfo(this));
         PgyUpdateManager.setIsForced(true); //设置是否强制更新。true为强制更新；false为不强制更新（默认值）。
         PgyUpdateManager.register(this);
         mainActivity = this;
 
-        String dd = PreferUtil.getInstance().getcrashTxtPath();
-        if(dd!=null&& !dd.equals("")){
-            UmengUtil.onCarshEvent(ReadTxtFiles(dd));
-        }
+    }
 
-        mPresenter.Apk_Update();
-        UmengUtil.onEvent("DeviceInfo",getDeviceInfo(this));
+    public void startActivityin(Intent i, Activity a) {
+        startActivityIn(i, a);
+    }
+
+    @Override
+    public void Apk_Update_Success(Apk_UpdateBean.DataBean dataBean) {
 
     }
 
-    public  void  startActivityin(Intent i,Activity a){
-        startActivityIn(i,a);
+    @Override
+    public void Pust_App_Info_Success() {
+
     }
+
+    @Override
+    public void Pust_Phone_Info_Success() {
+
+    }
+
+
 
     @Override
     public void showError(String message) {
@@ -197,7 +233,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             mac = getMacBySystemInterface(context);
         } else {
             mac = getMacByJavaAPI();
-            if (TextUtils.isEmpty(mac)){
+            if (TextUtils.isEmpty(mac)) {
                 mac = getMacBySystemInterface(context);
             }
         }
@@ -227,6 +263,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 }
             }
         } catch (Throwable e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -276,22 +313,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
 
-    @Override
-    public void Apk_Update_Success(Apk_UpdateBean.DataBean dataBean) {
 
-        AppInfoRequest appInfoRequest = new AppInfoRequest();
-        appInfoRequest.setAppName(AppUtils.getAppName(this));
-        appInfoRequest.setAppPackageName(AppUtils.getAppPackageName(this));
-        appInfoRequest.setAppVersionCode(AppUtils.getAppVersionCode(this));
-        appInfoRequest.setAppVersionName(AppUtils.getAppVersionName(this));
-        appInfoRequest.setDate(TimeUtils.getNowTimeString());
 
-        mPresenter.Pust_App_Info(appInfoRequest);
-
-    }
-
-    @Override
-    public void Pust_App_Info_Success() {
-
-    }
 }

@@ -91,6 +91,7 @@ public class DownListActivity extends BaseActivity {
         mAdapter.OnDeleteItemListenter(new DownListApadter.OnDeleteItemListenter() {
             @Override
             public void OnDeleteItemListenter(DownVideoInfo item) {
+
                 downVideoInfoList.remove(item);
                 XLTaskHelper.instance().deleteTask(item.getTaskId(),  item.getSaveVideoPath());
                 downVideoInfoDao.delete(item);

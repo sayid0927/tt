@@ -63,6 +63,4 @@ public class AboutActivity extends BaseActivity {
                 break;
         }
     }
-
-
 }
