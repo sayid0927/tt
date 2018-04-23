@@ -195,6 +195,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onDestroy() {
         super.onDestroy();
         PgyUpdateManager.unregister();
+
     }
 
     public static String getDeviceInfo(Context context) {

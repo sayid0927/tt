@@ -49,5 +49,4 @@ public class RandomUtils {
         agentString.add("UCWEB7.0.2.37/28/999");
         return  agentString.get(rand.nextInt(agentString.size()));
     }
-
 }

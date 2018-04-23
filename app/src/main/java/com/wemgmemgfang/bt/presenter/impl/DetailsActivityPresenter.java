@@ -64,7 +64,7 @@ public class DetailsActivityPresenter extends RxPresenter<DetailsActivityContrac
 
                 try {
 
-                    Connection connect = Jsoup.connect(url);
+                    Connection connect = Jsoup.connect(url).timeout(30000).validateTLSCertificates(false);
                     Map<String, String> header = new HashMap<>();
                     header.put("User-Agent", RandomUtils.getAgentString());
                     header.put("Accept", "	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");

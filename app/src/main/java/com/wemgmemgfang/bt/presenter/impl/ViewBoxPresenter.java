@@ -77,7 +77,7 @@ public class ViewBoxPresenter extends RxPresenter<ViewBoxContract.View> implemen
                 //在call方法中执行异步任务
                 ViewBoxBean viewBoxBean = new ViewBoxBean();
                 try {
-                    Connection connect = Jsoup.connect(url);
+                    Connection connect = Jsoup.connect(url).timeout(30000).validateTLSCertificates(false);
                     Map<String, String> header = new HashMap<>();
                     header.put("User-Agent", RandomUtils.getAgentString());
                     header.put("Accept", "	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
@@ -158,7 +158,7 @@ public class ViewBoxPresenter extends RxPresenter<ViewBoxContract.View> implemen
                 //在call方法中执行异步任务
                 List<DownHrefBean> downHrefBeanList = new ArrayList<>();
                 try {
-                    Connection connect = Jsoup.connect(Url);
+                    Connection connect = Jsoup.connect(Url).timeout(30000).validateTLSCertificates(false);
                     Map<String, String> header = new HashMap<>();
                     header.put("User-Agent", RandomUtils.getAgentString());
                     header.put("Accept", "	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");

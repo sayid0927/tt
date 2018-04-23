@@ -70,12 +70,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     protected void initView(Bundle bundle) {
         UmengUtil.onEvent("HomeFragment");
+        mPresenter.Fetch_80sHomeInfo(sttBaseUrl);
     }
 
     @Override
     public void loadData() {
         setState(Constant.STATE_SUCCESS);
-        mPresenter.Fetch_80sHomeInfo(sttBaseUrl);
+
     }
 
     @Override
