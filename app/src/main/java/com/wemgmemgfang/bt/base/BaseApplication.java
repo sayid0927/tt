@@ -50,7 +50,7 @@ public class BaseApplication extends Application {
 //        MobclickAgent.setScenarioType(this ,  MobclickAgent.EScenarioType.E_UM_NORMAL);
 //        UMConfigure.setLogEnabled(true);
 
-        CrashHandler.getInstance(this).init();
+//        CrashHandler.getInstance(this).init();
 
 //        UMShareHelper.init(this);
 //        UmengUtil.UmengUtilInit(this);

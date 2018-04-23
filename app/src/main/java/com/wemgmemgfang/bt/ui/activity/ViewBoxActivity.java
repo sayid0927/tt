@@ -63,10 +63,10 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     ImageView img;
     @BindView(R.id.title)
     TextView title;
-    @BindView(R.id.llExit)
-    LinearLayout llExit;
-    @BindView(R.id.tvTitle)
-    TextView tvTitle;
+//    @BindView(R.id.llExit)
+//    LinearLayout llExit;
+//    @BindView(R.id.tvTitle)
+//    TextView tvTitle;
     @BindView(R.id.size)
     TextView size;
     @BindView(R.id.sizeNum)
@@ -74,12 +74,12 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     @BindView(R.id.content)
     TextView content;
 
-    @BindView(R.id.iv_right)
-    ImageView ivRight;
-    @BindView(R.id.tv_collection)
-    TextView tvCollection;
-    @BindView(R.id.llRight)
-    LinearLayout llRight;
+//    @BindView(R.id.iv_right)
+//    ImageView ivRight;
+//    @BindView(R.id.tv_collection)
+//    TextView tvCollection;
+//    @BindView(R.id.llRight)
+//    LinearLayout llRight;
     @BindView(R.id.title_list)
     RecyclerView titleList;
 
@@ -136,9 +136,9 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     @Override
     public void Fetch_ViewBoxInfo_Success(ViewBoxBean data) {
 
-        strTitle = data.getAlt();
+        strTitle = data.getAlt().trim();
         ImgLoadUtils.loadImage(ViewBoxActivity.this, ImgUrl, img);
-        tvTitle.setText(strTitle);
+//        tvTitle.setText(strTitle);
         title.setText(strTitle);
         size.setText(data.getSize());
         sizeNum.setText(data.getSizeNum());
@@ -149,12 +149,12 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).list();
         if (cList != null && cList.size() != 0) {
             isCollertion = true;
-            tvCollection.setText(R.string.Collection_Yes);
-            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+//            tvCollection.setText(R.string.Collection_Yes);
+//            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
         } else {
             isCollertion = false;
-            tvCollection.setText(R.string.Collection_No);
-            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+//            tvCollection.setText(R.string.Collection_No);
+//            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
         }
         mPresenter.Fetch_HrefUrl(hrefUrl);
     }
@@ -248,40 +248,40 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     }
 
 
-    @OnClick({R.id.llExit, R.id.tvTitle, R.id.llRight})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.llExit:
-                this.finish();
-                break;
-
-            case R.id.llRight:
-
-                if (isCollertion) {
-                    isCollertion = false;
-                    CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).unique();
-                    collectionInfoDao.delete(collectionInfo);
-                    tvCollection.setText("收藏");
-                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
-
-                } else {
-                    isCollertion = true;
-                    CollectionInfo collectionInfo = new CollectionInfo();
-                    collectionInfo.setHrefUrl(Url);
-                    collectionInfo.setTitle(strTitle);
-                    collectionInfo.setImgUrl(ImgUrl);
-                    collectionInfoDao.insert(collectionInfo);
-                    tvCollection.setText("已收藏");
-                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
-                }
-                break;
-
-            case R.id.tvTitle:
-
-                break;
-
-        }
-    }
+//    @OnClick({R.id.llExit, R.id.tvTitle, R.id.llRight})
+//    public void onViewClicked(View view) {
+//        switch (view.getId()) {
+//            case R.id.llExit:
+//                this.finish();
+//                break;
+//
+//            case R.id.llRight:
+//
+//                if (isCollertion) {
+//                    isCollertion = false;
+//                    CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).unique();
+//                    collectionInfoDao.delete(collectionInfo);
+////                    tvCollection.setText("收藏");
+////                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+//
+//                } else {
+//                    isCollertion = true;
+//                    CollectionInfo collectionInfo = new CollectionInfo();
+//                    collectionInfo.setHrefUrl(Url);
+//                    collectionInfo.setTitle(strTitle);
+//                    collectionInfo.setImgUrl(ImgUrl);
+//                    collectionInfoDao.insert(collectionInfo);
+////                    tvCollection.setText("已收藏");
+////                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+//                }
+//                break;
+//
+//            case R.id.tvTitle:
+//
+//                break;
+//
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -298,4 +298,5 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         ToastUtils.showLongToast("没有权限无法下载电影");
     }
+
 }

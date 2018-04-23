@@ -17,7 +17,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -105,13 +104,11 @@
             android:name=".ui.activity.SearchActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".ui.activity.CrashDialog"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="PGYER_APPID"
@@ -123,6 +120,7 @@
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
 
+        <activity android:name=".ui.activity.MeiDetailsActivity"/>
     </application>
 
 </manifest>

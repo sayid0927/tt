@@ -26,7 +26,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <ImageView
-                    android:id="@+id/img"
+                    android:id="@+id/iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -71,9 +71,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text=""
+                            android:text="dddddd"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="15sp" />
 
 
                         <TextView
@@ -81,7 +81,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text=""
+                            android:text="vvvvvv"
                             android:textSize="10sp" />
 
                         <TextView
@@ -89,7 +89,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text=""
+                            android:text="ddddddd"
                             android:textSize="10sp" />
 
                     </LinearLayout>
@@ -107,8 +107,8 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="15dp"
-                        android:text=""
-                        android:textSize="14sp" />
+                        android:text="dddddddd"
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
