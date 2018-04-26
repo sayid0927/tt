@@ -15,12 +15,16 @@ public class CollectionInfo {
     private  String  HrefUrl;
     private  String  imgUrl;
     private String  Title;
-    @Generated(hash = 1313117972)
-    public CollectionInfo(Long id, String HrefUrl, String imgUrl, String Title) {
+    private  String itemType;
+
+    @Generated(hash = 1363961491)
+    public CollectionInfo(Long id, String HrefUrl, String imgUrl, String Title,
+            String itemType) {
         this.id = id;
         this.HrefUrl = HrefUrl;
         this.imgUrl = imgUrl;
         this.Title = Title;
+        this.itemType = itemType;
     }
     @Generated(hash = 358181051)
     public CollectionInfo() {
@@ -48,6 +52,12 @@ public class CollectionInfo {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getItemType() {
+        return this.itemType;
+    }
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 
     

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
@@ -27,6 +28,8 @@ public class CollectionActivity extends BaseActivity {
     RecyclerView rvColl;
     @BindView(R.id.llExit)
     LinearLayout llExit;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
     private CollectionAdapter collectionAdapter;
 
     @Override
@@ -52,7 +55,32 @@ public class CollectionActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        collectionAdapter.notifyDataSetChanged();
+
+        CollectionInfoDao collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
+        List<CollectionInfo> collectionInfoList = collectionInfoDao.loadAll();
+
+        collectionAdapter = new CollectionAdapter(collectionInfoList, this);
+        rvColl.setAdapter(collectionAdapter);
+        rvColl.setLayoutManager(new LinearLayoutManager(this));
+        collectionAdapter.onVideoItemListener(new CollectionAdapter.onVideoItemListener() {
+            @Override
+            public void onVideoItemListener(CollectionInfo item) {
+                if(item.getItemType().equals("zei8")){
+                    Intent intent = new Intent(CollectionActivity.this, ViewBoxActivity.class);
+                    intent.putExtra("HrefUrl", item.getHrefUrl());
+                    intent.putExtra("imgUrl", item.getImgUrl());
+                    intent.putExtra("Title", item.getTitle());
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(CollectionActivity.this, DetailsActivity.class);
+                    intent.putExtra("HrefUrl", item.getHrefUrl());
+                    intent.putExtra("imgUrl", item.getImgUrl());
+                    intent.putExtra("Title", item.getTitle());
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -60,23 +88,7 @@ public class CollectionActivity extends BaseActivity {
 
         UmengUtil.onEvent("CollectionActivity");
         setSwipeBackEnable(true);
-
-        CollectionInfoDao collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
-        List<CollectionInfo> collectionInfoList = collectionInfoDao.loadAll();
-
-         collectionAdapter = new CollectionAdapter(collectionInfoList, this);
-        rvColl.setAdapter(collectionAdapter);
-        rvColl.setLayoutManager(new LinearLayoutManager(this));
-//        collectionAdapter.onVideoItemListener(new CollectionAdapter.onVideoItemListener() {
-//            @Override
-//            public void onVideoItemListener(CollectionInfo item) {
-//                Intent intent = new Intent(CollectionActivity.this, DetailsActivity.class);
-//                intent.putExtra("HrefUrl",item.getHrefUrl());
-//                intent.putExtra("imgUrl",item.getImgUrl());
-//                intent.putExtra("Title",item.getTitle());
-//                startActivity(intent);
-//            }
-//        });
+        tvTitle.setText("我的收藏");
     }
 
     @OnClick(R.id.llExit)

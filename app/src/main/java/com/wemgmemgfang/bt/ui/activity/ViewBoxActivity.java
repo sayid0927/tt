@@ -288,8 +288,8 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                     isCollertion = false;
                     CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).unique();
                     collectionInfoDao.delete(collectionInfo);
-//                    tvCollection.setText("收藏");
-//                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+                    tvCollection.setText("收藏");
+                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
 
                 } else {
                     isCollertion = true;
@@ -297,9 +297,10 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                     collectionInfo.setHrefUrl(Url);
                     collectionInfo.setTitle(strTitle);
                     collectionInfo.setImgUrl(ImgUrl);
+                    collectionInfo.setItemType("zei8");
                     collectionInfoDao.insert(collectionInfo);
-//                    tvCollection.setText("已收藏");
-//                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+                    tvCollection.setText("收藏");
+                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
                 }
                 break;
 

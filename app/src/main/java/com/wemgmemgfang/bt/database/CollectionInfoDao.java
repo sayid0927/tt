@@ -28,6 +28,7 @@ public class CollectionInfoDao extends AbstractDao<CollectionInfo, Long> {
         public final static Property HrefUrl = new Property(1, String.class, "HrefUrl", false, "HREF_URL");
         public final static Property ImgUrl = new Property(2, String.class, "imgUrl", false, "IMG_URL");
         public final static Property Title = new Property(3, String.class, "Title", false, "TITLE");
+        public final static Property ItemType = new Property(4, String.class, "itemType", false, "ITEM_TYPE");
     }
 
 
@@ -46,7 +47,8 @@ public class CollectionInfoDao extends AbstractDao<CollectionInfo, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"HREF_URL\" TEXT," + // 1: HrefUrl
                 "\"IMG_URL\" TEXT," + // 2: imgUrl
-                "\"TITLE\" TEXT);"); // 3: Title
+                "\"TITLE\" TEXT," + // 3: Title
+                "\"ITEM_TYPE\" TEXT);"); // 4: itemType
     }
 
     /** Drops the underlying database table. */
@@ -78,6 +80,11 @@ public class CollectionInfoDao extends AbstractDao<CollectionInfo, Long> {
         if (Title != null) {
             stmt.bindString(4, Title);
         }
+ 
+        String itemType = entity.getItemType();
+        if (itemType != null) {
+            stmt.bindString(5, itemType);
+        }
     }
 
     @Override
@@ -103,6 +110,11 @@ public class CollectionInfoDao extends AbstractDao<CollectionInfo, Long> {
         if (Title != null) {
             stmt.bindString(4, Title);
         }
+ 
+        String itemType = entity.getItemType();
+        if (itemType != null) {
+            stmt.bindString(5, itemType);
+        }
     }
 
     @Override
@@ -116,7 +128,8 @@ public class CollectionInfoDao extends AbstractDao<CollectionInfo, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // HrefUrl
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // imgUrl
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // Title
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // Title
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // itemType
         );
         return entity;
     }
@@ -127,6 +140,7 @@ public class CollectionInfoDao extends AbstractDao<CollectionInfo, Long> {
         entity.setHrefUrl(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setImgUrl(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setTitle(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setItemType(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override

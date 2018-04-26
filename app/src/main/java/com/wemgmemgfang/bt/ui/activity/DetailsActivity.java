@@ -181,6 +181,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                     collectionInfo.setHrefUrl(url);
                     collectionInfo.setTitle(Title);
                     collectionInfo.setImgUrl(imgUrl);
+                    collectionInfo.setItemType("ss6");
                     collectionInfoDao.insert(collectionInfo);
                     tvCollection.setText(R.string.Collection_No);
                     ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
