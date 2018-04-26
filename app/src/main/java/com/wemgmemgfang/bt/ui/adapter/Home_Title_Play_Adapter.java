@@ -31,7 +31,7 @@ public class Home_Title_Play_Adapter extends BaseQuickAdapter<VideoDetailsBean.V
     protected void convert(BaseViewHolder helper, final VideoDetailsBean.VideoLinks item) {
 
         helper.setText(R.id.tv_title, item.getTitle());
-        helper.setText(R.id.tv_label, item.getLabel());
+//        helper.setText(R.id.tv_label, item.getLabel());
         Button buPlay = helper.getView(R.id.bu_play);
         Button buDown = helper.getView(R.id.bu_down);
         buPlay.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +68,4 @@ public class Home_Title_Play_Adapter extends BaseQuickAdapter<VideoDetailsBean.V
     public interface OnDownItemClickListener {
         void OnDownItemClickListener(VideoDetailsBean.VideoLinks item);
     }
-
-
 }

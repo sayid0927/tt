@@ -4,11 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -18,8 +21,8 @@
             android:id="@+id/rl_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical">
 
@@ -32,15 +35,7 @@
                 android:textColor="@color/common_h1"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:maxLines="1"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/light_red"
-                android:textSize="14sp" />
+
 
         </LinearLayout>
 

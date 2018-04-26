@@ -74,10 +74,12 @@ public class DetailsActivityPresenter extends RxPresenter<DetailsActivityContrac
                     Document doc = data.get();
 
                     Elements elSpan = doc.select("p.movie-info");
-                    String movieDescription = doc.getElementById("movie_description").text();
+//                    String movieDescription = doc.getElementById("movie_description").text();
                     Elements elLinks = doc.select("div.td-dl-links");
+                    String movieDescription =   doc.select("div.readmore").text();
 
-                    for(Element e : elLinks){
+
+                     for(Element e : elLinks){
                         VideoDetailsBean.VideoLinks videoLinks = new VideoDetailsBean.VideoLinks();
                         videoLinks.setThunder(e.select("a").attr("href"));
                         videoLinks.setLabel(e.select("span").text());
@@ -123,7 +125,9 @@ public class DetailsActivityPresenter extends RxPresenter<DetailsActivityContrac
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (mView != null) {
+                            mView.showError(e.toString());
+                        }
                     }
 
                     @Override

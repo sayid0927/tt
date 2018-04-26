@@ -69,8 +69,10 @@
                 <data android:scheme="thunder" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.ViewBoxActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.DownLoadService" />

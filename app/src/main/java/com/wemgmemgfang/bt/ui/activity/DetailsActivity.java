@@ -2,9 +2,12 @@ package com.wemgmemgfang.bt.ui.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,12 +45,12 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Inject
     DetailsActivityPresenter mPresenter;
-    @BindView(R.id.llExit)
-    LinearLayout llExit;
+//    @BindView(R.id.llExit)
+//    LinearLayout llExit;
     @BindView(R.id.img)
     ImageView img;
-    @BindView(R.id.tvTitle)
-    TextView tvTitle;
+//    @BindView(R.id.tvTitle)
+//    TextView tvTitle;
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.size)
@@ -64,8 +67,15 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     TextView tvCollection;
     @BindView(R.id.llRight)
     LinearLayout llRight;
-    @BindView(R.id.connection_title)
-    RelativeLayout connectionTitle;
+//    @BindView(R.id.connection_title)
+//    RelativeLayout connectionTitle;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar_layout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+
     private String HrefUrl, imgUrl, Title;
     private int clickType;
     private String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -99,8 +109,11 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Override
     public void initView() {
+
+
         UmengUtil.onEvent("DetailsActivity");
         setSwipeBackEnable(true);
+
 
         imgUrl = getIntent().getStringExtra("imgUrl");
         url = getIntent().getStringExtra("HrefUrl");
@@ -110,7 +123,24 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         showLoadPd();
 
         ImgLoadUtils.GifloadImage(this, imgUrl, img);
-        tvTitle.setText(Title);
+//        tvTitle.setText(Title);
+
+        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        toolbar.setTitle(Title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+
         title.setText(Title);
         collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
         List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).list();
@@ -130,12 +160,12 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         UmengUtil.onEvent("showError_DetailsActivity");
     }
 
-    @OnClick({R.id.llExit, R.id.llRight})
+    @OnClick({R.id.llRight})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.llExit:
-                this.finish();
-                break;
+//            case R.id.llExit:
+//                this.finish();
+//                break;
             case R.id.llRight:
 
                 if (isCollertion) {

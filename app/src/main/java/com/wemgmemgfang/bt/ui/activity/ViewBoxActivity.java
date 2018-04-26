@@ -1,13 +1,18 @@
 package com.wemgmemgfang.bt.ui.activity;
 
 import android.Manifest;
+import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +47,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import player.XLVideoPlayActivity;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -63,7 +69,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     ImageView img;
     @BindView(R.id.title)
     TextView title;
-//    @BindView(R.id.llExit)
+    //    @BindView(R.id.llExit)
 //    LinearLayout llExit;
 //    @BindView(R.id.tvTitle)
 //    TextView tvTitle;
@@ -74,14 +80,18 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     @BindView(R.id.content)
     TextView content;
 
-//    @BindView(R.id.iv_right)
-//    ImageView ivRight;
-//    @BindView(R.id.tv_collection)
-//    TextView tvCollection;
-//    @BindView(R.id.llRight)
-//    LinearLayout llRight;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.tv_collection)
+    TextView tvCollection;
+    @BindView(R.id.llRight)
+    LinearLayout llRight;
     @BindView(R.id.title_list)
     RecyclerView titleList;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar_layout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     private String hrefUrl;
     private DownHrefBean downHrefBean;
@@ -116,12 +126,16 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void initView() {
+
+        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         UmengUtil.onEvent("ViewBoxActivity");
         setSwipeBackEnable(true);
         Url = getIntent().getStringExtra("HrefUrl");
         ImgUrl = getIntent().getStringExtra("ImgUrl");
         mPresenter.Fetch_ViewBoxInfo("http://www.zei8.me" + Url);
         showLoadPd();
+
     }
 
     @Override
@@ -133,12 +147,25 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         UmengUtil.onEvent("showError_ViewBoxActivity");
     }
 
+
     @Override
     public void Fetch_ViewBoxInfo_Success(ViewBoxBean data) {
 
         strTitle = data.getAlt().trim();
         ImgLoadUtils.loadImage(ViewBoxActivity.this, ImgUrl, img);
-//        tvTitle.setText(strTitle);
+
+        toolbar.setTitle(strTitle);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         title.setText(strTitle);
         size.setText(data.getSize());
         sizeNum.setText(data.getSizeNum());
@@ -149,12 +176,12 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).list();
         if (cList != null && cList.size() != 0) {
             isCollertion = true;
-//            tvCollection.setText(R.string.Collection_Yes);
-//            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+            tvCollection.setText(R.string.Collection_Yes);
+            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
         } else {
             isCollertion = false;
-//            tvCollection.setText(R.string.Collection_No);
-//            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+            tvCollection.setText(R.string.Collection_No);
+            ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
         }
         mPresenter.Fetch_HrefUrl(hrefUrl);
     }
@@ -169,7 +196,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     public void download_Zip_Success(String filePath) {
         dismissLoadPd();
         final String destFileDir = DeviceUtils.getSDPath(downHrefBean.getTitle());
-         videoLinksList = new ArrayList<>();
+        videoLinksList = new ArrayList<>();
         try {
             boolean jieya = ZipUtils.unzipFile(filePath, destFileDir);
             if (jieya) {
@@ -227,7 +254,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
                         } else {
                             String thunderUrl = item.getThunder();
-                            Log.e("TAG",thunderUrl);
+                            Log.e("TAG", thunderUrl);
                             if (thunderUrl != null)
                                 XLVideoPlayActivity.intentTo(ViewBoxActivity.this, thunderUrl, item.getTitle());
                         }
@@ -248,40 +275,40 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     }
 
 
-//    @OnClick({R.id.llExit, R.id.tvTitle, R.id.llRight})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
+    @OnClick({R.id.llRight})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
 //            case R.id.llExit:
 //                this.finish();
 //                break;
-//
-//            case R.id.llRight:
-//
-//                if (isCollertion) {
-//                    isCollertion = false;
-//                    CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).unique();
-//                    collectionInfoDao.delete(collectionInfo);
-////                    tvCollection.setText("收藏");
-////                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
-//
-//                } else {
-//                    isCollertion = true;
-//                    CollectionInfo collectionInfo = new CollectionInfo();
-//                    collectionInfo.setHrefUrl(Url);
-//                    collectionInfo.setTitle(strTitle);
-//                    collectionInfo.setImgUrl(ImgUrl);
-//                    collectionInfoDao.insert(collectionInfo);
-////                    tvCollection.setText("已收藏");
-////                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
-//                }
-//                break;
-//
-//            case R.id.tvTitle:
-//
-//                break;
-//
-//        }
-//    }
+
+            case R.id.llRight:
+
+                if (isCollertion) {
+                    isCollertion = false;
+                    CollectionInfo collectionInfo = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(strTitle)).unique();
+                    collectionInfoDao.delete(collectionInfo);
+//                    tvCollection.setText("收藏");
+//                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc));
+
+                } else {
+                    isCollertion = true;
+                    CollectionInfo collectionInfo = new CollectionInfo();
+                    collectionInfo.setHrefUrl(Url);
+                    collectionInfo.setTitle(strTitle);
+                    collectionInfo.setImgUrl(ImgUrl);
+                    collectionInfoDao.insert(collectionInfo);
+//                    tvCollection.setText("已收藏");
+//                    ivRight.setImageDrawable(getResources().getDrawable(R.mipmap.cc_ss));
+                }
+                break;
+
+            case R.id.tvTitle:
+
+                break;
+
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
