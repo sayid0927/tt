@@ -3,6 +3,7 @@ package com.wemgmemgfang.bt.ui.activity;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.ToastUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.VideoDetailsBean;
@@ -26,10 +27,12 @@ import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.presenter.contract.DetailsActivityContract;
 import com.wemgmemgfang.bt.presenter.impl.DetailsActivityPresenter;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
+import com.wemgmemgfang.bt.utils.Defaultcontent;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
 import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
+import com.wemgmemgfang.bt.utils.ShareUtils;
 import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.List;
@@ -37,6 +40,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import player.XLVideoPlayActivity;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -45,11 +49,11 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Inject
     DetailsActivityPresenter mPresenter;
-//    @BindView(R.id.llExit)
+    //    @BindView(R.id.llExit)
 //    LinearLayout llExit;
     @BindView(R.id.img)
     ImageView img;
-//    @BindView(R.id.tvTitle)
+    //    @BindView(R.id.tvTitle)
 //    TextView tvTitle;
     @BindView(R.id.title)
     TextView title;
@@ -74,6 +78,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.ll_share)
+    LinearLayout llShare;
 
 
     private String HrefUrl, imgUrl, Title;
@@ -140,7 +146,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         });
 
 
-
         title.setText(Title);
         collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
         List<CollectionInfo> cList = collectionInfoDao.queryBuilder().where(CollectionInfoDao.Properties.Title.eq(Title)).list();
@@ -160,12 +165,13 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         UmengUtil.onEvent("showError_DetailsActivity");
     }
 
-    @OnClick({R.id.llRight})
+    @OnClick({R.id.llRight,R.id.ll_share})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-//            case R.id.llExit:
-//                this.finish();
-//                break;
+            case R.id.ll_share:
+                ShareUtils.shareWeb(this, Defaultcontent.url, Defaultcontent.title, Defaultcontent.text, Defaultcontent.imageurl, R.mipmap.cash, SHARE_MEDIA.WEIXIN
+                );
+                break;
             case R.id.llRight:
 
                 if (isCollertion) {
@@ -264,4 +270,10 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         ToastUtils.showLongToast("没有权限无法下载电影");
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

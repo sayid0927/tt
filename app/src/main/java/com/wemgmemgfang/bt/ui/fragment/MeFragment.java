@@ -22,6 +22,8 @@ import com.wemgmemgfang.bt.ui.activity.CollectionActivity;
 import com.wemgmemgfang.bt.ui.activity.DownListActivity;
 import com.wemgmemgfang.bt.ui.activity.FeedbackActivity;
 import com.wemgmemgfang.bt.ui.activity.MainActivity;
+import com.wemgmemgfang.bt.utils.Defaultcontent;
+import com.wemgmemgfang.bt.utils.ShareUtils;
 import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.util.Map;
@@ -101,12 +103,10 @@ public class MeFragment extends BaseFragment {
                 MainActivity.mainActivity.killAll();
                 break;
             case R.id.ll_denglu:
-//                ToastUtils.showLongToast("暂不支持");
                 authorization(SHARE_MEDIA.WEIXIN);
                 break;
         }
     }
-
 
     private  static  String TAG = "MeFragment";
     //授权
@@ -135,6 +135,7 @@ public class MeFragment extends BaseFragment {
                 Toast.makeText(getActivity(), "name=" + name + ",gender=" + gender, Toast.LENGTH_SHORT).show();
 
                 //拿到信息去请求登录接口。。。
+
             }
 
             @Override

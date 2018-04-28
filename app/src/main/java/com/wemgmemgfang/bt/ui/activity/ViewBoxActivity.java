@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.ToastUtils;
 import com.blankj.utilcode.utils.ZipUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.DownHrefBean;
@@ -33,10 +33,12 @@ import com.wemgmemgfang.bt.entity.DownVideoInfo;
 import com.wemgmemgfang.bt.presenter.contract.ViewBoxContract;
 import com.wemgmemgfang.bt.presenter.impl.ViewBoxPresenter;
 import com.wemgmemgfang.bt.ui.adapter.Home_Title_Play_Adapter;
+import com.wemgmemgfang.bt.utils.Defaultcontent;
 import com.wemgmemgfang.bt.utils.DeviceUtils;
 import com.wemgmemgfang.bt.utils.DownLoadHelper;
 import com.wemgmemgfang.bt.utils.GreenDaoUtil;
 import com.wemgmemgfang.bt.utils.ImgLoadUtils;
+import com.wemgmemgfang.bt.utils.ShareUtils;
 import com.wemgmemgfang.bt.utils.UmengUtil;
 
 import java.io.File;
@@ -92,6 +94,8 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.ll_share)
+    LinearLayout llShare;
 
     private String hrefUrl;
     private DownHrefBean downHrefBean;
@@ -275,12 +279,16 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     }
 
 
-    @OnClick({R.id.llRight})
+    @OnClick({R.id.llRight,R.id.ll_share})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-//            case R.id.llExit:
-//                this.finish();
-//                break;
+            case R.id.ll_share:
+
+                ShareUtils.shareWeb(this, Defaultcontent.url, Defaultcontent.title
+                        , Defaultcontent.text, Defaultcontent.imageurl, R.mipmap.cash, SHARE_MEDIA.WEIXIN
+                );
+
+                break;
 
             case R.id.llRight:
 
@@ -327,4 +335,10 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         ToastUtils.showLongToast("没有权限无法下载电影");
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

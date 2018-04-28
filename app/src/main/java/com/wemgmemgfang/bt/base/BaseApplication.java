@@ -59,6 +59,8 @@ public class BaseApplication extends Application {
 //        UMShareHelper.init(this);
 //        UmengUtil.UmengUtilInit(this);
 //        UmengUtil.onEvent("phoneInfo");
+
+
     }
 
     private void initCompoent() {
