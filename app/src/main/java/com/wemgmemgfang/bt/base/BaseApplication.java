@@ -3,9 +3,12 @@ package com.wemgmemgfang.bt.base;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.Config;
 
 import com.blankj.utilcode.utils.ThreadPoolUtils;
 import com.blankj.utilcode.utils.Utils;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.bean.DownVideoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
@@ -42,6 +45,7 @@ public class BaseApplication extends Application {
         AppUtils.init(this);
         PreferUtil.getInstance().init(this);
         UmengUtil.UmengUtilInit(this);
+        UMShareAPI.get(this);//初始化sdk
         GreenDaoUtil.initDataBase(getApplicationContext());
 
 
@@ -63,6 +67,17 @@ public class BaseApplication extends Application {
                 .appModule(new AppModule(this))
                 .build();
     }
+
+    //各个平台的配置
+    static {
+        //微信
+        PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
+        //新浪微博(第三个参数为回调地址)
+//        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com/sina2/callback");
+//        //QQ
+//        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+    }
+
 
     /**
      * 获取BaseApplication实例

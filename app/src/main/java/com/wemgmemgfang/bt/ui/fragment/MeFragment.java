@@ -1,11 +1,17 @@
 package com.wemgmemgfang.bt.ui.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.blankj.utilcode.utils.LogUtils;
 import com.blankj.utilcode.utils.ToastUtils;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseFragment;
 import com.wemgmemgfang.bt.base.Constant;
@@ -17,6 +23,9 @@ import com.wemgmemgfang.bt.ui.activity.DownListActivity;
 import com.wemgmemgfang.bt.ui.activity.FeedbackActivity;
 import com.wemgmemgfang.bt.ui.activity.MainActivity;
 import com.wemgmemgfang.bt.utils.UmengUtil;
+
+import java.util.Map;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -92,8 +101,51 @@ public class MeFragment extends BaseFragment {
                 MainActivity.mainActivity.killAll();
                 break;
             case R.id.ll_denglu:
-                ToastUtils.showLongToast("暂不支持");
+//                ToastUtils.showLongToast("暂不支持");
+                authorization(SHARE_MEDIA.WEIXIN);
                 break;
         }
+    }
+
+
+    private  static  String TAG = "MeFragment";
+    //授权
+    private void authorization(SHARE_MEDIA share_media) {
+        UMShareAPI.get(getActivity()).getPlatformInfo(getActivity(), share_media, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+                LogUtils.e("onStart " + "授权开始");
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                LogUtils.e(TAG, "onComplete " + "授权完成");
+
+                //sdk是6.4.4的,但是获取值的时候用的是6.2以前的(access_token)才能获取到值,未知原因
+                String uid = map.get("uid");
+                String openid = map.get("openid");//微博没有
+                String unionid = map.get("unionid");//微博没有
+                String access_token = map.get("access_token");
+                String refresh_token = map.get("refresh_token");//微信,qq,微博都没有获取到
+                String expires_in = map.get("expires_in");
+                String name = map.get("name");
+                String gender = map.get("gender");
+                String iconurl = map.get("iconurl");
+
+                Toast.makeText(getActivity(), "name=" + name + ",gender=" + gender, Toast.LENGTH_SHORT).show();
+
+                //拿到信息去请求登录接口。。。
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                LogUtils.e(TAG, "onError " + "授权失败");
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                LogUtils.e(TAG, "onCancel " + "授权取消");
+            }
+        });
     }
 }

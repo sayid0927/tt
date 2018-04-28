@@ -112,6 +112,14 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <!--微信-->
+        <activity
+            android:name="com.wemgmemgfang.bt.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
         <meta-data
             android:name="PGYER_APPID"
             android:value="4b6e8877dfcc2462bedb37dcf66b6d87" />

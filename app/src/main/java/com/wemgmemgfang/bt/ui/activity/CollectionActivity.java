@@ -1,7 +1,6 @@
 package com.wemgmemgfang.bt.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
@@ -19,7 +18,6 @@ import com.wemgmemgfang.bt.utils.UmengUtil;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CollectionActivity extends BaseActivity {
@@ -68,7 +66,7 @@ public class CollectionActivity extends BaseActivity {
                 if(item.getItemType().equals("zei8")){
                     Intent intent = new Intent(CollectionActivity.this, ViewBoxActivity.class);
                     intent.putExtra("HrefUrl", item.getHrefUrl());
-                    intent.putExtra("imgUrl", item.getImgUrl());
+                    intent.putExtra("ImgUrl", item.getImgUrl());
                     intent.putExtra("Title", item.getTitle());
                     startActivity(intent);
                 }else {

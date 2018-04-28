@@ -36,16 +36,28 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("tt.jks")
+//            storeFile file("tt.jks")
+//            storePassword "000000"
+//            keyAlias "tt"
+//            keyPassword "000000"
+
+            storeFile file('doutu.jks')
             storePassword "000000"
-            keyAlias "tt"
+            keyAlias "doutu"
             keyPassword "000000"
+
         }
         debug {
 //            storeFile file("tt.jks")
 //            storePassword "000000"
 //            keyAlias "tt"
 //            keyPassword "000000"
+
+            storeFile file('doutu.jks')
+            storePassword "000000"
+            keyAlias "doutu"
+            keyPassword "000000"
+
         }
     }
     buildTypes {
@@ -61,10 +73,10 @@ android {
         debug {
 //            debuggable true
 //            zipAlignEnabled true //zip对齐
-//            minifyEnabled true  //设置混淆
+//            minifyEnabled false  //设置混淆
 //            shrinkResources true //删除多余的资源文件
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release //设置签名
+            signingConfig signingConfigs.debug //设置签名
         }
     }
 
@@ -132,13 +144,13 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.apache.httpcomponents:httpcore:4.4.4'
     implementation 'com.umeng.analytics:analytics:latest.integration'
-
-//    可选，用于生成application类
-//    provided 'com.tencent.tinker:tinker-android-anno:1.7.11'
-//    //tinker的核心库
-//    compile 'com.tencent.tinker:tinker-android-lib:1.7.11'
-
+    //    可选，用于生成application类
+    //    provided 'com.tencent.tinker:tinker-android-anno:1.7.11'
+    //    //tinker的核心库
+    //    compile 'com.tencent.tinker:tinker-android-lib:1.7.11'
     implementation project(':thunder')
     implementation project(':library')
-
+    implementation files('libs/umeng_social_api.jar')
+    implementation files('libs/umeng_social_net.jar')
+    implementation files('libs/SocialSDK_WeChat_Simplify.jar')
 }
