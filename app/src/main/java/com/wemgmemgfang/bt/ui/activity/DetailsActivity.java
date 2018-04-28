@@ -49,12 +49,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Inject
     DetailsActivityPresenter mPresenter;
-    //    @BindView(R.id.llExit)
-//    LinearLayout llExit;
     @BindView(R.id.img)
     ImageView img;
-    //    @BindView(R.id.tvTitle)
-//    TextView tvTitle;
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.size)
@@ -71,8 +67,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     TextView tvCollection;
     @BindView(R.id.llRight)
     LinearLayout llRight;
-//    @BindView(R.id.connection_title)
-//    RelativeLayout connectionTitle;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -80,7 +74,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.ll_share)
     LinearLayout llShare;
-
 
     private String HrefUrl, imgUrl, Title;
     private int clickType;
@@ -91,7 +84,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     private String url;
     private CollectionInfoDao collectionInfoDao;
     private boolean isCollertion;
-
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -116,10 +108,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     @Override
     public void initView() {
 
-
         UmengUtil.onEvent("DetailsActivity");
         setSwipeBackEnable(true);
-
 
         imgUrl = getIntent().getStringExtra("imgUrl");
         url = getIntent().getStringExtra("HrefUrl");
@@ -129,7 +119,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         showLoadPd();
 
         ImgLoadUtils.GifloadImage(this, imgUrl, img);
-//        tvTitle.setText(Title);
 
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
@@ -144,7 +133,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                 finish();
             }
         });
-
 
         title.setText(Title);
         collectionInfoDao = GreenDaoUtil.getDaoSession().getCollectionInfoDao();
@@ -253,7 +241,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         });
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -270,10 +257,4 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         ToastUtils.showLongToast("没有权限无法下载电影");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }
