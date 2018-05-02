@@ -50,14 +50,10 @@ public class DownTaskService extends Service {
 
                             case 0:
 //                                d.setId(d.getId());
-//                                d.setMFileSize(taskInfo.mFileSize);
-//                                d.setMDownloadSize(taskInfo.mDownloadSize);
-//                                d.setMTaskStatus(taskInfo.mTaskStatus);
 //                                d.setState(getString(R.string.downError));
 //                                d.setTaskId(taskId);
 //                                downVideoInfoDao.update(d);
-//                                EventBus.getDefault().post(d);
-//                                ToastUtils.showLongToast("服务器太忙,请稍会再试");
+                                EventBus.getDefault().post(d);
                                 break;
 
                             case 1:
@@ -95,11 +91,8 @@ public class DownTaskService extends Service {
                                 d.setState(getString(R.string.downError));
                                 downVideoInfoDao.update(d);
                                 EventBus.getDefault().post(d);
-                                ToastUtils.showLongToast("服务器太忙,请稍会再试");
                                 break;
-
                         }
-
                         break;
                 }
             }

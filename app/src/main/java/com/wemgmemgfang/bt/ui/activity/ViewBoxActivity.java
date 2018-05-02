@@ -248,6 +248,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             downVideoInfo.setState(getString(R.string.Start));
                             downVideoInfo.setSaveVideoPath(DeviceUtils.getSDVideoPath(item.getTitle()));
                             DownLoadHelper.getInstance().submit(ViewBoxActivity.this, downVideoInfo);
+
                         }
                     }
                 });
@@ -258,7 +259,6 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                             EasyPermissions.requestPermissions(this, "需要读写权限", 1000, perms);
                         } else {
                             String thunderUrl = item.getThunder();
-                            Log.e("TAG", thunderUrl);
                             if (thunderUrl != null)
                                 XLVideoPlayActivity.intentTo(ViewBoxActivity.this, thunderUrl, item.getTitle());
                         }

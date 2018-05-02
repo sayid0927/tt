@@ -39,38 +39,63 @@ public class DownListApadter extends BaseQuickAdapter<DownVideoInfo, BaseViewHol
     protected void convert(BaseViewHolder helper, final DownVideoInfo item) {
         ImageView iv = helper.getView(R.id.iv_down);
         helper.setText(R.id.down_title, item.getPlayTitle());
-        ProgressBar progressBar= helper.getView(R.id.progressBar);
+        ProgressBar progressBar = helper.getView(R.id.progressBar);
         ImgLoadUtils.loadImage(mContext, item.getPlayimgUrl(), iv);
-        if(item.getMFileSize()!=0&& item.getMDownloadSize()!=0) {
-            progressBar.setVisibility(View.VISIBLE);
-            helper.getView(R.id.tv_pro).setVisibility(View.VISIBLE);
-             int size =  (int) (item.getMDownloadSize() * 100 / item.getMFileSize());
-            progressBar.setProgress( size);
-            helper.setText(R.id.tv_pro,  String.valueOf(size)+"%    " +item.getMFileSize()+ " / "+item.getMDownloadSize()+"    "+
-                    convertFileSize(item.getMDownloadSpeed()));
-        }else {
-            helper.getView(R.id.tv_pro).setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
-        }
+
+        progressBar.setVisibility(View.VISIBLE);
+        helper.getView(R.id.tv_pro).setVisibility(View.VISIBLE);
+        int size = (int) (item.getMDownloadSize() * 100 / item.getMFileSize());
+        progressBar.setProgress(size);
+         switch (item.getState()){
+             case "下载暂停":
+                 helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
+                         "下载暂停");
+                 break;
+
+             case "下载错误":
+                 helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
+                         "网络异常");
+                 break;
+
+             case "下载中":
+                 helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
+                         convertFileSize(item.getMDownloadSpeed()));
+                 break;
+         }
+
+
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onDeleteItemListenter.OnDeleteItemListenter(item);
             }
         });
-
-
-
+        helper.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onItemLongClickListenter.OnItemLongClickListenter(item);
+                return false;
+            }
+        });
     }
 
     private OnDeleteItemListenter onDeleteItemListenter;
+    private OnItemLongClickListenter onItemLongClickListenter;
 
     public void OnDeleteItemListenter(OnDeleteItemListenter onDeleteItemListenter) {
         this.onDeleteItemListenter = onDeleteItemListenter;
     }
 
+    public void OnItemLongClickListenter(OnItemLongClickListenter OnItemLongClickListenter) {
+        this.onItemLongClickListenter = OnItemLongClickListenter;
+    }
+
     public interface OnDeleteItemListenter {
         void OnDeleteItemListenter(DownVideoInfo item);
+    }
+
+    public interface OnItemLongClickListenter {
+        void OnItemLongClickListenter(DownVideoInfo item);
     }
 
 
