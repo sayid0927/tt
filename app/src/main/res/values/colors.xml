@@ -31,6 +31,9 @@
     <color name="colorLineItem">#FFDDDDDD</color>
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
+    <color name="blacktap">#312F34</color>
+
+
     <color name="red">#FF0000</color>
     <color name="orange">#DE6014</color>
     <color name="gray">#b8b8b8</color>

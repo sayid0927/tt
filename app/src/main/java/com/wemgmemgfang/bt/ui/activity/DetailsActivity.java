@@ -256,5 +256,4 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         ToastUtils.showLongToast("没有权限无法下载电影");
     }
-
 }

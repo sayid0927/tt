@@ -78,6 +78,7 @@ public class DownRankingPresenter extends RxPresenter<DownRankingContract.View> 
                     Elements document = Jsoup.parse(html).getElementsByTag("li");
 
                     for(Element e : document){
+
                         DownRaningBean downRaningBean = new DownRaningBean();
                         downRaningBean.setHref(e.select("a").attr("href"));
                         downRaningBean.setImgUrl(e.select("img").attr("src"));
@@ -85,6 +86,7 @@ public class DownRankingPresenter extends RxPresenter<DownRankingContract.View> 
                         downRaningBean.setAdd(e.select("span").text());
                         downRaningBean.setIntro(e.select("p").text());
                         downRaningBeans.add(downRaningBean);
+
                     }
                 } catch (Exception e) {
                     //注意：如果异步任务中需要抛出异常，在执行结果中处理异常。需要将异常转化未RuntimException

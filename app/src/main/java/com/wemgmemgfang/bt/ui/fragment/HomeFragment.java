@@ -71,6 +71,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     protected void initView(Bundle bundle) {
         UmengUtil.onEvent("HomeFragment");
         mPresenter.Fetch_80sHomeInfo(sttBaseUrl);
+        showLoadPd();
     }
 
     @Override
@@ -96,7 +97,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @Override
     public void showError(String message) {
-//        showDialog(message);
+
         UmengUtil.onEvent("showError_HomeFragment");
         mPresenter.Fetch_80sHomeInfo(sttBaseUrl);
     }
@@ -108,7 +109,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     private void initadapterData(HomeInfoBean data) {
-
+        dismissLoadPd();
         ArrayList<MultiItemEntity> res = new ArrayList<>();
 
         for (int i = 0; i < data.getColTitleBean().size(); i++) {
@@ -119,9 +120,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             homeTitleItem.setTitle(data.getColTitleBean().get(i).getTitle());
 
             for (int j = 0; j < data.getSectionBeans().size(); j++) {
-                String title=  homeTitleItem.getTitle();
-                String tt =  data.getSectionBeans().get(j).getType();
-                if (title.contains(tt) ) {
+                String title = homeTitleItem.getTitle();
+                String tt = data.getSectionBeans().get(j).getType();
+                if (title.contains(tt)) {
                     HomeSectionBean homeSectionBean = new HomeSectionBean();
                     homeSectionBean.setEm(data.getSectionBeans().get(j).getEm());
                     homeSectionBean.setHerf(data.getSectionBeans().get(j).getHerf());
@@ -151,9 +152,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             public void OnTitleItemClickListener(HomeTitleItem item) {
 
                 Intent intent = new Intent(getActivity(), MoreActivity.class);
-                intent.putExtra("HrefUrl",item.getHrefUrl());
-                intent.putExtra("Title",item.getTitle());
-                MainActivity.mainActivity.startActivityIn(intent,getActivity());
+                intent.putExtra("HrefUrl", item.getHrefUrl());
+                intent.putExtra("Title", item.getTitle());
+                MainActivity.mainActivity.startActivityIn(intent, getActivity());
 
             }
         });
@@ -161,10 +162,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             @Override
             public void OnSectionItemClickListener(HomeSectionBean item) {
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra("HrefUrl",item.getHerf());
-                intent.putExtra("imgUrl",item.getImgUrl());
-                intent.putExtra("Title",item.getTitle());
-                MainActivity.mainActivity.startActivityIn(intent,getActivity());
+                intent.putExtra("HrefUrl", item.getHerf());
+                intent.putExtra("imgUrl", item.getImgUrl());
+                intent.putExtra("Title", item.getTitle());
+                MainActivity.mainActivity.startActivityIn(intent, getActivity());
             }
         });
     }

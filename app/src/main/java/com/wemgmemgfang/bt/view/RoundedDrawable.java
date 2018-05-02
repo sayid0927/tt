@@ -128,11 +128,11 @@ public class RoundedDrawable extends Drawable {
       return ((BitmapDrawable) drawable).getBitmap();
     }
 
-    Bitmap bitmap;
+     Bitmap bitmap;
     int width = Math.max(drawable.getIntrinsicWidth(), 2);
     int height = Math.max(drawable.getIntrinsicHeight(), 2);
     try {
-      bitmap = Bitmap.createBitmap(width, height, Config.ARGB_4444);
+      bitmap = Bitmap.createBitmap(width, height, Config.RGB_565);
       Canvas canvas = new Canvas(bitmap);
       drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
       drawable.draw(canvas);
@@ -140,6 +140,7 @@ public class RoundedDrawable extends Drawable {
       e.printStackTrace();
       Log.w(TAG, "Failed to create bitmap from drawable!");
       bitmap = null;
+      bitmap.recycle();
     }
 
     return bitmap;

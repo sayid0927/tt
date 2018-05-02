@@ -1,14 +1,13 @@
 package com.wemgmemgfang.bt.base;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.view.LoadingPage;
@@ -40,7 +39,7 @@ public abstract class BaseFragment extends Fragment implements Stateful {
 
     protected View contentView;
     private Unbinder bind;
-    private AlertDialog dialog;
+    public ProgressDialog loadPd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
@@ -91,18 +90,24 @@ public abstract class BaseFragment extends Fragment implements Stateful {
     }
 
 
-    public void dismissDialog() {
-        if (dialog != null)
-            dialog.dismiss();
+    public void showLoadPd() {
+        if (loadPd == null) {
+            loadPd = new ProgressDialog(getActivity());
+            loadPd.setMessage("正在加载中......");
+            loadPd.show();
+        } else {
+            loadPd.show();
+        }
     }
 
 
-    public void showDialog(String str) {
-        dialog = new AlertDialog.Builder(getActivity())
-                .setMessage(str)
-                .create();
-        dialog.show();
+    public void dismissLoadPd() {
+        if (loadPd != null && loadPd.isShowing())
+            loadPd.dismiss();
     }
+
+
+
 
     /**
      * 显示时加载数据,需要这样的使用

@@ -48,6 +48,7 @@ public class DownRankingFragment extends BaseFragment implements DownRankingCont
     private DownRanking_Adapter mAdapter;
     private List<DownRaningBean> dataBean;
     private static String DownRankingUrl = "http://www.zei8.me/movie/lunli/";
+//    private static String DownRankingUrl = "http://www.bttwo.com/movie/20741.html";
     private boolean isRefresh = false;
     private int index = 1;
 
