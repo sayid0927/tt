@@ -3,7 +3,6 @@ package com.wemgmemgfang.bt.ui.activity;
 import android.Manifest;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -49,7 +48,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import player.XLVideoPlayActivity;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -107,6 +105,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     private boolean isCollertion;
     private String Url, ImgUrl;
     private ArrayList<VideoDetailsBean.VideoLinks> videoLinksList;
+    private long taskId;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -130,7 +129,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void initView() {
-
+//        XLTaskHelper.init(getApplicationContext());
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         UmengUtil.onEvent("ViewBoxActivity");
@@ -238,6 +237,7 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
                         if (!EasyPermissions.hasPermissions(ViewBoxActivity.this, perms)) {
                             EasyPermissions.requestPermissions(this, "需要读写权限", 2000, perms);
                         } else {
+
                             DownVideoInfo downVideoInfo = new DownVideoInfo();
                             downVideoInfo.setPlayPath(item.getThunder());
                             downVideoInfo.setPlayTitle(item.getTitle());
@@ -335,10 +335,4 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
         ToastUtils.showLongToast("没有权限无法下载电影");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

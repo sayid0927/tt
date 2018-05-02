@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.wemgmemgfang.bt.database.DownVideoInfoDao;
 import com.wemgmemgfang.bt.entity.DownVideoInfo;
+import com.wemgmemgfang.bt.service.DownTaskService;
 import com.wemgmemgfang.bt.service.DownVoideService;
 
 /**
@@ -40,29 +41,17 @@ public class DownLoadHelper {
 
         if (d == null) {
             addTask(downVideoInfo);
-            if(!DownVoideService.isDown) {
-                Bundle bundle = new Bundle();
-                bundle.putString("PlayPath", downVideoInfo.getPlayPath());
-                bundle.putString("state", downVideoInfo.getState());
-                Intent intent = new Intent(context, DownVoideService.class);
-                intent.putExtras(bundle);
-                context.startService(intent);
-            }
+            Bundle bundle = new Bundle();
+            bundle.putString("PlayPath", downVideoInfo.getPlayPath());
+            Intent intent = new Intent(context, DownTaskService.class);
+            intent.putExtras(bundle);
+            context.startService(intent);
         } else {
-            if (d.getPlayPath().equals(downVideoInfo.getPlayPath()) && !downVideoInfo.getState().equals(d.getState())) {
-                downVideoInfo.setId(d.getId());
-                downVideoInfoDao.update(downVideoInfo);
-                Bundle bundle = new Bundle();
-                bundle.putString("PlayPath", downVideoInfo.getPlayPath());
-                bundle.putString("state", downVideoInfo.getState());
-                Intent intent = new Intent(context, DownVoideService.class);
-                intent.putExtras(bundle);
-                context.startService(intent);
-            }
+            ToastUtils.showLongToast("已经在下载队列中");
         }
     }
 
-    public void addTask(DownVideoInfo downVideoInfo) {
+     private void addTask(DownVideoInfo downVideoInfo) {
         downVideoInfoDao.insert(downVideoInfo);
         ToastUtils.showLongToast("添加到下载队列中");
     }

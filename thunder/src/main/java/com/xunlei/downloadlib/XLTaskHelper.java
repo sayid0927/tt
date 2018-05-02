@@ -132,6 +132,58 @@ public class XLTaskHelper {
         return getTaskId.getTaskId();
     }
 
+
+
+    public synchronized long addThunderTasks(String url,String savePath,String fileName) throws Exception {
+        if (url.startsWith("thunder://")) url = XLDownloadManager.getInstance().parserThunderUrl(url);
+        final GetTaskId getTaskId = new GetTaskId();
+        GetFileName getFileName = new GetFileName();
+        XLDownloadManager.getInstance().getFileNameFromUrl(url, getFileName);
+        if (url.startsWith("ftp://") || url.startsWith("http")) {
+            P2spTaskParam taskParam = new P2spTaskParam();
+            taskParam.setCreateMode(1);
+            taskParam.setFileName(getFileName.getFileName());
+            taskParam.setFilePath(savePath);
+            taskParam.setUrl(url);
+            taskParam.setSeqId(seq.incrementAndGet());
+            taskParam.setCookie("");
+            taskParam.setRefUrl("");
+            taskParam.setUser("");
+            taskParam.setPass("");
+            XLDownloadManager.getInstance().createP2spTask(taskParam, getTaskId);
+        } else if (url.startsWith("ed2k://")) {
+            EmuleTaskParam taskParam = new EmuleTaskParam();
+            taskParam.setFilePath(savePath);
+            taskParam.setFileName(getFileName.getFileName());
+            taskParam.setUrl(url);
+            taskParam.setSeqId(seq.incrementAndGet());
+            taskParam.setCreateMode(1);
+            XLDownloadManager.getInstance().createEmuleTask(taskParam, getTaskId);
+        } else {
+            throw new Exception("url illegal.");
+        }
+
+        XLDownloadManager.getInstance().setDownloadTaskOrigin(getTaskId.getTaskId(), "out_app/out_app_paste");
+        XLDownloadManager.getInstance().setOriginUserAgent(getTaskId.getTaskId(), "AndroidDownloadManager/4.4.4 (Linux; U; Android 4.4.4; Build/KTU84Q)");
+        XLDownloadManager.getInstance().startTask(getTaskId.getTaskId(), false);
+        XLDownloadManager.getInstance().setTaskLxState(getTaskId.getTaskId(), 0, 1);
+        XLDownloadManager.getInstance().startDcdn(getTaskId.getTaskId(), 0, "", "", "");
+
+        return getTaskId.getTaskId();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 通过链接获取文件名
      * @param url

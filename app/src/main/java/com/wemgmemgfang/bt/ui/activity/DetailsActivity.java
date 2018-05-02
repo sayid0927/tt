@@ -3,7 +3,6 @@ package com.wemgmemgfang.bt.ui.activity;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,7 +39,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import player.XLVideoPlayActivity;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -216,6 +214,8 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                 }
             }
         });
+
+
 
         mAdapter.setOnDownItemClickListener(new Home_Title_Play_Adapter.OnDownItemClickListener() {
             @Override

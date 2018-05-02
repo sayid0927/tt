@@ -26,11 +26,12 @@ public class DownVideoInfo {
     private long mFileSize;
     private String saveVideoPath;
     private long mDownloadSize;
-    @Generated(hash = 1136827977)
+    private long mDownloadSpeed;
+    @Generated(hash = 1689916856)
     public DownVideoInfo(Long id, String playPath, String playTitle,
             String PlayimgUrl, String hrefUrl, String hrefTitle, String type,
             String state, int mTaskStatus, long taskId, long mFileSize,
-            String saveVideoPath, long mDownloadSize) {
+            String saveVideoPath, long mDownloadSize, long mDownloadSpeed) {
         this.id = id;
         this.playPath = playPath;
         this.playTitle = playTitle;
@@ -44,6 +45,7 @@ public class DownVideoInfo {
         this.mFileSize = mFileSize;
         this.saveVideoPath = saveVideoPath;
         this.mDownloadSize = mDownloadSize;
+        this.mDownloadSpeed = mDownloadSpeed;
     }
     @Generated(hash = 773913658)
     public DownVideoInfo() {
@@ -125,6 +127,12 @@ public class DownVideoInfo {
     }
     public void setState(String state) {
         this.state = state;
+    }
+    public long getMDownloadSpeed() {
+        return this.mDownloadSpeed;
+    }
+    public void setMDownloadSpeed(long mDownloadSpeed) {
+        this.mDownloadSpeed = mDownloadSpeed;
     }
 
 

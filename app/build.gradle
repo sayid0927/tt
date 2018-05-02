@@ -24,14 +24,14 @@ android {
             abiFilters 'x86_64'
         }
 
-        splits {
-            abi {
-                enable true
-                reset()
-                include 'x86', 'armeabi-v7a', 'x86_64'
-                universalApk true
-            }
-        }
+//        splits {
+//            abi {
+//                enable true
+//                reset()
+//                include 'x86', 'armeabi-v7a', 'x86_64'
+//                universalApk true
+//            }
+//        }
 
     }
     signingConfigs {
@@ -71,11 +71,11 @@ android {
 
         }
         debug {
-//            debuggable true
-//            zipAlignEnabled true //zip对齐
-//            minifyEnabled false  //设置混淆
+            debuggable true
+            zipAlignEnabled true //zip对齐
+            minifyEnabled false  //设置混淆
 //            shrinkResources true //删除多余的资源文件
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug //设置签名
         }
     }
@@ -115,7 +115,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation project(':ijkplayer')
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
     implementation 'com.google.dagger:dagger:2.11'
@@ -144,13 +143,16 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.apache.httpcomponents:httpcore:4.4.4'
     implementation 'com.umeng.analytics:analytics:latest.integration'
-    //    可选，用于生成application类
-    //    provided 'com.tencent.tinker:tinker-android-anno:1.7.11'
-    //    //tinker的核心库
-    //    compile 'com.tencent.tinker:tinker-android-lib:1.7.11'
-    implementation project(':thunder')
-    implementation project(':library')
+
     implementation files('libs/umeng_social_api.jar')
     implementation files('libs/umeng_social_net.jar')
     implementation files('libs/SocialSDK_WeChat_Simplify.jar')
+    implementation files('libs/umeng_social_shareview.jar')
+
+
+//    implementation project(':task')
+    implementation project(':thunder')
+    implementation project(':library')
+    implementation project(':ijkplayer')
+
 }

@@ -21,5 +21,9 @@
     <string name="SearchRe">搜索结果</string>
     <string name="Search_No">没有找到任何资源</string>
     <string name="Video_No">暂无电影资源</string>
+    <string name="downSuccess">下载完成</string>
+    <string name="downIng">下载中</string>
+    <string name="downError">下载错误</string>
+    <string name="downStop">下载暂停</string>
 
 </resources>

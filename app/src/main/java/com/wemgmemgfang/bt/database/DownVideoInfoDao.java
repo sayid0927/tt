@@ -37,6 +37,7 @@ public class DownVideoInfoDao extends AbstractDao<DownVideoInfo, Long> {
         public final static Property MFileSize = new Property(10, long.class, "mFileSize", false, "M_FILE_SIZE");
         public final static Property SaveVideoPath = new Property(11, String.class, "saveVideoPath", false, "SAVE_VIDEO_PATH");
         public final static Property MDownloadSize = new Property(12, long.class, "mDownloadSize", false, "M_DOWNLOAD_SIZE");
+        public final static Property MDownloadSpeed = new Property(13, long.class, "mDownloadSpeed", false, "M_DOWNLOAD_SPEED");
     }
 
 
@@ -64,7 +65,8 @@ public class DownVideoInfoDao extends AbstractDao<DownVideoInfo, Long> {
                 "\"TASK_ID\" INTEGER NOT NULL ," + // 9: taskId
                 "\"M_FILE_SIZE\" INTEGER NOT NULL ," + // 10: mFileSize
                 "\"SAVE_VIDEO_PATH\" TEXT," + // 11: saveVideoPath
-                "\"M_DOWNLOAD_SIZE\" INTEGER NOT NULL );"); // 12: mDownloadSize
+                "\"M_DOWNLOAD_SIZE\" INTEGER NOT NULL ," + // 12: mDownloadSize
+                "\"M_DOWNLOAD_SPEED\" INTEGER NOT NULL );"); // 13: mDownloadSpeed
     }
 
     /** Drops the underlying database table. */
@@ -125,6 +127,7 @@ public class DownVideoInfoDao extends AbstractDao<DownVideoInfo, Long> {
             stmt.bindString(12, saveVideoPath);
         }
         stmt.bindLong(13, entity.getMDownloadSize());
+        stmt.bindLong(14, entity.getMDownloadSpeed());
     }
 
     @Override
@@ -179,6 +182,7 @@ public class DownVideoInfoDao extends AbstractDao<DownVideoInfo, Long> {
             stmt.bindString(12, saveVideoPath);
         }
         stmt.bindLong(13, entity.getMDownloadSize());
+        stmt.bindLong(14, entity.getMDownloadSpeed());
     }
 
     @Override
@@ -201,7 +205,8 @@ public class DownVideoInfoDao extends AbstractDao<DownVideoInfo, Long> {
             cursor.getLong(offset + 9), // taskId
             cursor.getLong(offset + 10), // mFileSize
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // saveVideoPath
-            cursor.getLong(offset + 12) // mDownloadSize
+            cursor.getLong(offset + 12), // mDownloadSize
+            cursor.getLong(offset + 13) // mDownloadSpeed
         );
         return entity;
     }
@@ -221,6 +226,7 @@ public class DownVideoInfoDao extends AbstractDao<DownVideoInfo, Long> {
         entity.setMFileSize(cursor.getLong(offset + 10));
         entity.setSaveVideoPath(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setMDownloadSize(cursor.getLong(offset + 12));
+        entity.setMDownloadSpeed(cursor.getLong(offset + 13));
      }
     
     @Override

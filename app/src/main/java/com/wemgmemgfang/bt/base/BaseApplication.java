@@ -2,8 +2,10 @@ package com.wemgmemgfang.bt.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 import android.util.Config;
+import android.util.Log;
 
 import com.blankj.utilcode.utils.ThreadPoolUtils;
 import com.blankj.utilcode.utils.Utils;
@@ -99,4 +101,25 @@ public class BaseApplication extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
+
+    @Override
+    public String getPackageName() {
+        if(Log.getStackTraceString(new Throwable()).contains("com.xunlei.downloadlib")) {
+            return "com.xunlei.downloadprovider";
+        }
+        return super.getPackageName();
+    }
+
+
+    @Override
+    public PackageManager getPackageManager() {
+        if(Log.getStackTraceString(new Throwable()).contains("com.xunlei.downloadlib")) {
+            return new DelegateApplicationPackageManager(super.getPackageManager());
+        }
+        return super.getPackageManager();
+    }
+
+
+
 }

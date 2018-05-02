@@ -23,19 +23,21 @@
 
             <ImageView
                 android:id="@+id/iv_down"
-                android:layout_width="80dp"
-                android:layout_height="100dp"
+                android:layout_width="60dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginBottom="2dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/ic_launcher"
                 android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -45,7 +47,7 @@
                     android:maxLines="1"
                     android:text="ddddddddddddddddddddddddd"
                     android:textColor="@color/common_h1"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -63,11 +65,9 @@
                     android:layout_height="wrap_content"
                     android:text="100%    3232323002 / 000000000"
                     android:textColor="@color/common_h1"
-                    android:textSize="12sp" />
+                    android:textSize="8sp" />
 
             </LinearLayout>
-
-
 
         </LinearLayout>
 

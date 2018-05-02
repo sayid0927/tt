@@ -24,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/iv_down"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="80dp"
                 android:layout_weight="0"
                 android:scaleType="centerCrop"

@@ -38,7 +38,6 @@ public class DownListApadter extends BaseQuickAdapter<DownVideoInfo, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, final DownVideoInfo item) {
         ImageView iv = helper.getView(R.id.iv_down);
-//        Button but = helper.getView(R.id.bu_delete);
         helper.setText(R.id.down_title, item.getPlayTitle());
         ProgressBar progressBar= helper.getView(R.id.progressBar);
         ImgLoadUtils.loadImage(mContext, item.getPlayimgUrl(), iv);
@@ -47,11 +46,20 @@ public class DownListApadter extends BaseQuickAdapter<DownVideoInfo, BaseViewHol
             helper.getView(R.id.tv_pro).setVisibility(View.VISIBLE);
              int size =  (int) (item.getMDownloadSize() * 100 / item.getMFileSize());
             progressBar.setProgress( size);
-            helper.setText(R.id.tv_pro,  String.valueOf(size)+"%    " +item.getMFileSize()+ " / "+item.getMDownloadSize());
+            helper.setText(R.id.tv_pro,  String.valueOf(size)+"%    " +item.getMFileSize()+ " / "+item.getMDownloadSize()+"    "+
+                    convertFileSize(item.getMDownloadSpeed()));
         }else {
             helper.getView(R.id.tv_pro).setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
         }
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDeleteItemListenter.OnDeleteItemListenter(item);
+            }
+        });
+
+
 
     }
 
@@ -63,6 +71,24 @@ public class DownListApadter extends BaseQuickAdapter<DownVideoInfo, BaseViewHol
 
     public interface OnDeleteItemListenter {
         void OnDeleteItemListenter(DownVideoInfo item);
+    }
+
+
+    public static String convertFileSize(long size) {
+        long kb = 1024;
+        long mb = kb * 1024;
+        long gb = mb * 1024;
+
+        if (size >= gb) {
+            return String.format("%.1f GB", (float) size / gb);
+        } else if (size >= mb) {
+            float f = (float) size / mb;
+            return String.format(f > 100 ? "%.0f M" : "%.1f M", f);
+        } else if (size >= kb) {
+            float f = (float) size / kb;
+            return String.format(f > 100 ? "%.0f K" : "%.1f K", f);
+        } else
+            return String.format("%d B", size);
     }
 
 }

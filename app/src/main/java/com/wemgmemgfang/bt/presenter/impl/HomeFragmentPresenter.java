@@ -204,5 +204,4 @@ public class HomeFragmentPresenter extends RxPresenter<HomeContract.View> implem
             }
         }
     }
-
 }
