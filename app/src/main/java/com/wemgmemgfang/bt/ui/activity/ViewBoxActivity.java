@@ -69,10 +69,6 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
     ImageView img;
     @BindView(R.id.title)
     TextView title;
-    //    @BindView(R.id.llExit)
-//    LinearLayout llExit;
-//    @BindView(R.id.tvTitle)
-//    TextView tvTitle;
     @BindView(R.id.size)
     TextView size;
     @BindView(R.id.sizeNum)
@@ -129,7 +125,6 @@ public class ViewBoxActivity extends BaseActivity implements ViewBoxContract.Vie
 
     @Override
     public void initView() {
-//        XLTaskHelper.init(getApplicationContext());
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         UmengUtil.onEvent("ViewBoxActivity");

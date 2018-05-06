@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.LogUtils;
+import com.blankj.utilcode.utils.ToastUtils;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
 import com.wemgmemgfang.bt.bean.DownVideoBean;
@@ -25,10 +26,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import player.XLVideoPlayActivity;
 
 public class DownListActivity extends BaseActivity {
 
@@ -97,17 +100,19 @@ public class DownListActivity extends BaseActivity {
         mAdapter.OnDeleteItemListenter(new DownListApadter.OnDeleteItemListenter() {
             @Override
             public void OnDeleteItemListenter(DownVideoInfo item) {
-                DownVideoInfo downVideoInfo = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(item.getPlayPath())).unique();
-                if(item.getState().equals(getString(R.string.downIng))){
-                    downVideoInfo.setId(downVideoInfo.getId());
-                    downVideoInfo.setState(getString(R.string.downStop));
-                    downVideoInfoDao.update(downVideoInfo);
-                    List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
-                    mAdapter.setNewData(downVideoInfoList);
-                    XLTaskHelper.instance().stopTask(item.getTaskId());
-                }else {
-                    DownLoadHelper.getInstance().restartSubmit(DownListActivity.this, downVideoInfo);
+
+                List<File> files = FileUtils.listFilesInDir(item.getSaveVideoPath());
+                for(int i=0;i<files.size();i++){
+                  String fileName =  files.get(i).getName();
+                  if(fileName.contains(item.getPlayTitle())){
+                      XLVideoPlayActivity.intentTo(DownListActivity.this,files.get(i).getAbsolutePath(), null);
+                      break;
+                  }else {
+                      ToastUtils.showLongToastSafe("没有文件");
+                  }
+                  LogUtils.e(fileName);
                 }
+//                XLVideoPlayActivity.intentTo(DownListActivity.this,path, null);
             }
         });
     }
@@ -117,6 +122,7 @@ public class DownListActivity extends BaseActivity {
     public void onViewClicked() {
         this.finish();
     }
+
 
     private void showDeleteDialog(final DownVideoInfo item) {
 

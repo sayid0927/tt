@@ -44,25 +44,32 @@ public class DownListApadter extends BaseQuickAdapter<DownVideoInfo, BaseViewHol
 
         progressBar.setVisibility(View.VISIBLE);
         helper.getView(R.id.tv_pro).setVisibility(View.VISIBLE);
-        int size = (int) (item.getMDownloadSize() * 100 / item.getMFileSize());
+        int size = 0;
+        if (item.getMFileSize() != 0 && item.getMDownloadSize() != 0) {
+            size = (int) (item.getMDownloadSize() * 100 / item.getMFileSize());
+        }
         progressBar.setProgress(size);
-         switch (item.getState()){
-             case "下载暂停":
-                 helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
-                         "下载暂停");
-                 break;
 
-             case "下载错误":
-                 helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
-                         "网络异常");
-                 break;
+        if(size!=100){
+            switch (item.getState()) {
+                case "下载暂停":
+                    helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
+                            "下载暂停");
+                    break;
 
-             case "下载中":
-                 helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
-                         convertFileSize(item.getMDownloadSpeed()));
-                 break;
-         }
+                case "下载错误":
+                    helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
+                            "网络异常");
+                    break;
 
+                case "下载中":
+                    helper.setText(R.id.tv_pro, String.valueOf(size) + "%    " + item.getMFileSize() + " / " + item.getMDownloadSize() + "    " +
+                            convertFileSize(item.getMDownloadSpeed()));
+                    break;
+            }
+        }else {
+            helper.setText(R.id.tv_pro, "下载完成");
+        }
 
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
