@@ -2,17 +2,16 @@ package com.wemgmemgfang.bt.ui.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.blankj.utilcode.utils.FileUtils;
-import com.blankj.utilcode.utils.LogUtils;
 import com.blankj.utilcode.utils.ToastUtils;
 import com.wemgmemgfang.bt.R;
 import com.wemgmemgfang.bt.base.BaseActivity;
-import com.wemgmemgfang.bt.bean.DownVideoBean;
 import com.wemgmemgfang.bt.component.AppComponent;
 import com.wemgmemgfang.bt.database.DownVideoInfoDao;
 import com.wemgmemgfang.bt.entity.DownVideoInfo;
@@ -30,6 +29,7 @@ import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import player.XLVideoPlayActivity;
 
@@ -39,6 +39,8 @@ public class DownListActivity extends BaseActivity {
     RecyclerView rvDown;
     @BindView(R.id.llExit)
     LinearLayout llExit;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
 
     private NotificationHandler nHandler;
     private DownListApadter mAdapter;
@@ -83,6 +85,7 @@ public class DownListActivity extends BaseActivity {
         setSwipeBackEnable(true);
         EventBus.getDefault().register(this);
         XLTaskHelper.init(getApplicationContext());
+        tvTitle.setText("我的下载");
         downVideoInfoDao = GreenDaoUtil.getDaoSession().getDownVideoInfoDao();
         final List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
 
@@ -101,34 +104,122 @@ public class DownListActivity extends BaseActivity {
             @Override
             public void OnDeleteItemListenter(DownVideoInfo item) {
 
-                List<File> files = FileUtils.listFilesInDir(item.getSaveVideoPath());
-                for(int i=0;i<files.size();i++){
-                  String fileName =  files.get(i).getName();
-                  if(fileName.contains(item.getPlayTitle())){
-                      XLVideoPlayActivity.intentTo(DownListActivity.this,files.get(i).getAbsolutePath(), null);
-                      break;
-                  }else {
-                      ToastUtils.showLongToastSafe("没有文件");
-                  }
-                  LogUtils.e(fileName);
+                switch (item.getState()) {
+                    case "下载完成":
+                        List<File> files = FileUtils.listFilesInDir(item.getSaveVideoPath());
+                        if (files != null && files.size() != 0) {
+                            for (int i = 0; i < files.size(); i++) {
+                                String path = files.get(i).getAbsolutePath();
+                                if (xllib.FileUtils.isMediaFile(path)) {
+                                    XLVideoPlayActivity.intentTo(DownListActivity.this, path, null);
+                                    break;
+                                }
+                            }
+                        } else {
+                            ToastUtils.showLongToastSafe("没有本地文件");
+                        }
+                        break;
+
+                    case "下载中":
+                        showStopDownDialog(item);
+                        break;
+                    case  "下载错误":
+                        showRestDownDialog(item);
+                        break;
+                    case "下载暂停":
+                        showRestDownDialog(item);
+                        break;
+
+                    case "等待下载":
+
+
+                        break;
+
+
                 }
-//                XLVideoPlayActivity.intentTo(DownListActivity.this,path, null);
+            }
+        });
+
+        mAdapter.OnItemDownSuccess(new DownListApadter.OnItemDownSuccess() {
+            @Override
+            public void OnItemDownSuccess(DownVideoInfo item) {
+                final List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
+                for (DownVideoInfo d : downVideoInfoList) {
+                    if (!d.getState().equals("下载完成")) {
+                        DownLoadHelper.getInstance().submit(DownListActivity.this, d);
+                        break;
+                    }
+                }
             }
         });
     }
-
 
     @OnClick(R.id.llExit)
     public void onViewClicked() {
         this.finish();
     }
 
-
     private void showDeleteDialog(final DownVideoInfo item) {
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("提示")
-                .setMessage("删除下载任务")
+                .setMessage("删除下载任务,并删除本地文件")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        downVideoInfoDao.delete(item);
+//                        FileUtils.deleteDir(item.getSaveVideoPath());
+//                        List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
+//                        mAdapter.setNewData(downVideoInfoList);
+                        downVideoInfoDao.delete(item);
+                        XLTaskHelper.instance().deleteTask(item.getTaskId(),item.getSaveVideoPath());
+                        List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
+                        mAdapter.setNewData(downVideoInfoList);
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    private void showStopDownDialog(final DownVideoInfo item) {
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("文件正在下载是否停止下载")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        item.setId(item.getId());
+                        item.setState(getString(R.string.downStop));
+                        downVideoInfoDao.update(item);
+                        XLTaskHelper.instance().stopTask(item.getTaskId());
+                        List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
+                        mAdapter.setNewData(downVideoInfoList);
+                        dialog.dismiss();
+
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    private void showRestDownDialog(final DownVideoInfo item) {
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("是否重新开始下载")
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -139,7 +230,8 @@ public class DownListActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         downVideoInfoDao.delete(item);
-                        FileUtils.deleteDir(item.getSaveVideoPath());
+                        XLTaskHelper.instance().deleteTask(item.getTaskId(),item.getSaveVideoPath());
+                        DownLoadHelper.getInstance().submit(DownListActivity.this, item);
                         List<DownVideoInfo> downVideoInfoList = downVideoInfoDao.loadAll();
                         mAdapter.setNewData(downVideoInfoList);
                         dialog.dismiss();
@@ -147,4 +239,6 @@ public class DownListActivity extends BaseActivity {
                 }).create();
         dialog.show();
     }
+
+
 }

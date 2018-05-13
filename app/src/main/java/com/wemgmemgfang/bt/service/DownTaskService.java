@@ -29,7 +29,7 @@ public class DownTaskService extends Service {
     private DownVideoInfoDao downVideoInfoDao;
     private String downPath;
     private long taskId;
-
+    public  static   boolean isDownState;
 
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -40,19 +40,20 @@ public class DownTaskService extends Service {
                     case 0:
                         long taskId = (long) msg.obj;
                         XLTaskInfo taskInfo = XLTaskHelper.instance().getTaskInfo(taskId);
-                        LogUtils.e( "mTaskStatus:" + taskInfo.mTaskStatus+"\n"
-                                +"fileSize:" + taskInfo.mFileSize+"\n"
-                                + " downSize:" + taskInfo.mDownloadSize+"\n"
-                                +"mDownloadSpeed"+taskInfo.mDownloadSpeed);
+                        LogUtils.e("mTaskStatus:" + taskInfo.mTaskStatus + "\n"
+                                + "fileSize:" + taskInfo.mFileSize + "\n"
+                                + " downSize:" + taskInfo.mDownloadSize + "\n"
+                                + "mDownloadSpeed" + taskInfo.mDownloadSpeed);
                         DownVideoInfo d = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(downPath)).unique();
 
                         switch (taskInfo.mTaskStatus) {
 
                             case 0:
-//                                d.setId(d.getId());
-//                                d.setState(getString(R.string.downError));
-//                                d.setTaskId(taskId);
-//                                downVideoInfoDao.update(d);
+                                d.setId(d.getId());
+                                d.setState(getString(R.string.downStop));
+                                d.setTaskId(taskId);
+                                downVideoInfoDao.update(d);
+                                isDownState = false;
                                 EventBus.getDefault().post(d);
                                 break;
 
@@ -67,6 +68,7 @@ public class DownTaskService extends Service {
                                 d.setTaskId(taskId);
                                 downVideoInfoDao.update(d);
                                 EventBus.getDefault().post(d);
+                                isDownState = true;
                                 handler.sendMessageDelayed(handler.obtainMessage(0, taskId), 1000);
 
                                 break;
@@ -80,7 +82,8 @@ public class DownTaskService extends Service {
                                 d.setTaskId(taskId);
                                 downVideoInfoDao.update(d);
                                 EventBus.getDefault().post(d);
-                                ToastUtils.showLongToast(d.getPlayTitle()+"下载完成");
+                                isDownState = false;
+                                ToastUtils.showLongToast(d.getPlayTitle() + "下载完成");
                                 break;
 
                             case 3:
@@ -90,6 +93,7 @@ public class DownTaskService extends Service {
                                 d.setMTaskStatus(taskInfo.mTaskStatus);
                                 d.setState(getString(R.string.downError));
                                 downVideoInfoDao.update(d);
+                                isDownState = false;
                                 EventBus.getDefault().post(d);
                                 break;
                         }
@@ -110,6 +114,22 @@ public class DownTaskService extends Service {
         super.onCreate();
     }
 
+
+    @Override
+    public void onDestroy() {
+        DownVideoInfo d = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(downPath)).unique();
+        d.setId(d.getId());
+//        d.setMFileSize(taskInfo.mFileSize);
+//        d.setMDownloadSize(taskInfo.mDownloadSize);
+//        d.setMTaskStatus(taskInfo.mTaskStatus);
+        d.setState(getString(R.string.downError));
+        downVideoInfoDao.update(d);
+        isDownState = false;
+        EventBus.getDefault().post(d);
+
+        super.onDestroy();
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         XLTaskHelper.init(getApplicationContext());
@@ -118,10 +138,24 @@ public class DownTaskService extends Service {
         downPath = bundle.getString("PlayPath");
         DownVideoInfo downVideoInfo = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(downPath)).unique();
         try {
-            taskId = XLTaskHelper.instance().addThunderTasks(downPath, downVideoInfo.getSaveVideoPath(), null);
+            if (downPath.startsWith("thunder://")) {
+                taskId = XLTaskHelper.instance().addThunderTask(downPath, downVideoInfo.getSaveVideoPath(), downVideoInfo.getPlayTitle());
+            } else {
+                taskId = XLTaskHelper.instance().addTorrentTask(downPath, downVideoInfo.getSaveVideoPath(), null);
+            }
             handler.sendMessage(handler.obtainMessage(0, taskId));
         } catch (Exception e) {
             e.printStackTrace();
+
+            downVideoInfo.setId(downVideoInfo.getId());
+            downVideoInfo.setMFileSize(0);
+            downVideoInfo.setMDownloadSize(0);
+            downVideoInfo.setMTaskStatus(3);
+            downVideoInfo.setState(getString(R.string.downError));
+            downVideoInfoDao.update(downVideoInfo);
+            isDownState = false;
+            EventBus.getDefault().post(downVideoInfo);
+
         }
         return super.onStartCommand(intent, flags, startId);
     }

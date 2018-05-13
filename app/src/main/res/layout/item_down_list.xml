@@ -64,7 +64,7 @@
                     android:id="@+id/tv_pro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="100%    3232323002 / 000000000"
+                    android:text=""
                     android:textColor="@color/common_h1"
                     android:textSize="8sp" />
 

@@ -38,12 +38,18 @@ public class DownLoadHelper {
     public void submit(Context context, DownVideoInfo downVideoInfo) {
         DownVideoInfo d = downVideoInfoDao.queryBuilder().where(DownVideoInfoDao.Properties.PlayPath.eq(downVideoInfo.getPlayPath())).unique();
         if (d == null) {
-            addTask(downVideoInfo);
-            Bundle bundle = new Bundle();
-            bundle.putString("PlayPath", downVideoInfo.getPlayPath());
-            Intent intent = new Intent(context, DownTaskService.class);
-            intent.putExtras(bundle);
-            context.startService(intent);
+            if(!DownTaskService.isDownState){
+                addTask(downVideoInfo);
+                Bundle bundle = new Bundle();
+                bundle.putString("PlayPath", downVideoInfo.getPlayPath());
+                Intent intent = new Intent(context, DownTaskService.class);
+                intent.putExtras(bundle);
+                context.startService(intent);
+            }else {
+                downVideoInfo.setState("等待下载");
+                addTask(downVideoInfo);
+                ToastUtils.showLongToast("添加到下载队列中");
+            }
         } else {
             ToastUtils.showLongToast("已经在下载队列中");
         }
